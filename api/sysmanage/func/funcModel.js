@@ -1,9 +1,9 @@
 var mongoose = require('mongoose');
-var Schema   = mongoose.Schema;
+var Schema = mongoose.Schema;
 
 var funcSchema = new Schema({
-	'funcName' : String,
-	'funcLink' : String
+	'funcName': String,//功能名单
+	'funcLink': String//功能router-link
 });
 
 module.exports = mongoose.model('function', funcSchema);

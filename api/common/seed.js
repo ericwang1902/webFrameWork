@@ -47,7 +47,7 @@ var initData = function () {
     })
 }
 
-module.exports={initData};
+module.exports = { initData };
 
 
 

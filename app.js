@@ -36,6 +36,54 @@ app.use(session({
   saveUninitialized: true
 }));
 
+//passport和数据加密
+var passport = require('passport')//3.验证
+var LocalStrategy = require('passport-local').Strategy;//4.登录策略
+var bcrypt = require('bcryptjs');//5.数据加密
+var usermodel = require('./api/sysmanage/user/userModel');
+
+app.use(passport.initialize());
+app.use(passport.session());
+passport.serializeUser(function (user, done) {
+  done(null, user.id);
+});
+
+passport.deserializeUser(function (id, done) {
+  usermodel.findOne({ _id: id }, function (err, user) {
+    done(err, user);
+  });
+});
+
+passport.use(new LocalStrategy(
+  function (username, password, done) {
+    usermodel.findOne({ username: username }, function (err, user) {
+      if (err) return console.error(err);
+      //console.log(user)
+      if (!user) {
+        console.log('用户名不存在');
+
+        return done(null, false, { message: '用户名不存在！！' })
+      } else {
+        //参数说明：password和user.password进行比较，第三个参数是回调函数
+        bcrypt.compare(password, user.password, function (err, isMatch) {
+          if (err) return console.error(err);
+
+          if (isMatch) {
+            console.log("用户名和密码验证成功！")
+
+            return done(null, user);
+          } else {
+            console.log("密码不匹配！")
+            return done(null, false, { message: '密码不匹配！' });
+          }
+        })
+      }
+    })
+  }
+));
+
+
+
 
 //seed
 var seed = require('./api/common/seed');
