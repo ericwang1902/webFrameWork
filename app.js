@@ -5,11 +5,35 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 
+//config
+var Config = require('./api/frameConfig/frameConfig');
+
 // routers
 var index = require('./routes/index');
 var users = require('./routes/users');
 var sysmanage = require('./api/sysmanage')
 var app = express();
+
+//数据库连接工具类
+var dbutils = require('./api/common/dbutils');
+dbutils.createconnection();
+
+//session管理
+var session = require('express-session');
+var MongoStore = require('connect-mongo')(session);
+
+app.use(session({
+  secret: Config.sessionSecret,
+  store: new MongoStore(
+    {
+      mongooseConnection: mongoose.connection,
+      ttl: 14 * 24 * 60 * 60
+    }),
+  resave: false,
+  saveUninitialized: true
+}));
+
+
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));

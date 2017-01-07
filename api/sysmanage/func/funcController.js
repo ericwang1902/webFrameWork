@@ -1,86 +1,90 @@
-var functionModel = require('./functionModel.js');
+var funcModel = require('./funcModel.js');
 
 /**
- * functionController.js
+ * funcController.js
  *
- * @description :: Server-side logic for managing functions.
+ * @description :: Server-side logic for managing funcs.
  */
 module.exports = {
 
     /**
-     * functionController.list()
+     * 查询所有功能
      */
     list: function (req, res) {
-        functionModel.find(function (err, functions) {
+        funcModel.find(function (err, funcs) {
             if (err) {
                 return res.status(500).json({
                     message: 'Error when getting function.',
                     error: err
                 });
             }
-            return res.json(functions);
+            return res.json(funcs);
         });
     },
 
     /**
-     * functionController.show()
+     * 根据id查询单个功能
      */
     show: function (req, res) {
         var id = req.params.id;
-        functionModel.findOne({_id: id}, function (err, function) {
+        funcModel.findOne({_id: id}, function (err, func) {
             if (err) {
                 return res.status(500).json({
                     message: 'Error when getting function.',
                     error: err
                 });
             }
-            if (!function) {
+            if (!func) {
                 return res.status(404).json({
                     message: 'No such function'
                 });
             }
-            return res.json(function);
+            return res.json(func);
         });
     },
 
     /**
-     * functionController.create()
+     * 创建单个功能
      */
     create: function (req, res) {
-        var function = new functionModel({			functionName : req.body.functionName,			functionLink : req.body.functionLink
+        var func = new funcModel({
+			func : req.body.funcName,
+			funcLink : req.body.funcLink
         });
 
-        function.save(function (err, function) {
+        func.save(function (err, func) {
             if (err) {
                 return res.status(500).json({
                     message: 'Error when creating function',
                     error: err
                 });
             }
-            return res.status(201).json(function);
+            return res.status(201).json(func);
         });
     },
 
     /**
-     * functionController.update()
+     * 更新功能
      */
     update: function (req, res) {
         var id = req.params.id;
-        functionModel.findOne({_id: id}, function (err, function) {
+        funcModel.findOne({_id: id}, function (err, func) {
             if (err) {
                 return res.status(500).json({
                     message: 'Error when getting function',
                     error: err
                 });
             }
-            if (!function) {
+            if (!func) {
                 return res.status(404).json({
                     message: 'No such function'
                 });
             }
 
-            function.functionName = req.body.functionName ? req.body.functionName : function.functionName;			function.functionLink = req.body.functionLink ? req.body.functionLink : function.functionLink;			
-            function.save(function (err, function) {
+            func.funcName = req.body.funcName ? req.body.funcName : func.funcName;
+			func.functionLink = req.body.funcLink ? req.body.funcLink : func.funcLink;
+			
+            func.save(function (err, func) {
                 if (err) {
                     return res.status(500).json({
                         message: 'Error when updating function.',
@@ -88,17 +92,17 @@ module.exports = {
                     });
                 }
 
-                return res.json(function);
+                return res.json(func);
             });
         });
     },
 
     /**
-     * functionController.remove()
+     * 删除功能
      */
     remove: function (req, res) {
         var id = req.params.id;
-        functionModel.findByIdAndRemove(id, function (err, function) {
+        funcModel.findByIdAndRemove(id, function (err, func) {
             if (err) {
                 return res.status(500).json({
                     message: 'Error when deleting the function.',
