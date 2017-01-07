@@ -10,7 +10,7 @@ var userRouter = require('./user/userRoutes');
 
 //only function router
 //sysmanage/function
-router.use('/func', funcRouter);
+router.use('/func',passportAuth, funcRouter);
 
 //menu router
 //sysmanage/menu
@@ -39,6 +39,16 @@ router.post('/login', passportAuth, function (req, res, next) {
     })
 });
 
+//自定义回调函数
+//get地址是：http://localhost:3000/sysmanage/func?username=123&password=1234
+router.get('/login', passportAuth, function (req, res, next) {
+    console.log('success!')
+    return res.json({
+        state: 200,
+        authresult: true,
+        info: "info"
+    })
+});
 
 //passport登录中间件
 function passportAuth(req, res, next) {
