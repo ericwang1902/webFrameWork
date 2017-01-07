@@ -5,15 +5,11 @@ var mongoose = require('mongoose')
 
 var Config = require('../frameConfig/frameConfig')
 
-
-module.exports={
-    createconnection:function()
-    {
-       mongoose.Promise = global.Promise;
-       mongoose.connect('mongodb://localhost/'+Config.databaseName);
+module.exports = {
+    createconnection: function () {
+       mongoose.connect('mongodb://localhost/' + Config.databaseName);
     },
-    getconnection:function()
-    {
-        return  mongoose.connection;
+    getconnection: function () {
+        return mongoose.connection;
     }
 }

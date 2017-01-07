@@ -48,7 +48,7 @@ module.exports = {
      */
     create: function (req, res) {
         var func = new funcModel({
-			func : req.body.funcName,
+			funcName : req.body.funcName,
 			funcLink : req.body.funcLink
         });
 
