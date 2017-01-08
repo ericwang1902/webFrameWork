@@ -58,7 +58,7 @@ module.exports = {
     create: function (req, res) {
         var menu = new menuModel({
             menuName: req.body.menuName,
-            funcList: req.body.funcList
+            funcList: req.body.funcList//这是func的objectId的array
         });
 
         menu.save(function (err, menu) {

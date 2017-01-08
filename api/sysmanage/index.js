@@ -10,7 +10,7 @@ var userRouter = require('./user/userRoutes');
 
 //only function router
 //sysmanage/function
-router.use('/func',passportAuth, funcRouter);
+router.use('/func', funcRouter);
 
 //menu router
 //sysmanage/menu
