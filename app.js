@@ -42,6 +42,17 @@ var LocalStrategy = require('passport-local').Strategy;//4.登录策略
 var bcrypt = require('bcryptjs');//5.数据加密
 var usermodel = require('./api/sysmanage/user/userModel');
 
+//解决跨域访问问题的代码，就下面这段中间件
+app.all('*', function(req, res, next) {
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Headers", "X-Requested-With");
+    res.header("Access-Control-Allow-Methods","PUT,POST,GET,DELETE,OPTIONS");
+    res.header("X-Powered-By",' 3.2.1')
+    res.header("Content-Type", "application/json;charset=utf-8");
+    next();
+});
+
+
 app.use(passport.initialize());
 app.use(passport.session());
 passport.serializeUser(function (user, done) {
