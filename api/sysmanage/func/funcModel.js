@@ -6,4 +6,4 @@ var funcSchema = new Schema({
 	'funcLink': String//功能router-link
 });
 
-module.exports = mongoose.model('function', funcSchema);
+module.exports = mongoose.model('func', funcSchema);

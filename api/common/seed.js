@@ -9,194 +9,153 @@ var userModel = require('../sysmanage/user/userModel');
 
 var constants = require('../frameConfig/constants');
 
-
-
-//本来上面应该再写一个fun的对象新建，直接省去了
-
-//功能写入数据库，所有管理后台的菜单都需要在里初始化进入到数据库
-var FuncList = [
-    {
-        funcName: "添加功能",
-        funcLink: "/func/addfunc"
-    },
-    {
-        funcName: "修改功能",
-        funcLink: "/func/modifyfunc"
-    },
-    {
-        funcName: "添加角色",
-        funcLink: "/role/addrole"
-    },
-    {
-        funcName: "修改角色",
-        funcLink: "/role/modifyrole"
-    }
-]
-
-//菜单列表
-var MenuList = [
-    {
-        menuName: "角色管理",
-        funcList: [
-            {
-                funcName: "添加角色",
-                funcLink: "/role/addrole"
-            },
-            {
-                funcName: "修改角色",
-                funcLink: "/role/modifyrole"
-            }
-        ]
-    },
-    {
-        menuName: "功能管理",
-        funcList: [
-            {
-                funcName: "添加功能",
-                funcLink: "/role/addrole"
-            },
-            {
-                funcName: "修改功能",
-                funcLink: "/role/modifyrole"
-            }
-        ]
-    }
-]
-
-//角色
-var RoleData = {
-    roleName: constants.role.admin,//管理员角色
-    menuList: []//菜单列表
-}
-
 //用户
 var UserData = {
-    userName :"sysadmin",
-    mobile:"18501609618",
-    password:"qwe123",
-    openid:"",
-    role:{}
+    userName: "sysadmin",
+    mobile: "18501609618",
+    password: "qwe123",
+    openid: "",
+    role: {
+        roleName: constants.role.admin,//管理员角色
+        menuList: [
+            {
+                menuName: "角色管理",
+                funcList: [
+                    {
+                        funcName: "添加角色",
+                        funcLink: "/role/addrole"
+                    },
+                    {
+                        funcName: "修改角色",
+                        funcLink: "/role/modifyrole"
+                    }
+                ]
+            },
+            {
+                menuName: "功能管理",
+                funcList: [
+                    {
+                        funcName: "添加功能",
+                        funcLink: "/role/addrole"
+                    },
+                    {
+                        funcName: "修改功能",
+                        funcLink: "/role/modifyrole"
+                    }
+                ]
+            }
+        ]//菜单列表
+    }
 }
 
-
-//添加功能
 var initData = function () {
+    var userModelInstance = new userModel();
 
-    var funcResults = [];
-    //添加功能
-    async.each(FuncList, function (itemValue, callback) {
-        //遍历数组来存储funcList的内容
-        funcModel
-            .findOne({ funcName: itemValue.funcName })
-            .exec(function (err, funcResult) {
-                if (err) {
-                    console.log("seed.js:查找func失败");
-                }
-                if (!funcResult) {
-                    var funcTemp = new funcModel(itemValue);
-                    funcTemp.save(function (err, SaveResult) {
-                        if (err) {
-                            console.log("seed.js:添加功能失败");
-                        }
-                        if (SaveResult) {
-                            funcResults.push(SaveResult);
-                            // console.log(funcResults);
-                            console.log("添加功能成功！")
-                            callback();
+    userModel
+        .findOne({ userName: UserData.userName })
+        .exec(function (err, userResult) {
+            if (err) console.error(err.message);
+            if (!userResult) {
+                //新建role
+                roleModel
+                    .findOne({ roleName: UserData.role.roleName })
+                    .exec(function (err, roleResult) {
+                        if (err) console.error(err.message);
+                        if (!roleResult) {//-----------------------------------------------rolecreate
+                            //新建菜单，菜单是数组，需要循环添加
+                            var menulisttemp = [];//menu id的数组
+                            async.each(UserData.role.menuList, function (itemmenuValue, callback) {
+                                menuModel
+                                    .findOne({ menuName: itemmenuValue.menuName })
+                                    .exec(function (err, menuResult) {
+                                        if (err) console.log(err.message);
+                                        if (!menuResult) {//---------------------------------------menucreate
+                                            var funclistTemp = [];//function的id数组
+
+                                            //新建功能，功能列表是数组，需要循环添加
+                                            async.each(itemmenuValue.funcList, function (itemfuncValue, callback1) {
+                                                funcModel
+                                                    .findOne({ funcName: itemfuncValue.funcName })
+                                                    .exec(function (err, funcResult) {
+                                                        if (err) console.log(err.message);
+                                                        if (!funcResult) {
+                                                            var funcInstance = new funcModel(itemfuncValue);
+                                                            funcInstance.save(function (err, funcSaveResult) {
+                                                                if (err) console.log(err);
+                                                                if (funcSaveResult) {
+                                                                    funclistTemp.push(funcSaveResult._id);
+                                                                    console.log(itemfuncValue.funcName + "功能创建成功！")
+                                                                    callback1();
+                                                                }
+                                                            })
+                                                        }
+                                                    })
+                                            }, function (err) {
+                                                //---------------------------------------menucreate
+                                                var menuInstance = new menuModel({
+                                                    menuName: itemmenuValue.menuName,
+                                                    funcList: funclistTemp
+                                                })
+                                                menuInstance.save(function (err, menuSaveResult) {
+                                                    if (err) console.log(err);
+                                                    if (menuSaveResult) {
+                                                        menulisttemp.push(menuSaveResult._id);
+                                                        console.log(itemmenuValue.menuName + "菜单创建成功！")
+                                                        callback();
+                                                    }
+                                                })
+                                            })
+
+                                        }
+                                    })
+
+                            }, function (err) {
+                                //-----------------------------------------------rolecreate
+                                if (err) console.log(err.message);
+                                var roleInstance = new roleModel(
+                                    {
+                                        roleName: constants.role.admin,
+                                        menuList: menulisttemp
+                                    }
+                                )
+
+                                roleInstance.save(function (err, roleSaveResult) {
+                                    if (err) console.log(err)
+                                    if (roleSaveResult) {
+                                        console.log(constants.role.admin + "角色创建成功！")
+                                        var userInstance = new userModel({
+                                            userName: UserData.userName,
+                                            mobile: UserData.mobile,
+                                            password: UserData.password,
+                                            openid:UserData.openid,
+                                            role:roleSaveResult._id
+
+                                        })
+
+                                        userInstance.save(function(err,userSaveResult){
+                                            if(err) console.log(err);
+
+                                            if(userSaveResult){
+                                                console.log(userSaveResult.userName+ "用户创建成功！")
+                                            }
+                                        })
+                                    }
+                                })
+
+
+
+
+
+                            })
+
+
                         }
                     })
-                }
-            });
-
-
-    }, function (err) {
-        if (err) console.error(err.message);
-        addMenu(MenuList);
-    });
-
-
-}
-//添加菜单
-var addMenu = function (menuList) {
-    //console.log("addMenu:" + funcList)
-    var menuRefList = [];
-
-    console.log("menu:" + JSON.stringify(menuList));
-
-    async.each(menuList, function (itemValue, callback) {
-        menuModel
-        .findOne({ menuName: itemValue.menuName })
-        .exec(function (err, menuResult) {
-            if (err) console.log("seed.js:查找menu失败");
-            if (!menuResult) {
-                var menuTemp = new menuModel(itemValue);
-                menuTemp.save(function (err, SaveResult) {
-                    if (err) {
-                        console.log("seed.js:添加menu失败")
-                    }
-                    if (SaveResult) {
-                        menuRefList.push(SaveResult);
-                        console.log("seed.js:添加menu成功")
-                        callback();
-                    }
-                })
             }
         })
 
-    }, function (err) {
-        if(err) console.error(err.message);
-        
-        addRole(menuRefList)    
-    });
 
-    
 }
-//添加角色
-var addRole = function (menuRefList) {
-    RoleData.menuList = menuRefList;
-
-    roleModel
-    .findOne({roleName:RoleData.roleName})
-    .exec(function(err,roleResult){
-        if(err) console.log("seed.js:查找role失败");
-
-        if(!roleResult){
-            var roleTemp = new roleModel(RoleData);
-            roleTemp.save(function(err,SaveResult){
-                if(err) console.log("seed.js:添加role失败")
-
-                if(SaveResult){
-                    console.log("seed.js:添加role成功")
-                    addUser(SaveResult._id);
-                }
-            })
-        }
-    })
-}
-
-//添加用户
- var addUser = function(roleId){
-     UserData.role = roleId;
-
-     userModel
-     .findOne({userName:UserData.userName})
-     .exec(function(err,userResult){
-         if(err) console.log("seed.js:查找user失败")
-         
-         if(!userResult){
-             var userTemp = new userModel(UserData);
-
-             userTemp.save(function(err,SaveResult){
-                 if(err) console.error(err.message);
-
-                 if(SaveResult){
-                     console.log("seed.js:添加user成功")
-                 }
-             })
-         }
-     })
-
- }
 
 
 

@@ -13,7 +13,7 @@ module.exports = {
     list: function (req, res) {
         menuModel
             .find()
-           // .populate("funcList")
+            .populate("funcList")
             .exec(function (err, menus) {
                 if (err) {
                     return res.status(500).json({
@@ -32,7 +32,7 @@ module.exports = {
         var id = req.params.id;
         menuModel
             .findOne({ _id: id })
-            //.populate("funcList")
+            .populate("funcList")
             .exec(function (err, menuResult) {
                 if (err) {
                     return res.status(500).json({

@@ -11,15 +11,30 @@ module.exports = {
      * roleController.list()
      */
     list: function (req, res) {
-        roleModel.find(function (err, roles) {
-            if (err) {
-                return res.status(500).json({
-                    message: 'Error when getting role.',
-                    error: err
-                });
+        roleModel
+            .find()
+            .populate({
+                path: 'menuList',//字段
+                select: '_id menuName funcList',
+                model: 'menu',//字段对应的model
+                //下面这个是在上面path、select、model基础上的，上面返回的是{menuName,funcList},下面的对该返回对象进行populate
+                populate: {
+                    path: 'funcList',
+                    select: '_id funcName funcLink',
+                    model: 'func'
+                }
             }
-            return res.json(roles);
-        });
+            )
+            .exec(function (err, roles) {
+                if (err) {
+                    return res.status(500).json({
+                        message: 'Error when getting role.',
+                        error: err
+                    });
+                }
+                return res.json(roles);
+            })
+
     },
 
     /**
@@ -27,27 +42,38 @@ module.exports = {
      */
     show: function (req, res) {
         var id = req.params.id;
-        roleModel.findOne({_id: id}, function (err, role) {
-            if (err) {
-                return res.status(500).json({
-                    message: 'Error when getting role.',
-                    error: err
-                });
+        roleModel
+            .find({_id:id})
+            .populate({
+                path: 'menuList',//字段
+                select: '_id menuName funcList',
+                model: 'menu',//字段对应的model
+                //下面这个是在上面path、select、model基础上的，上面返回的是{menuName,funcList},下面的对该返回对象进行populate
+                populate: {
+                    path: 'funcList',
+                    select: '_id funcName funcLink',
+                    model: 'func'
+                }
             }
-            if (!role) {
-                return res.status(404).json({
-                    message: 'No such role'
-                });
-            }
-            return res.json(role);
-        });
+            )
+            .exec(function (err, roles) {
+                if (err) {
+                    return res.status(500).json({
+                        message: 'Error when getting role.',
+                        error: err
+                    });
+                }
+                return res.json(roles);
+            })
     },
 
     /**
      * roleController.create()
      */
     create: function (req, res) {
-        var role = new roleModel({			roleName : req.body.roleName,			menuList : req.body.menuList
+        var role = new roleModel({
+            roleName: req.body.roleName,
+            menuList: req.body.menuList
         });
 
         role.save(function (err, role) {
@@ -66,7 +92,7 @@ module.exports = {
      */
     update: function (req, res) {
         var id = req.params.id;
-        roleModel.findOne({_id: id}, function (err, role) {
+        roleModel.findOne({ _id: id }, function (err, role) {
             if (err) {
                 return res.status(500).json({
                     message: 'Error when getting role',
@@ -79,7 +105,9 @@ module.exports = {
                 });
             }
 
-            role.roleName = req.body.roleName ? req.body.roleName : role.roleName;			role.menuList = req.body.menuList ? req.body.menuList : role.menuList;			
+            role.roleName = req.body.roleName ? req.body.roleName : role.roleName;
+            role.menuList = req.body.menuList ? req.body.menuList : role.menuList;
+
             role.save(function (err, role) {
                 if (err) {
                     return res.status(500).json({

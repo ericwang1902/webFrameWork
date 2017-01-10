@@ -11,15 +11,33 @@ module.exports = {
      * userController.list()
      */
     list: function (req, res) {
-        userModel.find(function (err, users) {
-            if (err) {
-                return res.status(500).json({
-                    message: 'Error when getting user.',
-                    error: err
-                });
-            }
-            return res.json(users);
-        });
+        userModel
+            .find()
+            .populate({
+                path: "role",
+                selcet: "_id roleName menuList",
+                model: "role",
+                populate: {
+                    path: "menuList",
+                    select: "_id menuName funcList",
+                    model: "menu",
+                    populate: {
+                        path: "funcList",
+                        select: "_id funcName funcLink",
+                        model: "func"
+                    }
+
+                }
+            })
+            .exec(function (err, users) {
+                if (err) {
+                    return res.status(500).json({
+                        message: 'Error when getting user.',
+                        error: err
+                    });
+                }
+                return res.json(users);
+            })
     },
 
     /**
@@ -27,27 +45,45 @@ module.exports = {
      */
     show: function (req, res) {
         var id = req.params.id;
-        userModel.findOne({_id: id}, function (err, user) {
-            if (err) {
-                return res.status(500).json({
-                    message: 'Error when getting user.',
-                    error: err
-                });
-            }
-            if (!user) {
-                return res.status(404).json({
-                    message: 'No such user'
-                });
-            }
-            return res.json(user);
-        });
+        userModel
+            .find({ _id: id })
+            .populate({
+                path: "role",
+                selcet: "_id roleName menuList",
+                model: "role",
+                populate: {
+                    path: "menuList",
+                    select: "_id menuName funcList",
+                    model: "menu",
+                    populate: {
+                        path: "funcList",
+                        select: "_id funcName funcLink",
+                        model: "func"
+                    }
+
+                }
+            })
+            .exec(function (err, users) {
+                if (err) {
+                    return res.status(500).json({
+                        message: 'Error when getting user.',
+                        error: err
+                    });
+                }
+                return res.json(users);
+            })
     },
 
     /**
      * userController.create()
      */
     create: function (req, res) {
-        var user = new userModel({			username : req.body.username,			mobile : req.body.mobile,			password : req.body.password,			openid : req.body.openid,			role : req.body.role
+        var user = new userModel({
+            username: req.body.username,
+            mobile: req.body.mobile,
+            password: req.body.password,
+            openid: req.body.openid,
+            role: req.body.role
         });
 
         user.save(function (err, user) {
@@ -66,7 +102,7 @@ module.exports = {
      */
     update: function (req, res) {
         var id = req.params.id;
-        userModel.findOne({_id: id}, function (err, user) {
+        userModel.findOne({ _id: id }, function (err, user) {
             if (err) {
                 return res.status(500).json({
                     message: 'Error when getting user',
@@ -79,7 +115,12 @@ module.exports = {
                 });
             }
 
-            user.username = req.body.username ? req.body.username : user.username;			user.mobile = req.body.mobile ? req.body.mobile : user.mobile;			user.password = req.body.password ? req.body.password : user.password;			user.openid = req.body.openid ? req.body.openid : user.openid;			user.role = req.body.role ? req.body.role : user.role;			
+            user.username = req.body.username ? req.body.username : user.username;
+            user.mobile = req.body.mobile ? req.body.mobile : user.mobile;
+            user.password = req.body.password ? req.body.password : user.password;
+            user.openid = req.body.openid ? req.body.openid : user.openid;
+            user.role = req.body.role ? req.body.role : user.role;
+
             user.save(function (err, user) {
                 if (err) {
                     return res.status(500).json({
