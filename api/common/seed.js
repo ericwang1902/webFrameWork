@@ -2,6 +2,10 @@ var mongoose = require('mongoose');
 
 var async = require('async');
 
+var bcrypt = require('bcryptjs');//数据加密
+var salt = bcrypt.genSaltSync(10);
+
+
 var funcModel = require('../sysmanage/func/funcModel');
 var menuModel = require('../sysmanage/menu/menuModel');
 var roleModel = require('../sysmanage/role/roleModel');
@@ -11,7 +15,7 @@ var constants = require('../frameConfig/constants');
 
 //用户
 var UserData = {
-    userName: "sysadmin",
+    userName: "18501609618",
     mobile: "18501609618",
     password: "qwe123",
     openid: "",
@@ -112,38 +116,35 @@ var initData = function () {
                             }, function (err) {
                                 //-----------------------------------------------rolecreate
                                 if (err) console.log(err.message);
+
                                 var roleInstance = new roleModel(
                                     {
                                         roleName: constants.role.admin,
                                         menuList: menulisttemp
                                     }
                                 )
-
                                 roleInstance.save(function (err, roleSaveResult) {
                                     if (err) console.log(err)
                                     if (roleSaveResult) {
                                         console.log(constants.role.admin + "角色创建成功！")
                                         var userInstance = new userModel({
-                                            userName: UserData.userName,
+                                            username: UserData.userName,
                                             mobile: UserData.mobile,
-                                            password: UserData.password,
-                                            openid:UserData.openid,
-                                            role:roleSaveResult._id
+                                            password: bcrypt.hashSync(UserData.password, salt),
+                                            openid: UserData.openid,
+                                            role: roleSaveResult._id
 
                                         })
 
-                                        userInstance.save(function(err,userSaveResult){
-                                            if(err) console.log(err);
+                                        userInstance.save(function (err, userSaveResult) {
+                                            if (err) console.log(err);
 
-                                            if(userSaveResult){
-                                                console.log(userSaveResult.userName+ "用户创建成功！")
+                                            if (userSaveResult) {
+                                                console.log(userSaveResult.username + "用户创建成功！")
                                             }
                                         })
                                     }
                                 })
-
-
-
 
 
                             })
@@ -151,6 +152,8 @@ var initData = function () {
 
                         }
                     })
+
+
             }
         })
 
