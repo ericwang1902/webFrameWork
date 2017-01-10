@@ -47,6 +47,19 @@ var UserData = {
                         funcLink: "/role/modifyrole"
                     }
                 ]
+            },
+            {
+                menuName: "系统设置",
+                funcList: [
+                    {
+                        funcName: "系统设置1",
+                        funcLink: "/role/addrole"
+                    },
+                    {
+                        funcName: "系统设置2",
+                        funcLink: "/role/modifyrole"
+                    }
+                ]
             }
         ]//菜单列表
     }
