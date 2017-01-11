@@ -27,7 +27,7 @@ var UserData = {
                 funcList: [
                     {
                         funcName: "添加角色",
-                        funcLink: "/role/addrole"
+                        funcLink: "/dashboard/role/addrole"
                     },
                     {
                         funcName: "修改角色",

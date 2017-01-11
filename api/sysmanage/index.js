@@ -30,7 +30,8 @@ router.use('/user', userRouter);
 
 //**********************************测试区***************************
 //自定义回调函数
-router.post('/login', passportAuth, function (req, res, next) {
+router.post('/login',passportAuth, function (req, res, next) {
+    console.log(req)
     console.log('success!')
     return res.json({
         state: 200,
