@@ -23,41 +23,15 @@ var UserData = {
         roleName: constants.role.admin,//管理员角色
         menuList: [
             {
-                menuName: "角色管理",
+                menuName: "菜单管理",
                 funcList: [
                     {
-                        funcName: "添加角色",
-                        funcLink: "/dashboard/role/addrole"
+                        funcName: "添加菜单",
+                        funcLink: "/dashboard/menu/addmenu"
                     },
                     {
-                        funcName: "修改角色",
-                        funcLink: "/role/modifyrole"
-                    }
-                ]
-            },
-            {
-                menuName: "功能管理",
-                funcList: [
-                    {
-                        funcName: "添加功能",
-                        funcLink: "/role/addrole"
-                    },
-                    {
-                        funcName: "修改功能",
-                        funcLink: "/role/modifyrole"
-                    }
-                ]
-            },
-            {
-                menuName: "系统设置",
-                funcList: [
-                    {
-                        funcName: "系统设置1",
-                        funcLink: "/role/addrole"
-                    },
-                    {
-                        funcName: "系统设置2",
-                        funcLink: "/role/modifyrole"
+                        funcName: "修改菜单",
+                        funcLink: "/dashboard/menu/modifymenu"
                     }
                 ]
             }
@@ -101,7 +75,7 @@ var initData = function () {
                                                                 if (err) console.log(err);
                                                                 if (funcSaveResult) {
                                                                     funclistTemp.push(funcSaveResult._id);
-                                                                    console.log(itemfuncValue.funcName + "功能创建成功！")
+                                                                    console.log("功能:["+itemfuncValue.funcName+"]" + "创建成功！")
                                                                     callback1();
                                                                 }
                                                             })
@@ -117,7 +91,7 @@ var initData = function () {
                                                     if (err) console.log(err);
                                                     if (menuSaveResult) {
                                                         menulisttemp.push(menuSaveResult._id);
-                                                        console.log(itemmenuValue.menuName + "菜单创建成功！")
+                                                        console.log("菜单:["+itemmenuValue.menuName+"]" + "创建成功！")
                                                         callback();
                                                     }
                                                 })
@@ -139,7 +113,7 @@ var initData = function () {
                                 roleInstance.save(function (err, roleSaveResult) {
                                     if (err) console.log(err)
                                     if (roleSaveResult) {
-                                        console.log(constants.role.admin + "角色创建成功！")
+                                        console.log("角色:["+constants.role.admin+"]" + "创建成功！")
                                         var userInstance = new userModel({
                                             username: UserData.userName,
                                             mobile: UserData.mobile,
@@ -153,7 +127,7 @@ var initData = function () {
                                             if (err) console.log(err);
 
                                             if (userSaveResult) {
-                                                console.log(userSaveResult.username + "用户创建成功！")
+                                                console.log("用户:["+userSaveResult.username +"]"+ "创建成功！")
                                             }
                                         })
                                     }

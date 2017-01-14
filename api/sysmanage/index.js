@@ -28,7 +28,7 @@ router.use('/user', userRouter);
 
 
 
-//**********************************测试区***************************
+//*********************************登录区***************************
 //自定义回调函数
 router.post('/login',passportAuth, function (req, res, next) {
     console.log(req)
@@ -50,6 +50,16 @@ router.get('/login', passportAuth, function (req, res, next) {
         info: "info"
     })
 });
+
+//登出
+router.post('/logout',passportAuth,function(req,res,next){
+    req.logout();
+    return res.json({
+        state: 200,
+        authresult: false,
+        info: "成功登出"
+    })
+})
 
 //passport登录中间件
 function passportAuth(req, res, next) {
