@@ -23,15 +23,15 @@ var UserData = {
         roleName: constants.role.admin,//管理员角色
         menuList: [
             {
-                menuName: "菜单管理",
+                menuName: "系统设置",
                 funcList: [
                     {
-                        funcName: "添加菜单",
-                        funcLink: "/dashboard/menu/addmenu"
+                        funcName: "菜单管理",
+                        funcLink: "/dashboard/menu"
                     },
                     {
-                        funcName: "修改菜单",
-                        funcLink: "/dashboard/menu/modifymenu"
+                        funcName: "角色管理",
+                        funcLink: "/dashboard/role"
                     }
                 ]
             }

@@ -56,10 +56,19 @@ module.exports = {
      * 创建菜单
      */
     create: function (req, res) {
+        
+        var menuInstance = req.body;
+        var funcListTemp = [];
+
+        for(var i=0;i<menuInstance.funcSelection.length;i++){
+            funcListTemp.push(menuInstance.funcSelection[i]._id)
+        }
+
         var menu = new menuModel({
-            menuName: req.body.menuName,
-            funcList: req.body.funcList//这是func的objectId的array
+            menuName: menuInstance.menuName,
+            funcList: funcListTemp//这是func的objectId的array
         });
+        console.log(JSON.stringify(funcListTemp))
 
         menu.save(function (err, menu) {
             if (err) {
