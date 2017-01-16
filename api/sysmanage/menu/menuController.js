@@ -1,4 +1,5 @@
 var menuModel = require('./menuModel.js');
+var async = require('async')
 
 /**
  * menuController.js
@@ -11,18 +12,45 @@ module.exports = {
      * 查看所有菜单列表
      */
     list: function (req, res) {
-        menuModel
-            .find()
-            .populate("funcList")
-            .exec(function (err, menus) {
-                if (err) {
-                    return res.status(500).json({
-                        message: 'Error when getting menu.',
-                        error: err
+        console.log(req.query)
+        var pageItems = Number(req.query.pageItems) ;
+        var currentPage =Number(req.query.currentPage);
+
+        async.series([
+            function (callback) {
+                //获取总条数
+                menuModel.count({}, function (err, count) {
+                    if (err) console.log(err);
+                    callback(null, count);
+                })
+            },
+            function (callback) {
+                menuModel
+                    .find()
+                    .populate('funcList')
+                    .skip((currentPage - 1) * pageItems)
+                    .limit(pageItems)
+                    .exec(function (err, menus) {
+                        if (err) console.log(err);
+
+                        callback(null, menus);
                     })
-                }
-                return res.json(menus);
-            });
+            }
+
+        ], function (err, results) {
+          //  callback2(null, results[0], results[1]);
+          var menuResult ={
+              count:results[0],
+              menus:results[1]
+          }
+            if (err) {
+                return res.status(500).json({
+                    message: 'Error when getting menu.',
+                    error: err
+                })
+            }
+            return res.json(menuResult);
+        })
     },
 
     /**
@@ -56,11 +84,11 @@ module.exports = {
      * 创建菜单
      */
     create: function (req, res) {
-        
+
         var menuInstance = req.body;
         var funcListTemp = [];
 
-        for(var i=0;i<menuInstance.funcSelection.length;i++){
+        for (var i = 0; i < menuInstance.funcSelection.length; i++) {
             funcListTemp.push(menuInstance.funcSelection[i]._id)
         }
 
