@@ -20,18 +20,26 @@ var UserData = {
     password: "qwe123",
     openid: "",
     role: {
+        roleDes:"系统管理员职责",
         roleName: constants.role.admin,//管理员角色
         menuList: [
             {
                 menuName: "系统设置",
                 funcList: [
                     {
+                        funcNum:"1",
                         funcName: "菜单管理",
                         funcLink: "/dashboard/menu"
                     },
                     {
+                        funcNum:"2",
                         funcName: "角色管理",
                         funcLink: "/dashboard/role"
+                    },
+                    {
+                        funcNum:"3",
+                        funcName:"用户管理",
+                        funcLink:"/dashboard/user"
                     }
                 ]
             }
@@ -106,6 +114,7 @@ var initData = function () {
 
                                 var roleInstance = new roleModel(
                                     {
+                                        roleDes:"系统管理员职责",
                                         roleName: constants.role.admin,
                                         menuList: menulisttemp
                                     }

@@ -31,11 +31,12 @@ router.use('/user', userRouter);
 //*********************************登录区***************************
 //自定义回调函数
 router.post('/login',passportAuth, function (req, res, next) {
-    console.log(req)
+    console.log(req.user)//登录验证后，用户的信息会在req.user里
     console.log('success!')
     return res.json({
         state: 200,
         authresult: true,
+        userId:req.user._id,
         info: "info"
     })
 });

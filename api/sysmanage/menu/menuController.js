@@ -1,5 +1,6 @@
 var menuModel = require('./menuModel.js');
 var async = require('async')
+var mongoose = require('mongoose')
 
 /**
  * menuController.js
@@ -114,8 +115,17 @@ module.exports = {
      */
     update: function (req, res) {
         var id = req.params.id;
+         
+         var funcselection = req.body.funcSelection;
+         var funclist =[];
+         for(var i=0;i<funcselection.length;i++){
+             funclist.push(funcselection[i]._id);
+         }
+
+
         menuModel.findOne({ _id: id }, function (err, menu) {
             if (err) {
+                console.log(err)
                 return res.status(500).json({
                     message: 'Error when getting menu',
                     error: err
@@ -127,8 +137,9 @@ module.exports = {
                 });
             }
 
-            menu.menuName = req.body.menuName ? req.body.menuName : menu.menuName;
-            menu.funcList = req.body.funcList ? req.body.funcList : menu.funcList;
+             menu.menuName = req.body.menuName ? req.body.menuName : menu.menuName;
+             menu.funcList = funclist ? funclist : menu.funcList;
+            
 
             menu.save(function (err, menu) {
                 if (err) {

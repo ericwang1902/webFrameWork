@@ -1,11 +1,12 @@
 var mongoose = require('mongoose');
-var Schema   = mongoose.Schema;
+var Schema = mongoose.Schema;
 
 var roleSchema = new Schema({
-	'roleName' : String,
-	'menuList' : [{
-	 	type: Schema.Types.ObjectId,
-	 	ref: 'menu'
+	'roleName': String,
+	'roleDes': String,
+	'menuList': [{
+		type: Schema.Types.ObjectId,
+		ref: 'menu'
 	}]//menu对象的list
 });
 

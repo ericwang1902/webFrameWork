@@ -20,7 +20,8 @@ module.exports = {
                 //下面这个是在上面path、select、model基础上的，上面返回的是{menuName,funcList},下面的对该返回对象进行populate
                 populate: {
                     path: 'funcList',
-                    select: '_id funcName funcLink',
+                    select: '_id funcNum funcName funcLink',
+                    options: { sort: {funcNum:1} },
                     model: 'func'
                 }
             }
@@ -43,7 +44,7 @@ module.exports = {
     show: function (req, res) {
         var id = req.params.id;
         roleModel
-            .find({_id:id})
+            .find({ _id: id })
             .populate({
                 path: 'menuList',//字段
                 select: '_id menuName funcList',
@@ -73,6 +74,7 @@ module.exports = {
     create: function (req, res) {
         var role = new roleModel({
             roleName: req.body.roleName,
+            roleDes: req.body.roleDes,
             menuList: req.body.menuList
         });
 
@@ -105,6 +107,7 @@ module.exports = {
                 });
             }
 
+            role.roleDes = req.body.roleDes ? req.body.roleDes : role.roleDes
             role.roleName = req.body.roleName ? req.body.roleName : role.roleName;
             role.menuList = req.body.menuList ? req.body.menuList : role.menuList;
 

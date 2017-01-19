@@ -46,31 +46,33 @@ module.exports = {
     show: function (req, res) {
         var id = req.params.id;
         userModel
-            .find({ _id: id })
+            .findOne({ _id: id })
             .populate({
-                path: "role",
+                path: "role",//usermodel里的属性名
                 selcet: "_id roleName menuList",
-                model: "role",
+                model: "role",//path对应的model名
                 populate: {
                     path: "menuList",
                     select: "_id menuName funcList",
                     model: "menu",
                     populate: {
                         path: "funcList",
-                        select: "_id funcName funcLink",
+                        select: "_id funcNum funcName funcLink",
+                        options: { sort: {funcNum:1} },
                         model: "func"
                     }
 
                 }
             })
-            .exec(function (err, users) {
+            .exec(function (err, user) {
                 if (err) {
                     return res.status(500).json({
                         message: 'Error when getting user.',
                         error: err
                     });
                 }
-                return res.json(users);
+                console.log(JSON.stringify(user))
+                return res.json(user);
             })
     },
 
