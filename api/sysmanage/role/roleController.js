@@ -21,7 +21,7 @@ module.exports = {
                 populate: {
                     path: 'funcList',
                     select: '_id funcNum funcName funcLink',
-                    options: { sort: {funcNum:1} },
+                    options: { sort: { funcNum: 1 } },
                     model: 'func'
                 }
             }
@@ -72,11 +72,20 @@ module.exports = {
      * roleController.create()
      */
     create: function (req, res) {
+        console.log(req.body)
+
+        var roleInstance = req.body;
+        var menuListTemp = [];
+
+        for (var i = 0; i < roleInstance.menuSelection.length; i++) {
+            menuListTemp.push(roleInstance.menuSelection[i].menuId);
+        }
+
         var role = new roleModel({
-            roleName: req.body.roleName,
-            roleDes: req.body.roleDes,
-            menuList: req.body.menuList
-        });
+            roleName:roleInstance.roleName,
+            roleDes:roleInstance.roleDes,
+            menuList:menuListTemp
+        })
 
         role.save(function (err, role) {
             if (err) {
@@ -94,6 +103,19 @@ module.exports = {
      */
     update: function (req, res) {
         var id = req.params.id;
+        console.log(req.body)
+
+        var menuselection = req.body.menuSelection;
+
+        var roleName=req.body.roleName;
+        var roleDes = req.body.roleDes;
+        var menuList = [];
+        for(var i=0;i<menuselection.length;i++){
+            menuList.push(menuselection[i].menuId)
+        }
+
+
+
         roleModel.findOne({ _id: id }, function (err, role) {
             if (err) {
                 return res.status(500).json({
@@ -107,9 +129,9 @@ module.exports = {
                 });
             }
 
-            role.roleDes = req.body.roleDes ? req.body.roleDes : role.roleDes
-            role.roleName = req.body.roleName ? req.body.roleName : role.roleName;
-            role.menuList = req.body.menuList ? req.body.menuList : role.menuList;
+            role.roleDes = roleDes ? roleDes : role.roleDes
+            role.roleName = roleName ? roleName : role.roleName;
+            role.menuList = menuList ? menuList : role.menuList;
 
             role.save(function (err, role) {
                 if (err) {
