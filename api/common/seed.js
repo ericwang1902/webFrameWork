@@ -6,6 +6,7 @@ var bcrypt = require('bcryptjs');//数据加密
 var salt = bcrypt.genSaltSync(10);
 
 
+
 var funcModel = require('../sysmanage/func/funcModel');
 var menuModel = require('../sysmanage/menu/menuModel');
 var roleModel = require('../sysmanage/role/roleModel');
