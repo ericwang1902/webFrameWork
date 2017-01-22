@@ -43,6 +43,16 @@ var UserData = {
                         funcLink:"/dashboard/user"
                     }
                 ]
+            },
+            {
+                menuName: "业务设置",
+                funcList: [
+                    {
+                        funcNum:"1",
+                        funcName: "供应商管理",
+                        funcLink: "/dashboard/supplier/supplierlist"
+                    }
+                ]
             }
         ]//菜单列表
     }
