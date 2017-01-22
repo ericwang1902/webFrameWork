@@ -1,5 +1,6 @@
 var userModel = require('./userModel.js');
-
+var bcrypt = require('bcryptjs');//数据加密
+var salt = bcrypt.genSaltSync(10);
 /**
  * userController.js
  *
@@ -80,12 +81,21 @@ module.exports = {
      * userController.create()
      */
     create: function (req, res) {
+        var userInstance = req.body;
+        var roleListTemp = [];
+
+        for(var i =0;i<userInstance.roleSelection.length;i++){
+            roleListTemp.push(userInstance.roleSelection[i]._id);
+        }
+
+
+
         var user = new userModel({
-            username: req.body.username,
-            mobile: req.body.mobile,
-            password: req.body.password,
-            openid: req.body.openid,
-            role: req.body.role
+            username: userInstance.userName,
+            mobile: userInstance.userName,
+            password: bcrypt.hashSync(userInstance.passWord, salt),
+            openid: "",
+            role: roleListTemp
         });
 
         user.save(function (err, user) {
@@ -103,7 +113,23 @@ module.exports = {
      * userController.update()
      */
     update: function (req, res) {
+
+        console.log(req.params.id)
+        console.log(req.body);
+
         var id = req.params.id;
+
+        var roleSelection = req.body.roleSelection ? req.body.roleSelection: [];
+        var roleList =[];
+        if(roleSelection.length!=0){
+            for(var i=0;i<roleSelection.length;i++){
+                roleList.push(roleSelection[i]._id);
+            }
+        }else{
+            roleList=null;
+        }
+        
+
         userModel.findOne({ _id: id }, function (err, user) {
             if (err) {
                 return res.status(500).json({
@@ -117,11 +143,11 @@ module.exports = {
                 });
             }
 
-            user.username = req.body.username ? req.body.username : user.username;
-            user.mobile = req.body.mobile ? req.body.mobile : user.mobile;
-            user.password = req.body.password ? req.body.password : user.password;
+            user.username = req.body.userName ? req.body.userName : user.username;
+            user.mobile = req.body.userName ? req.body.userName : user.mobile;
+            user.password =  req.body.passWord ? bcrypt.hashSync(req.body.passWord) : user.password;
             user.openid = req.body.openid ? req.body.openid : user.openid;
-            user.role = req.body.role ? req.body.role : user.role;
+            user.role = roleList ? roleList : user.role;
 
             user.save(function (err, user) {
                 if (err) {
