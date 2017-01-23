@@ -7,6 +7,7 @@ var funcRouter = require('./func/funcRoutes');
 var menuRouter = require('./menu/menuRoutes');
 var roleRouter = require('./role/roleRoutes');
 var userRouter = require('./user/userRoutes');
+var supplierRouter = require('./supplier/supplierRoutes')
 
 //only function router
 //sysmanage/function
@@ -23,6 +24,9 @@ router.use('/role', roleRouter);
 //user router
 //sysmanage/user
 router.use('/user', userRouter);
+//supplier router
+//sysmanage/supplier
+router.use('/supplier',supplierRouter);
 
 
 
