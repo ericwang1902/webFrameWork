@@ -49,7 +49,7 @@ var UserData = {
                 funcList: [
                     {
                         funcNum:"1",
-                        funcName: "供应商管理",
+                        funcName: "供应商列表",
                         funcLink: "/dashboard/supplier/supplierlist"
                     }
                 ]
