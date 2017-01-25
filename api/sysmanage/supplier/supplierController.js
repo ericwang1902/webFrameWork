@@ -15,7 +15,8 @@ module.exports = {
             .populate('supplieruser')
             .populate({
                 path:'workers',
-                select:''
+                select:'_id username nickname',
+                model:'user'
             })
             .exec(function (err, supplierusers) {
                 if (err) {
