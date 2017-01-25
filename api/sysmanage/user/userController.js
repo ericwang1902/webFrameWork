@@ -93,6 +93,7 @@ module.exports = {
         var user = new userModel({
             username: userInstance.userName,
             mobile: userInstance.userName,
+            nickname:userInstance.nickName,
             password: bcrypt.hashSync(userInstance.passWord, salt),
             openid: "",
             role: roleListTemp
@@ -145,6 +146,7 @@ module.exports = {
 
             user.username = req.body.userName ? req.body.userName : user.username;
             user.mobile = req.body.userName ? req.body.userName : user.mobile;
+            user.nickname = req.body.nickname ? req.body.nickname :user.nickname;
             user.password =  req.body.passWord ? bcrypt.hashSync(req.body.passWord) : user.password;
             user.openid = req.body.openid ? req.body.openid : user.openid;
             user.role = roleList ? roleList : user.role;

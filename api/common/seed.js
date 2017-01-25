@@ -18,6 +18,7 @@ var constants = require('../frameConfig/constants');
 var UserData = {
     userName: "18501609618",
     mobile: "18501609618",
+    nickname:"管理员",
     password: "qwe123",
     openid: "",
     role: {
@@ -136,6 +137,7 @@ var initData = function () {
                                         console.log("角色:["+constants.role.admin+"]" + "创建成功！")
                                         var userInstance = new userModel({
                                             username: UserData.userName,
+                                            nickname:UserData.nickname,
                                             mobile: UserData.mobile,
                                             password: bcrypt.hashSync(UserData.password, salt),
                                             openid: UserData.openid,

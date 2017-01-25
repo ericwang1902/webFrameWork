@@ -13,6 +13,10 @@ module.exports = {
     list: function (req, res) {
         supplierModel.find()
             .populate('supplieruser')
+            .populate({
+                path:'workers',
+                select:''
+            })
             .exec(function (err, supplierusers) {
                 if (err) {
                     return res.status(500).json({
