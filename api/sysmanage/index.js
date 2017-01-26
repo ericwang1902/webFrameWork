@@ -8,6 +8,7 @@ var menuRouter = require('./menu/menuRoutes');
 var roleRouter = require('./role/roleRoutes');
 var userRouter = require('./user/userRoutes');
 var supplierRouter = require('./supplier/supplierRoutes')
+var goodsRouter = require('./goods/goodsRoutes')
 
 //only function router
 //sysmanage/function
@@ -28,6 +29,10 @@ router.use('/user', userRouter);
 //sysmanage/supplier
 router.use('/supplier',supplierRouter);
 
+//goods router
+//sysmanage/goods
+router.use('/goods',goodsRouter);
+
 
 
 
@@ -35,6 +40,7 @@ router.use('/supplier',supplierRouter);
 //*********************************登录区***************************
 //自定义回调函数
 router.post('/login',passportAuth, function (req, res, next) {
+    req.session.seesionUserId = req.user._id;
     console.log(req.user)//登录验证后，用户的信息会在req.user里
     console.log('success!')
     return res.json({
