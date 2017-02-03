@@ -7,7 +7,11 @@ var Config = require('../frameConfig/frameConfig')
 
 module.exports = {
     createconnection: function () {
-       mongoose.connect('mongodb://localhost/' + Config.databaseName);
+        var options = {
+            user: 'ericwang1903',
+            pass: 'qwer12345'
+        }
+        mongoose.connect('mongodb://localhost/' + Config.databaseName,options);
     },
     getconnection: function () {
         return mongoose.connection;
