@@ -80,7 +80,9 @@ module.exports = {
      * goodsController.update()
      */
     update: function (req, res) {
+        
         var id = req.params.id;
+        console.log(req.body);
         goodsModel.findOne({ _id: id }, function (err, goods) {
             if (err) {
                 return res.status(500).json({

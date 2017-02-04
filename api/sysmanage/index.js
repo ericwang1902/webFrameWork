@@ -8,7 +8,8 @@ var menuRouter = require('./menu/menuRoutes');
 var roleRouter = require('./role/roleRoutes');
 var userRouter = require('./user/userRoutes');
 var supplierRouter = require('./supplier/supplierRoutes')
-var goodsRouter = require('./goods/goodsRoutes')
+var goodsRouter = require('./goods/goodsRoutes');
+var suiteRouter = require('./suite/suiteRoutes');
 
 //only function router
 //sysmanage/function
@@ -32,6 +33,10 @@ router.use('/supplier',supplierRouter);
 //goods router
 //sysmanage/goods
 router.use('/goods',goodsRouter);
+
+//suite router
+//sysmanage/suite
+router.use('/suite',suiteRouter);
 
 
 

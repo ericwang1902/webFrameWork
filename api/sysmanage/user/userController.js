@@ -16,7 +16,7 @@ module.exports = {
             .find()
             .populate({
                 path: "role",
-                selcet: "_id roleName menuList",
+                select: "_id roleName menuList",
                 model: "role",
                 populate: {
                     path: "menuList",
