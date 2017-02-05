@@ -57,6 +57,11 @@ var UserData = {
                         funcNum:"2",
                         funcName:"商品管理",
                         funcLink:"/dashboard/goods"
+                    },
+                    {
+                        funcNum:"3",
+                        funcName:"套餐管理",
+                        funcLink:"/dashboard/suite"
                     }
                 ]
             }
