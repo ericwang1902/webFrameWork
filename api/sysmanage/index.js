@@ -11,6 +11,8 @@ var supplierRouter = require('./supplier/supplierRoutes')
 var goodsRouter = require('./goods/goodsRoutes');
 var suiteRouter = require('./suite/suiteRoutes');
 
+var qiniuToken = require('../common/qiniu')
+
 //only function router
 //sysmanage/function
 router.use('/func', funcRouter);
@@ -37,6 +39,9 @@ router.use('/goods',goodsRouter);
 //suite router
 //sysmanage/suite
 router.use('/suite',suiteRouter);
+
+//图片上传uploadtoken
+router.get('/qiniu',qiniuToken.getToken);
 
 
 
