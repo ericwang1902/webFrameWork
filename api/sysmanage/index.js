@@ -43,6 +43,15 @@ router.use('/suite',suiteRouter);
 //图片上传uploadtoken
 router.get('/qiniu',qiniuToken.getToken);
 
+router.post('/test',function(req,res){
+    console.log(req.body)
+    console.log(req.params)
+    console.log(req.query)
+    return res.json({
+        req:"req"
+    })
+})
+
 
 
 
