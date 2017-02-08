@@ -8,12 +8,12 @@ var client = new OAuth(config.wechatConfig.appid,config.wechatConfig.appsecret);
 
 
 /* GET home page. */
-router.get('/', function(req, res, next) {
-    var url = client.getAuthorizeURL('http://' + 'aft.robustudio.com' + '/mobile/index', 'aft', 'snsapi_userinfo');
+router.get('/index', function(req, res, next) {
+    var url = client.getAuthorizeURL('http://' + 'aft.robustudio.com' + '/mobile/home', 'aft', 'snsapi_userinfo');
     res.redirect(url);
 });
 
-router.get('/index',getopenid, function(req, res, next) {
+router.get('/home',getopenid, function(req, res, next) {
      return res.send("sdf")
 });
 
