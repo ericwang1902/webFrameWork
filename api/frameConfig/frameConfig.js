@@ -4,5 +4,10 @@ module.exports={
     //数据库名称
     databaseName:"frameworkDatabase",
     //session的secret
-    sessionSecret:"frameworkSecret"
+    sessionSecret:"frameworkSecret",
+    //微信appid和appsecret
+    wechatConfig:{
+        appid:"wx94e3a09e4149b262",
+        appsecret:"2301f292e2765b44890dba2f845c6f3a"
+    }
 }

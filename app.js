@@ -10,10 +10,10 @@ var Config = require('./api/frameConfig/frameConfig');
 
 
 // routers
-var index = require('./routes/index');
-var users = require('./routes/users');
+var mobileRouter = require('./api/mobile');
 var sysmanage = require('./api/sysmanage')
 var app = express();
+
 
 //数据库连接工具类
 var dbutils = require('./api/common/dbutils');
@@ -119,10 +119,9 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use('/', index);
+app.use('/mobile', mobileRouter);
 app.use('/sysmanage', sysmanage);
 
-app.use('/users', users);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
