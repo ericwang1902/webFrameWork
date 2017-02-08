@@ -118,7 +118,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
-
+//http://localhost:8085/MP_verify_fA2T6ARFofWXJQ9b.txt 即可访问
 app.use('/mobile', mobileRouter);
 app.use('/sysmanage', sysmanage);
 
