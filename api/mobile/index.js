@@ -35,4 +35,5 @@ function getopenid(req, res, next) {
     });
 }
 
+
 module.exports = router;
