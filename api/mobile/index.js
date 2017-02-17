@@ -23,14 +23,12 @@ router.get('/index', function (req, res, next) {
 router.get('/home', getopenid, createFans, createMenu, function (req, res, next) {
     console.log(JSON.stringify(req.fanSaveResult))
     console.log("access_token:" + JSON.stringify(req.session.access_token))
-    console.log('test:'+req.session.test);
     res.send("homepage")
 });
 
 //第三方库获取openid和access_token
 function getopenid(req, res, next) {
     //如果session中的access_token已经过期
-    req.session.test="test";
     console.log("session中是否有access_token:"+req.session.access_token);
     if (!req.session.access_token) {
         client.getAccessToken(req.query.code, function (err, result) {
@@ -100,9 +98,9 @@ function createMenu(req, res, next) {
     }
     request(menuOptions, function (err, response, body) {
         console.log('createmenu URL:' + menuOptions.url)
-        console.log('createMenu:' + JSON.stringify(body));
         if (body.errcode == '40001') {
-
+            console.log("创建菜单出错："+JSON.stringify(body))
+            return next();
         }
         return next();
     })
