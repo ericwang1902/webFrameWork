@@ -31,7 +31,7 @@ app.use(session({
   store: new MongoStore(
     {
       mongooseConnection: mongoose.connection,
-      ttl: 14*24*60*60
+      ttl: 2*60*60
     }),
   resave: false,
   saveUninitialized: true
