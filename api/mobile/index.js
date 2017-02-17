@@ -105,7 +105,7 @@ function createMenu(req, res, next) {
 
 //refresh_token
 function refreshToken(req,res,next){
-    client.refreshAccessToken(req.refresh_token, function(err,result){
+    client.refreshAccessToken(req.session.refresh_token, function(err,result){
         console.log('refreshtoken:'+JSON.stringify(result));
     });
 }
