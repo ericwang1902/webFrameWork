@@ -65,6 +65,7 @@ function createFans(req, res, next) {
             })
         }
         //如果该粉丝数据已经创建
+        req.fanSaveResult = fanresult;
         return next();
 
     })
