@@ -94,7 +94,7 @@ function createMenu(req, res, next) {
     }
     request(menuOptions,function(err,response,body){
         console.log('createmenu URL:'+menuOptions.url)
-        console.log('createMenu:'+body);
+        console.log('createMenu:'+JSON.stringify(body));
         return next();
     })
 
