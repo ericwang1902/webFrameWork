@@ -39,9 +39,9 @@ function createMenu() {
 
 //创建用户标签
 function createTag(tagName){
-    console.log("tag url:"+config.wechatTagURL + req.session.access_token)
+    console.log("tag url:"+config.wechatTagURL + config.apiToken)
     var groupOptions = {
-        url: config.wechatTagURL + req.session.access_token,
+        url: config.wechatTagURL + config.apiToken,
         method: 'POST',
         json: true,
         body: {       
