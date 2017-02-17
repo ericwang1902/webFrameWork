@@ -8,9 +8,10 @@ function getApiToken(){
         url: config.wechatTokenURL,
         method: 'GET'
     }
+    //body返回的是string
     request(tokenOptions, function (err, response, body) {
         console.log('tokenOptions:' + JSON.stringify(body))
-        config.apiToken = body.access_token;
+        config.apiToken = JSON.parse(body).access_token;
         console.log('config.apiToken:' + JSON.parse(body).access_token)
         createTag("fans");//粉丝分组
         createTag("shopowner");//店主
