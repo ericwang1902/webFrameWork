@@ -27,10 +27,11 @@ mongoose.Promise = require('bluebird');
 
 app.use(session({
   secret: Config.sessionSecret,
+  cookie: {maxAge: 3600 },
   store: new MongoStore(
     {
       mongooseConnection: mongoose.connection,
-      ttl: 3600
+      ttl: 14*24*60*60
     }),
   resave: false,
   saveUninitialized: true
