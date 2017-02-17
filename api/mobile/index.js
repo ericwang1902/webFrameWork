@@ -49,6 +49,8 @@ function getopenid(req, res, next) {
 
             return next();
         });
+    }else{
+        return next();
     }
 
 
