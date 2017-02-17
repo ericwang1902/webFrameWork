@@ -1,6 +1,9 @@
 var express = require('express');
 var router = express.Router();
 
+var axios = require('axios')
+var config = require('../frameConfig/frameConfig')
+
 var fansModel = require('../sysmanage/fans/fansModel');
 
 //微信网页授权
@@ -16,7 +19,7 @@ router.get('/index', function (req, res, next) {
 });
 
 // 获取openid，只能用这种跳转的方式，不能用ajax访问获取openid
-router.get('/home', getopenid,createFans, function (req, res, next) {
+router.get('/home', getopenid,createFans,createMenu,function (req, res, next) {
     console.log(JSON.stringify(req.fanSaveResult))
     console.log("access_token:"+JSON.stringify(req.access_token))
 });
@@ -73,6 +76,19 @@ function createFans(req, res, next) {
         return next();
 
     })
+}
+
+//创建菜单
+function createMenu(req,res,next){
+    axios.post(config.wechatMenuURL,{})
+         .then((response)=>{
+             console.log('11111111111:'+response)
+             return next();
+         })
+         .catch(function(err){
+             console.log(err);
+         })
+
 }
 
 module.exports = router;
