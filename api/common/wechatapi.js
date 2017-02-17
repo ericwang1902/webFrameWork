@@ -10,14 +10,15 @@ function getApiToken(){
     }
     request(tokenOptions, function (err, response, body) {
         console.log('tokenOptions:' + JSON.stringify(body))
-        
+        config.apiToken = body.access_token;
+        console.log('config.apiToken:' + JSON.stringify(body))
     })
 }
 
 //创建菜单
 function createMenu() {
     var menuOptions = {
-        url: config.wechatMenuURL + req.session.user_access_token,
+        url: config.wechatMenuURL + config.apiToken,
         method: 'POST',
         json: true,
         body: {

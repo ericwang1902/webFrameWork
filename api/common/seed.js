@@ -6,6 +6,7 @@ var bcrypt = require('bcryptjs');//数据加密
 var salt = bcrypt.genSaltSync(10);
 
 var schedule = require('node-schedule');
+var wechatApi = require('./wechatapi')
 
 
 
@@ -182,8 +183,9 @@ var initData = function () {
 }
 
 var setSchedule=function(){
-    schedule.scheduleJob('30 * * * * *', function(){
-        console.log('scheduleCronstyle:' + new Date());
+    schedule.scheduleJob('* /120 * * * *', function(){
+        console.log('定时任务:' + new Date());
+        wechatApi.getApiToken();
     }); 
 }
 
