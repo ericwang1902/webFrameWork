@@ -22,7 +22,7 @@ router.get('/index', function (req, res, next) {
 // 获取openid，只能用这种跳转的方式，不能用ajax访问获取openid
 router.get('/home', getopenid, createFans, createMenu, function (req, res, next) {
     console.log(JSON.stringify(req.fanSaveResult))
-    console.log("access_token:" + JSON.stringify(req.access_token))
+    console.log("access_token:" + JSON.stringify(req.session.access_token))
 });
 
 //第三方库获取openid
