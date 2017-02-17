@@ -11,7 +11,7 @@ function getApiToken(){
     request(tokenOptions, function (err, response, body) {
         console.log('tokenOptions:' + JSON.stringify(body))
         config.apiToken = body.access_token;
-        console.log('config.apiToken:' + body.access_token)
+        console.log('config.apiToken:' + JSON.parse(body).access_token)
         createTag("fans");//粉丝分组
         createTag("shopowner");//店主
         createTag("courier");//配送员
