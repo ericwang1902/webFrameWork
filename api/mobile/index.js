@@ -18,6 +18,7 @@ router.get('/index', function (req, res, next) {
 // 获取openid，只能用这种跳转的方式，不能用ajax访问获取openid
 router.get('/home', getopenid,createFans, function (req, res, next) {
     console.log(JSON.stringify(req.fanSaveResult))
+    console.log("access_token:"+JSON.stringify(req.access_token))
 });
 
 //第三方库获取openid
@@ -25,8 +26,11 @@ function getopenid(req, res, next) {
     client.getAccessToken(req.query.code, function (err, result) {
 
         try {
-            var accessToken = result.data.access_token;
             var openid = result.data.openid;
+            var accessToken = result.data.access_token;
+
+            req.openid = openid;
+            req.access_token =accessToken;
         } catch (error) {
             console.log(err)
             return res.json({
@@ -34,13 +38,12 @@ function getopenid(req, res, next) {
             })
         }
 
-        req.openid = openid;
-        //console.log(req.openid);
+        
         return next();
     });
 }
 
-//创建粉丝
+//创建粉丝档案
 function createFans(req, res, next) {
     fansModel.findOne({ fanopenid: req.openid }, function (err, fanresult) {
         if (err) {
@@ -64,8 +67,9 @@ function createFans(req, res, next) {
                 return next();
             })
         }
-        //如果该粉丝数据已经创建
+        //如果该粉丝数据已经创建，就将fanSaveResult写进req
         req.fanSaveResult = fanresult;
+    
         return next();
 
     })
