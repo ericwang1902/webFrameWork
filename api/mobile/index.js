@@ -28,7 +28,7 @@ router.get('/home', getopenid, createFans, createMenu, function (req, res, next)
 //第三方库获取openid和access_token
 function getopenid(req, res, next) {
     //如果session中的access_token已经过期
-    console.log("session中是否有access_token:"+!req.session.access_token);
+    console.log("session中是否有access_token:"+req.session.access_token);
     if (!req.session.access_token) {
         client.getAccessToken(req.query.code, function (err, result) {
             try {
