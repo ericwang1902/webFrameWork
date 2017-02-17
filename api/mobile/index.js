@@ -25,34 +25,36 @@ router.get('/home', getopenid, createFans, createMenu, function (req, res, next)
     console.log("access_token:" + JSON.stringify(req.session.access_token))
 });
 
-//第三方库获取openid
+//第三方库获取openid和access_token
 function getopenid(req, res, next) {
-    client.getAccessToken(req.query.code, function (err, result) {
+    //如果session中的access_token已经过期
+    if (!req.session.access_token) {
+        client.getAccessToken(req.query.code, function (err, result) {
+            try {
+                var openid = result.data.openid;
+                var accessToken = result.data.access_token;
+                var refreshToken = result.data.refresh_token;
 
-        try {
-            var openid = result.data.openid;
-            var accessToken = result.data.access_token;
-            var refreshToken = result.data.refresh_token;
+                req.session.openid = openid;
+                req.session.access_token = accessToken;
 
-            req.openid = openid;
-            req.session.access_token = accessToken;
-            req.session.refresh_token = refreshToken;
+            } catch (error) {
+                console.log(err)
+                return res.json({
+                    info: '获取openid错误'
+                })
+            }
 
-        } catch (error) {
-            console.log(err)
-            return res.json({
-                info: '获取openid错误'
-            })
-        }
+            return next();
+        });
+    }
 
 
-        return next();
-    });
 }
 
 //创建粉丝档案
 function createFans(req, res, next) {
-    fansModel.findOne({ fanopenid: req.openid }, function (err, fanresult) {
+    fansModel.findOne({ fanopenid: req.session.openid }, function (err, fanresult) {
         if (err) {
             console.log(err);
         }
@@ -89,13 +91,13 @@ function createMenu(req, res, next) {
         method: 'POST',
         json: true,
         body: {
-            
+
         }
     }
-    request(menuOptions,function(err,response,body){
-        console.log('createmenu URL:'+menuOptions.url)
-        console.log('createMenu:'+JSON.stringify(body));
-        if(body.errcode=='40001'){
+    request(menuOptions, function (err, response, body) {
+        console.log('createmenu URL:' + menuOptions.url)
+        console.log('createMenu:' + JSON.stringify(body));
+        if (body.errcode == '40001') {
 
         }
         return next();
@@ -104,9 +106,9 @@ function createMenu(req, res, next) {
 }
 
 //refresh_token
-function refreshToken(req,res,next){
-    client.refreshAccessToken(req.session.refresh_token, function(err,result){
-        console.log('refreshtoken:'+JSON.stringify(result));
+function refreshToken(req, res, next) {
+    client.refreshAccessToken(req.session.refresh_token, function (err, result) {
+        console.log('refreshtoken:' + JSON.stringify(result));
     });
 }
 
