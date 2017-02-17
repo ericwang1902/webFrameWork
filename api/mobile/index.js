@@ -36,8 +36,7 @@ function getopenid(req, res, next) {
             try {
                 var openid = result.data.openid;
                 var accessToken = result.data.access_token;
-                var refreshToken = result.data.refresh_token;
-
+              
                 req.session.openid = openid;
                 req.session.access_token = accessToken;
 
