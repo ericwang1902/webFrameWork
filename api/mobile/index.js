@@ -85,7 +85,7 @@ function createFans(req, res, next) {
 //创建菜单
 function createMenu(req, res, next) {
     var menuOptions = {
-        url: config.wechatMenuURL + req.access_token,
+        url: config.wechatMenuURL + req.session.access_token,
         method: 'POST',
         json: true,
         body: {
