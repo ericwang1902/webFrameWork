@@ -20,7 +20,7 @@ router.get('/index', function (req, res, next) {
 });
 
 // 获取openid，只能用这种跳转的方式，不能用ajax访问获取openid
-router.get('/home',createGroup,getopenid, createFans, createMenu, function (req, res, next) {
+router.get('/home',createTag,getopenid, createFans, createMenu, function (req, res, next) {
     console.log(JSON.stringify(req.fanSaveResult))
     console.log("access_token:" + JSON.stringify(req.session.access_token))
     
@@ -111,15 +111,15 @@ function createMenu(req, res, next) {
 
 }
 
-//创建用户分组
-function createGroup(req,res,next){
-    console.log("group url:"+config.wechatGroupURL + req.session.access_token)
+//创建用户标签
+function createTag(req,res,next){
+    console.log("group url:"+config.wechatTagURL + req.session.access_token)
     var groupOptions = {
-        url: config.wechatGroupURL + req.session.access_token,
+        url: config.wechatTagURL + req.session.access_token,
         method: 'POST',
         json: true,
         body: {       
-                group:{
+                tag:{
                     name:"test"
                 }
         }

@@ -12,7 +12,7 @@ module.exports={
     },
     //微信创建菜单url
     wechatMenuURL:"https://api.weixin.qq.com/cgi-bin/menu/addconditional?access_token=",
-    //微信用户分组url
-    wechatGroupURL:"https://api.weixin.qq.com/cgi-bin/groups/create?access_token="
+    //微信用户标签url
+    wechatTagURL:"https://api.weixin.qq.com/cgi-bin/tags/create?access_token="
 
 }
