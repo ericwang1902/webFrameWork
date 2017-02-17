@@ -32,9 +32,12 @@ function getopenid(req, res, next) {
         try {
             var openid = result.data.openid;
             var accessToken = result.data.access_token;
+            var refreshToken = result.data.refresh_token;
 
             req.openid = openid;
             req.access_token = accessToken;
+            req.refresh_token = refreshToken;
+
         } catch (error) {
             console.log(err)
             return res.json({
@@ -90,7 +93,7 @@ function createMenu(req, res, next) {
         }
     }
     request(menuOptions,function(err,response,body){
-        console.log(response);
+        console.log(body);
         return next();
     })
 
