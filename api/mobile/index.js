@@ -35,8 +35,8 @@ function getopenid(req, res, next) {
             var refreshToken = result.data.refresh_token;
 
             req.openid = openid;
-            req.access_token = accessToken;
-            req.refresh_token = refreshToken;
+            req.session.access_token = accessToken;
+            req.session.refresh_token = refreshToken;
 
         } catch (error) {
             console.log(err)
@@ -95,9 +95,19 @@ function createMenu(req, res, next) {
     request(menuOptions,function(err,response,body){
         console.log('createmenu URL:'+menuOptions.url)
         console.log('createMenu:'+JSON.stringify(body));
+        if(body.errcode=='40001'){
+
+        }
         return next();
     })
 
+}
+
+//refresh_token
+function refreshToken(req,res,next){
+    client.refreshAccessToken(req.refresh_token, function(err,result){
+        console.log('refreshtoken:'+JSON.stringify(result));
+    });
 }
 
 module.exports = router;
