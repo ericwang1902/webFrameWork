@@ -8,7 +8,7 @@ module.exports={
     //微信appid和appsecret
     wechatConfig:{
         appid:"wx94e3a09e4149b262",
-        appsecret:"2301f292e2765b44890dba2f845c6f3a"
+        appsecret:"6e428e808f1620210ef32a2d2313a038"
     },
     //微信创建菜单url
     wechatMenuURL:"https://api.weixin.qq.com/cgi-bin/menu/addconditional?access_token=",

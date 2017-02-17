@@ -113,7 +113,7 @@ function createMenu(req, res, next) {
 
 //创建用户标签
 function createTag(req,res,next){
-    console.log("group url:"+config.wechatTagURL + req.session.access_token)
+    console.log("tag url:"+config.wechatTagURL + req.session.access_token)
     var groupOptions = {
         url: config.wechatTagURL + req.session.access_token,
         method: 'POST',
@@ -125,7 +125,7 @@ function createTag(req,res,next){
         }
     }
     request(groupOptions,function(err,response,body){
-        console.log("创建用户组："+JSON.stringify(body))
+        console.log("创建tag："+JSON.stringify(body))
         return next();
     })
 }
