@@ -17,7 +17,7 @@ router.get('/index', function (req, res, next) {
 
 // 获取openid，只能用这种跳转的方式，不能用ajax访问获取openid
 router.get('/home', getopenid,createFans, function (req, res, next) {
-    console.log(req.fanSaveResult)
+    console.log(JSON.stringify(req.fanSaveResult))
 });
 
 //第三方库获取openid
@@ -35,7 +35,7 @@ function getopenid(req, res, next) {
         }
 
         req.openid = openid;
-        console.log(req.openid);
+        //console.log(req.openid);
         return next();
     });
 }
