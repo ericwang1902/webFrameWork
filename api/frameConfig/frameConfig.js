@@ -16,6 +16,6 @@ module.exports={
     //微信用户标签url
     wechatTagURL:"https://api.weixin.qq.com/cgi-bin/tags/create?access_token=",
     //获取微信全局的accesstoken的网址
-    wechatTokenURL:"https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid="+wechatConfig.appid+"&secret="+wechatConfig.appsecret
+    wechatTokenURL:"https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid="+this.wechatConfig.appid+"&secret="+this.wechatConfig.appsecret
 
 }
