@@ -2,6 +2,7 @@ var express = require('express');
 var router = express.Router();
 
 var request = require('request');
+
 var config = require('../frameConfig/frameConfig')
 
 var fansModel = require('../sysmanage/fans/fansModel');
@@ -88,7 +89,7 @@ function createMenu(req, res, next) {
             
         }
     }
-    request.post(menuOptions,function(err,response,body){
+    request(menuOptions,function(err,response,body){
         console.log(response);
         return next();
     })
