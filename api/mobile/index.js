@@ -32,6 +32,7 @@ function getopenid(req, res, next) {
     //如果session中的access_token已经过期
     console.log("session中是否有access_token:"+req.session.access_token);
     if (!req.session.access_token) {
+        
         client.getAccessToken(req.query.code, function (err, result) {
             try {
                 var openid = result.data.openid;
@@ -39,6 +40,7 @@ function getopenid(req, res, next) {
               
                 req.session.openid = openid;
                 req.session.access_token = accessToken;
+                console.log("获取access token："+req.session.access_token)
 
             } catch (error) {
                 console.log(err)
