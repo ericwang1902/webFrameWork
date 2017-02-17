@@ -1,5 +1,6 @@
 //framework全局开发配置文件
 
+
 module.exports={
     //数据库名称
     databaseName:"frameworkDatabase",
@@ -13,6 +14,8 @@ module.exports={
     //微信创建菜单url
     wechatMenuURL:"https://api.weixin.qq.com/cgi-bin/menu/addconditional?access_token=",
     //微信用户标签url
-    wechatTagURL:"https://api.weixin.qq.com/cgi-bin/tags/create?access_token="
+    wechatTagURL:"https://api.weixin.qq.com/cgi-bin/tags/create?access_token=",
+    //获取微信全局的accesstoken的网址
+    wechatTokenURL:"https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid="+wechatConfig.appid+"&secret="+wechatConfig.appsecret
 
 }

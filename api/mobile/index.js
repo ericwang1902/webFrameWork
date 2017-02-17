@@ -12,6 +12,8 @@ var OAuth = require('wechat-oauth');
 var config = require('../frameConfig/frameConfig');
 var client = new OAuth(config.wechatConfig.appid, config.wechatConfig.appsecret);
 
+var wechatapi = require('../common/wechatapi')
+
 
 /*  index用来获取openid，并用来跳转到home */
 router.get('/index', function (req, res, next) {
@@ -20,18 +22,18 @@ router.get('/index', function (req, res, next) {
 });
 
 // 获取openid，只能用这种跳转的方式，不能用ajax访问获取openid
-router.get('/home',getopenid,createTag, createFans, createMenu, function (req, res, next) {
+router.get('/home',getopenid, createFans, function (req, res, next) {
     console.log(JSON.stringify(req.fanSaveResult))
-    console.log("access_token:" + JSON.stringify(req.session.access_token))
-    
+    console.log("user_access_token:" + JSON.stringify(req.session.user_access_token))
+    wechatapi.getApiToken();
     res.send("homepage")
 });
 
-//第三方库获取openid和access_token
+//第三方库获取openid和user_access_token
 function getopenid(req, res, next) {
-    //如果session中的access_token已经过期
-    console.log("session中的access_token:"+req.session.access_token);
-    if (req.session.access_token) {
+    //如果session中的user_access_token已经过期
+    console.log("session中的user_access_token:"+req.session.user_access_token);
+    if (req.session.user_access_token) {
         
         client.getAccessToken(req.query.code, function (err, result) {
             try {
@@ -39,8 +41,8 @@ function getopenid(req, res, next) {
                 var accessToken = result.data.access_token;
               
                 req.session.openid = openid;
-                req.session.access_token = accessToken;
-                console.log("获取access token："+req.session.access_token)
+                req.session.user_access_token = accessToken;
+                console.log("获取access token："+req.session.user_access_token)
 
             } catch (error) {
                 console.log(err)
@@ -93,7 +95,7 @@ function createFans(req, res, next) {
 //创建菜单
 function createMenu(req, res, next) {
     var menuOptions = {
-        url: config.wechatMenuURL + req.session.access_token,
+        url: config.wechatMenuURL + req.session.user_access_token,
         method: 'POST',
         json: true,
         body: {
