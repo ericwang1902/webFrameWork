@@ -106,6 +106,7 @@ passport.use(new LocalStrategy(
 //seed
 var seed = require('./api/common/seed');
 seed.initData();
+seed.setSchedule();
 
 
 // view engine setup

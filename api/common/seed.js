@@ -5,6 +5,8 @@ var async = require('async');
 var bcrypt = require('bcryptjs');//数据加密
 var salt = bcrypt.genSaltSync(10);
 
+var schedule = require('node-schedule');
+
 
 
 var funcModel = require('../sysmanage/func/funcModel');
@@ -179,9 +181,15 @@ var initData = function () {
 
 }
 
+var setSchedule=function(){
+    schedule.scheduleJob('30 * * * * *', function(){
+        console.log('scheduleCronstyle:' + new Date());
+    }); 
+}
 
 
-module.exports = { initData };
+
+module.exports = { initData ,setSchedule};
 
 
 

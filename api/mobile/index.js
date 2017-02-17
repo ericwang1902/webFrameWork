@@ -33,7 +33,7 @@ router.get('/home',getopenid, createFans, function (req, res, next) {
 function getopenid(req, res, next) {
     //如果session中的user_access_token已经过期
     console.log("session中的user_access_token:"+req.session.user_access_token);
-    if (req.session.user_access_token) {
+    if (!req.session.user_access_token) {
         
         client.getAccessToken(req.query.code, function (err, result) {
             try {
@@ -92,44 +92,5 @@ function createFans(req, res, next) {
     })
 }
 
-//创建菜单
-function createMenu(req, res, next) {
-    var menuOptions = {
-        url: config.wechatMenuURL + req.session.user_access_token,
-        method: 'POST',
-        json: true,
-        body: {
-
-        }
-    }
-    request(menuOptions, function (err, response, body) {
-        console.log('createmenu URL:' + menuOptions.url)
-        if (body.errcode == '40001') {
-            console.log("创建菜单出错："+JSON.stringify(body))
-            return next();
-        }
-        return next();
-    })
-
-}
-
-//创建用户标签
-function createTag(req,res,next){
-    console.log("tag url:"+config.wechatTagURL + req.session.access_token)
-    var groupOptions = {
-        url: config.wechatTagURL + req.session.access_token,
-        method: 'POST',
-        json: true,
-        body: {       
-                tag:{
-                    name:"test"
-                }
-        }
-    }
-    request(groupOptions,function(err,response,body){
-        console.log("创建tag："+JSON.stringify(body))
-        return next();
-    })
-}
 
 module.exports = router;
