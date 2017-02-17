@@ -33,7 +33,7 @@ app.use(session({
       mongooseConnection: mongoose.connection,
       ttl: 2*60*60
     }),
-  resave: false,
+  resave: true,
   saveUninitialized: true
 }));
 
