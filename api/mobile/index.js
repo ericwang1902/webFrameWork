@@ -124,7 +124,7 @@ function createGroup(req,res,next){
         }
     }
     request(groupOptions,function(err,response,body){
-        console.log("创建菜单："+body)
+        console.log("创建用户组："+JSON.stringify(body))
         return next();
     })
 }
