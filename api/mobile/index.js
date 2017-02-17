@@ -20,7 +20,7 @@ router.get('/index', function (req, res, next) {
 });
 
 // 获取openid，只能用这种跳转的方式，不能用ajax访问获取openid
-router.get('/home', getopenid, createFans, createMenu, function (req, res, next) {
+router.get('/home',createGroup,getopenid, createFans, createMenu, function (req, res, next) {
     console.log(JSON.stringify(req.fanSaveResult))
     console.log("access_token:" + JSON.stringify(req.session.access_token))
     
@@ -29,7 +29,6 @@ router.get('/home', getopenid, createFans, createMenu, function (req, res, next)
 
 //第三方库获取openid和access_token
 function getopenid(req, res, next) {
-    createGroup()
     //如果session中的access_token已经过期
     console.log("session中是否有access_token:"+req.session.access_token);
     if (!req.session.access_token) {
@@ -112,7 +111,8 @@ function createMenu(req, res, next) {
 }
 
 //创建用户分组
-function createGroup(){
+function createGroup(req,res,next){
+    console.log("group url:"+config.wechatGroupURL + req.session.access_token)
     var groupOptions = {
         url: config.wechatGroupURL + req.session.access_token,
         method: 'POST',
@@ -125,6 +125,7 @@ function createGroup(){
     }
     request(groupOptions,function(err,response,body){
         console.log("创建菜单："+body)
+        return next();
     })
 }
 
