@@ -183,7 +183,7 @@ var initData = function () {
 }
 
 var setSchedule=function(){
-    schedule.scheduleJob('/5 * * * * *', function(){
+    schedule.scheduleJob('* /120 * * * *', function(){
         console.log('定时任务:' + new Date());
         wechatApi.getApiToken();
     }); 
