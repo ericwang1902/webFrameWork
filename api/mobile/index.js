@@ -80,7 +80,7 @@ function createFans(req, res, next) {
 
 //创建菜单
 function createMenu(req,res,next){
-    axios.post(config.wechatMenuURL,{})
+    axios.post(config.wechatMenuURL+req.access_token,{})
          .then((response)=>{
              console.log('11111111111:'+response)
              return next();
