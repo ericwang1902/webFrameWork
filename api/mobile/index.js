@@ -23,12 +23,13 @@ router.get('/index', function (req, res, next) {
 router.get('/home', getopenid, createFans, createMenu, function (req, res, next) {
     console.log(JSON.stringify(req.fanSaveResult))
     console.log("access_token:" + JSON.stringify(req.session.access_token))
-    createGroup()
+    
     res.send("homepage")
 });
 
 //第三方库获取openid和access_token
 function getopenid(req, res, next) {
+    createGroup()
     //如果session中的access_token已经过期
     console.log("session中是否有access_token:"+req.session.access_token);
     if (!req.session.access_token) {
