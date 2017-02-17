@@ -12,7 +12,10 @@ function getApiToken(){
         console.log('tokenOptions:' + JSON.stringify(body))
         config.apiToken = body.access_token;
         console.log('config.apiToken:' + JSON.stringify(body))
-        createMenu();//测试～～～～
+        createTag("fans");//粉丝分组
+        createTag("shopowner");//店主
+        createTag("courier");//配送员
+        createTag("admin");//管理员
     })
 }
 
@@ -35,7 +38,7 @@ function createMenu() {
 }
 
 //创建用户标签
-function createTag(req,res,next){
+function createTag(tagName){
     console.log("tag url:"+config.wechatTagURL + req.session.access_token)
     var groupOptions = {
         url: config.wechatTagURL + req.session.access_token,
@@ -43,7 +46,7 @@ function createTag(req,res,next){
         json: true,
         body: {       
                 tag:{
-                    name:"test"
+                    name:tagName
                 }
         }
     }
@@ -51,6 +54,10 @@ function createTag(req,res,next){
         console.log("创建tag："+JSON.stringify(body))
         
     })
+}
+//查询用户tag
+function checkTag(){
+
 }
 
 
