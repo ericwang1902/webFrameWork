@@ -27,7 +27,7 @@ mongoose.Promise = require('bluebird');
 
 app.use(session({
   secret: Config.sessionSecret,
-  cookie: {maxAge: 1000*7200 },
+  cookie: {maxAge: 1000*20 },
   store: new MongoStore(
     {
       mongooseConnection: mongoose.connection,

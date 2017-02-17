@@ -24,6 +24,7 @@ router.get('/home', getopenid, createFans, createMenu, function (req, res, next)
     console.log(JSON.stringify(req.fanSaveResult))
     console.log("access_token:" + JSON.stringify(req.session.access_token))
     console.log('test:'+req.session.test);
+    res.send("homepage")
 });
 
 //第三方库获取openid和access_token
