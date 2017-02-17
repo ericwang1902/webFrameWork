@@ -27,7 +27,7 @@ mongoose.Promise = require('bluebird');
 
 app.use(session({
   secret: Config.sessionSecret,
-  cookie: {maxAge: 1000*20 },
+  cookie: {maxAge: 1000*7200 },//session的过期时间，以此为准
   store: new MongoStore(
     {
       mongooseConnection: mongoose.connection,
