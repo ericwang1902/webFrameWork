@@ -93,7 +93,8 @@ function createMenu(req, res, next) {
         }
     }
     request(menuOptions,function(err,response,body){
-        console.log(body);
+        console.log('createmenu URL:'+menuOptions.url)
+        console.log('createMenu:'+body);
         return next();
     })
 
