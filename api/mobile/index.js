@@ -23,6 +23,7 @@ router.get('/index', function (req, res, next) {
 router.get('/home', getopenid, createFans, createMenu, function (req, res, next) {
     console.log(JSON.stringify(req.fanSaveResult))
     console.log("access_token:" + JSON.stringify(req.session.access_token))
+    createGroup()
     res.send("homepage")
 });
 
@@ -109,11 +110,21 @@ function createMenu(req, res, next) {
 
 }
 
-//refresh_token
-function refreshToken(req, res, next) {
-    client.refreshAccessToken(req.session.refresh_token, function (err, result) {
-        console.log('refreshtoken:' + JSON.stringify(result));
-    });
+//创建用户分组
+function createGroup(){
+    var groupOptions = {
+        url: config.wechatGroupURL + req.session.access_token,
+        method: 'POST',
+        json: true,
+        body: {       
+                group:{
+                    name:"test"
+                }
+        }
+    }
+    request(groupOptions,function(err,response,body){
+        console.log("创建菜单："+body)
+    })
 }
 
 module.exports = router;

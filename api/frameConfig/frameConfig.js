@@ -11,5 +11,8 @@ module.exports={
         appsecret:"2301f292e2765b44890dba2f845c6f3a"
     },
     //微信创建菜单url
-    wechatMenuURL:"https://api.weixin.qq.com/cgi-bin/menu/addconditional?access_token="
+    wechatMenuURL:"https://api.weixin.qq.com/cgi-bin/menu/addconditional?access_token=",
+    //微信用户分组url
+    wechatGroupURL:"https://api.weixin.qq.com/cgi-bin/groups/create?access_token="
+
 }
