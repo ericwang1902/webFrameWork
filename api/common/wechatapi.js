@@ -13,10 +13,10 @@ function getApiToken(){
         console.log('tokenOptions:' + JSON.stringify(body))
         config.apiToken = JSON.parse(body).access_token;
         console.log('config.apiToken:' + JSON.parse(body).access_token)
-        createTag("fans");//粉丝分组
-        createTag("shopowner");//店主
-        createTag("courier");//配送员
-        createTag("admin");//管理员
+        //createTag("fans");//粉丝分组
+        //createTag("shopowner");//店主
+        //createTag("courier");//配送员
+        //createTag("admin");//管理员
     })
 }
 
