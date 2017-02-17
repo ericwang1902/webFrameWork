@@ -12,6 +12,7 @@ function getApiToken(){
         console.log('tokenOptions:' + JSON.stringify(body))
         config.apiToken = body.access_token;
         console.log('config.apiToken:' + JSON.stringify(body))
+        createMenu();//测试～～～～
     })
 }
 
@@ -27,10 +28,7 @@ function createMenu() {
     }
     request(menuOptions, function (err, response, body) {
         console.log('createmenu URL:' + menuOptions.url)
-        if (body.errcode == '40001') {
-            console.log("创建菜单出错："+JSON.stringify(body))
-            
-        }
+            console.log("创建菜单："+JSON.stringify(body))
        
     })
 
