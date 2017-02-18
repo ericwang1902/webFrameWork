@@ -185,7 +185,7 @@ var initData = function () {
 var setSchedule=function(){
     console.log("开始定时任务")
     wechatApi.getApiToken();
-    schedule.scheduleJob('* /119 * * * *', function(){
+    schedule.scheduleJob('* 50 * * * *', function(){
         console.log('定时任务:' + new Date());
         wechatApi.getApiToken();
     }); 
