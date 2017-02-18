@@ -11,7 +11,7 @@ module.exports = {
             user: 'ericwang1903',
             pass: 'qwer12345'
         }
-        mongoose.connect('mongodb://localhost/' + Config.databaseName,options);
+        mongoose.connect('mongodb://localhost:20008/' + Config.databaseName,options);
     },
     getconnection: function () {
         return mongoose.connection;
