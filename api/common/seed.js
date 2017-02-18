@@ -75,6 +75,15 @@ var UserData = {
 var initData = function () {
     var userModelInstance = new userModel();
 
+    userModel.findOneAndRemove({userName: UserData.userName},function(err,user){
+        if(err){
+            console.log('删除数据出错!')
+        }
+        else{
+            console.log('删除成功！')
+        }
+    })
+
     userModel
         .findOne({ userName: UserData.userName })
         .exec(function (err, userResult) {
