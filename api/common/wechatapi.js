@@ -84,10 +84,10 @@ function initMenu(){
     });
 }
 
-//删除菜单
+//删除所有菜单
 function deleteMenu(callbackFunc){
     var deleteMenuOptions = {
-        url: config.wechatDeleteMenuURL+config.apiToken,
+        url: config.wechatTotalDelMenu+config.apiToken,
         method: 'GET'
     }
     request(deleteMenuOptions,function(err,response,body){

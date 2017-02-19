@@ -13,17 +13,20 @@ module.exports={
     },
     //微信创建基础菜单的url
     wechatSelfMenu:"https://api.weixin.qq.com/cgi-bin/menu/create?access_token=",
+    //微信删除所有菜单url
+    wechatTotalDelMenu:"https://api.weixin.qq.com/cgi-bin/menu/delete?access_token=",
     //微信创建个性化菜单url
     wechatCondictionMenuURL:"https://api.weixin.qq.com/cgi-bin/menu/addconditional?access_token=",
+    //微信删除菜单url，是删除所有自定义菜单
+    wechatDeleteConditionMenuURL:"https://api.weixin.qq.com/cgi-bin/menu/delconditional?access_token=",
+
     //微信用户标签url
     wechatTagURL:"https://api.weixin.qq.com/cgi-bin/tags/create?access_token=",
     //获取微信全局的accesstoken的网址，这需要修改！！！！！
     wechatTokenURL:"https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=wx94e3a09e4149b262&secret=6e428e808f1620210ef32a2d2313a038",
     //全局token
     apiToken:'',
-    //微信删除菜单url，是删除所有菜单
-    wechatDeleteMenuURL:"https://api.weixin.qq.com/cgi-bin/menu/delconditional?access_token=",
-
+ 
     
     
     //粉丝菜单配置
