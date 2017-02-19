@@ -90,7 +90,7 @@ function initMenu(){
 
 //删除菜单
 function deleteMenu(callbackFunc){
-    request(function(err,response,body){
+    request(config.wechatDeleteMenuURL+config.apiToken,function(err,response,body){
         if(err){
             console.log('删除菜单出错');
             callbackFunc(false);
