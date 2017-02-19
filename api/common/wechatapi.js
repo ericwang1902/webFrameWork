@@ -30,13 +30,13 @@ function initMenu(){
     async.waterfall([
         function(callback) {
             //删除菜单
-            deleteMenu(callback(null, function(result){
+            deleteMenu(function(result){
                 if(result){
                     callback(null,result);
                 }else{
                     callback("err","");
                 }
-            }));//回调函数        
+            });//回调函数        
         },
         function(deleteMenuResult, callback) {
             //创建基础菜单,即普通粉丝菜单
