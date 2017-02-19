@@ -40,7 +40,7 @@ function initMenu(){
         },
         function(deleteMenuResult, callback) {
             //创建基础菜单,即普通粉丝菜单
-            createMenu(config.wechatSelfMenu,config.fansMenu,function(result){
+            createMenu(config.wechatSelfMenu+config.apiToken,config.fansMenu,function(result){
                 if(result){
                     callback(null,result);
                 }else{
@@ -50,7 +50,7 @@ function initMenu(){
         },
         function(fansMenuResult, callback) {
             //创建店主菜单
-            createMenu(config.wechatCondictionMenuURL,config.shopperOwenerMenu,function(result){
+            createMenu(config.wechatCondictionMenuURL+config.apiToken,config.shopperOwenerMenu,function(result){
                 if(result){
                     callback(null,result);
                 }else{
@@ -60,7 +60,7 @@ function initMenu(){
         },
         function(shopperOwenerMenuResult, callback) {
             //创建配送员菜单
-            createMenu(config.wechatCondictionMenuURL,config.courierMenu,function(result){
+            createMenu(config.wechatCondictionMenuURL+config.apiToken,config.courierMenu,function(result){
                 if(result){
                     callback(null,result);
                 }else{
@@ -70,7 +70,7 @@ function initMenu(){
         },
         function(courierMenuResult, callback) {
             //创建管理员菜单
-            createMenu(config.wechatCondictionMenuURL,config.adminMenu,function(result){
+            createMenu(config.wechatCondictionMenuURL+config.apiToken,config.adminMenu,function(result){
                 if(result){
                     callback(null,result);
                 }else{
