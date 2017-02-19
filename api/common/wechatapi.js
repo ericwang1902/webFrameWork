@@ -4,7 +4,7 @@ var config =require('../frameConfig/frameConfig')
 var async = require('async')
 
 //获取全局的token
-function getApiToken(){
+function getApiToken(callback){
     var tokenOptions = {
         url: config.wechatTokenURL,
         method: 'GET'
@@ -14,11 +14,7 @@ function getApiToken(){
         console.log('tokenOptions:' + JSON.stringify(body))
         config.apiToken = JSON.parse(body).access_token;
         console.log('config.apiToken:' + JSON.parse(body).access_token)
-        //createTag("fans");//粉丝分组
-        //createTag("shopowner");//店主
-        //createTag("courier");//配送员
-        //createTag("admin");//管理员
-        //createMenu(config.fansMenu);//创建粉丝菜单
+        callback();
     })
 }
 
