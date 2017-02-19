@@ -17,34 +17,21 @@ function getApiToken(){
         //createTag("shopowner");//店主
         //createTag("courier");//配送员
         //createTag("admin");//管理员
-        createMenu();
+        createMenu(config.fansMenu);//创建粉丝菜单
     })
 }
 
-//创建菜单
-function createMenu() {
+//创建粉丝菜单
+function createMenu(menu) {
     var menuOptions = {
         url: config.wechatMenuURL + config.apiToken,
         method: 'POST',
         json: true,
-        body: {
-            
-            button: [
-                {
-                    type: "click", 
-                    name: "今日歌曲", 
-                    key: "V1001_TODAY_MUSIC"
-                }
-            ], 
-            matchrule: {
-                tag_id: "101"
-            }      
-        }
+        body: menu
     }
     request(menuOptions, function (err, response, body) {
         console.log('createmenu URL:' + menuOptions.url)
-            console.log("创建菜单："+JSON.stringify(body))
-       
+            console.log("创建菜单："+JSON.stringify(body))     
     })
 
 }
