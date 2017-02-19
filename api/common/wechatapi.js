@@ -108,11 +108,11 @@ function createMenu(menuUrl,menu,callbackFunc){
         console.log("创建菜单："+JSON.stringify(body))
         if(err){
             console.log("菜单创建出错了");
-            callbackFunc(null,false);
+            callbackFunc(false);
         }  
         else{
             console.log(JSON.stringify(body));
-            callbackFunc(null,true);
+            callbackFunc(true);
         }
     })
 }
