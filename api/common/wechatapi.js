@@ -24,6 +24,7 @@ function getApiToken(){
 
 
 
+
 //创建菜单：
 function initMenu(){
     async.waterfall([
