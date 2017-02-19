@@ -19,19 +19,62 @@ module.exports={
     wechatTokenURL:"https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=wx94e3a09e4149b262&secret=6e428e808f1620210ef32a2d2313a038",
     //全局token
     apiToken:'',
+    //微信删除菜单url，是删除所有菜单
+    wechatDeleteMenuURL:"https://api.weixin.qq.com/cgi-bin/menu/delconditional?access_token=",
+
+    
     
     //粉丝菜单配置
     fansMenu:{
         button: [
                 {
                     type: "click", 
-                    name: "今日歌曲2", 
+                    name: "粉丝", 
                     key: "V1001_TODAY_MUSIC"
                 }
-            ], 
-            matchrule: {
-                tag_id: "101"
-            }  
+            ] 
+    },
+    //店主菜单配置
+    shopperOwenerMenu:{
+        button: [
+                {
+                    type: "click", 
+                    name: "店主", 
+                    key: "V1001_TODAY_MUSIC"
+                }
+            ],
+            matchrule:{
+                tag_id:100
+            }
+    },
+    //管理员菜单配置
+    adminMenu:{
+        button: [
+                {
+                    type: "click", 
+                    name: "管理员", 
+                    key: "V1001_TODAY_MUSIC"
+                }
+            ],
+            matchrule:{
+                tag_id:103
+            }
+    },
+    //配送员菜单配置
+    courierMenu:{
+        button: [
+                {
+                    type: "click", 
+                    name: "配送员", 
+                    key: "V1001_TODAY_MUSIC"
+                }
+            ],
+            matchrule:{
+                tag_id:102
+            }
     }
+
+    
+
 
 }

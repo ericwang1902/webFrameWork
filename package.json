@@ -6,7 +6,7 @@
     "start": "node ./bin/www"
   },
   "dependencies": {
-    "async": "^2.1.4",
+    "async": "^2.1.5",
     "bcryptjs": "^2.4.0",
     "bluebird": "^3.4.7",
     "body-parser": "~1.15.2",
@@ -19,6 +19,7 @@
     "moment": "^2.17.1",
     "mongoose": "^4.7.6",
     "morgan": "~1.7.0",
+    "node-schedule": "^1.2.0",
     "passport": "^0.3.2",
     "passport-local": "^1.0.0",
     "qiniu": "^6.1.13",

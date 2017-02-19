@@ -196,9 +196,13 @@ var setSchedule=function(){
     });  
 }
 
+var createMenu=function(){
+    wechatApi.initMenu();
+}
 
 
-module.exports = { initData ,setSchedule};
+
+module.exports = { initData ,createMenu,setSchedule};
 
 
 
