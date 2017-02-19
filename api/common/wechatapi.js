@@ -86,7 +86,11 @@ function initMenu(){
 
 //删除菜单
 function deleteMenu(callbackFunc){
-    request(config.wechatDeleteMenuURL+config.apiToken,function(err,response,body){
+    var deleteMenuOptions = {
+        url: config.wechatDeleteMenuURL+config.apiToken,
+        method: 'GET'
+    }
+    request(deleteMenuOptions,function(err,response,body){
         if(err){
             console.log('删除菜单出错');
             callbackFunc(false);
