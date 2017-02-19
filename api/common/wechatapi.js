@@ -17,6 +17,7 @@ function getApiToken(){
         //createTag("shopowner");//店主
         //createTag("courier");//配送员
         //createTag("admin");//管理员
+        createMenu();
     })
 }
 
@@ -27,7 +28,15 @@ function createMenu() {
         method: 'POST',
         json: true,
         body: {
-
+            button:[
+                {	
+                    type:"view",
+                    name:"视频",
+                    url:"http://v.qq.com/"
+                }],
+                matchrule:{
+                tag_id:"100"
+                }
         }
     }
     request(menuOptions, function (err, response, body) {
