@@ -32,19 +32,19 @@ function initMenu(){
         },
         function(deleteMenuResult, callback) {
             //创建基础菜单,即普通粉丝菜单
-            createMenu(config.fansMenu,callback(err,result));
+            createMenu(config.wechatSelfMenu,config.fansMenu,callback(err,result));
         },
         function(fansMenuResult, callback) {
             //创建店主菜单
-            createMenu(config.shopperOwenerMenu,callback(err,result));
+            createMenu(config.wechatCondictionMenuURL,config.shopperOwenerMenu,callback(err,result));
         },
         function(shopperOwenerMenuResult, callback) {
             //创建配送员菜单
-            createMenu(config.courierMenu,callback(err,result));
+            createMenu(config.wechatCondictionMenuURL,config.courierMenu,callback(err,result));
         },
         function(courierMenuResult, callback) {
             //创建管理员菜单
-            createMenu(config.adminMenu,callback(err,result));
+            createMenu(config.wechatCondictionMenuURL,config.adminMenu,callback(err,result));
         }
     ], function (err, result) {
         if(err){
@@ -70,9 +70,9 @@ function deleteMenu(callbackFunc){
 }
 
 //创建菜单接口
-function createMenu(menu,callbackFunc){
+function createMenu(menuUrl,menu,callbackFunc){
     var menuOptions = {
-        url: config.wechatMenuURL + config.apiToken,
+        url: menuUrl,
         method: 'POST',
         json: true,
         body: menu

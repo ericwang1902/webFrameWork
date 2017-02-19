@@ -11,8 +11,10 @@ module.exports={
         appid:"wx94e3a09e4149b262",
         appsecret:"6e428e808f1620210ef32a2d2313a038"
     },
-    //微信创建菜单url
-    wechatMenuURL:"https://api.weixin.qq.com/cgi-bin/menu/addconditional?access_token=",
+    //微信创建基础菜单的url
+    wechatSelfMenu:"https://api.weixin.qq.com/cgi-bin/menu/create?access_token=",
+    //微信创建个性化菜单url
+    wechatCondictionMenuURL:"https://api.weixin.qq.com/cgi-bin/menu/addconditional?access_token=",
     //微信用户标签url
     wechatTagURL:"https://api.weixin.qq.com/cgi-bin/tags/create?access_token=",
     //获取微信全局的accesstoken的网址，这需要修改！！！！！
