@@ -34,19 +34,43 @@ function initMenu(){
         },
         function(deleteMenuResult, callback) {
             //创建基础菜单,即普通粉丝菜单
-            createMenu(config.wechatSelfMenu,config.fansMenu,callback(null,result));
+            createMenu(config.wechatSelfMenu,config.fansMenu,function(result){
+                if(result){
+                    callback(null,result);
+                }else{
+                    callback("err","");
+                }
+            });
         },
         function(fansMenuResult, callback) {
             //创建店主菜单
-            createMenu(config.wechatCondictionMenuURL,config.shopperOwenerMenu,callback(null,result));
+            createMenu(config.wechatCondictionMenuURL,config.shopperOwenerMenu,function(result){
+                if(result){
+                    callback(null,result);
+                }else{
+                    callback("err","");
+                }
+            });
         },
         function(shopperOwenerMenuResult, callback) {
             //创建配送员菜单
-            createMenu(config.wechatCondictionMenuURL,config.courierMenu,callback(null,result));
+            createMenu(config.wechatCondictionMenuURL,config.courierMenu,function(result){
+                if(result){
+                    callback(null,result);
+                }else{
+                    callback("err","");
+                }
+            });
         },
         function(courierMenuResult, callback) {
             //创建管理员菜单
-            createMenu(config.wechatCondictionMenuURL,config.adminMenu,callback(null,result));
+            createMenu(config.wechatCondictionMenuURL,config.adminMenu,function(result){
+                if(result){
+                    callback(null,result);
+                }else{
+                    callback("err","");
+                }
+            });
         }
     ], function (err, result) {
         if(err){
