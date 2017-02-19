@@ -30,23 +30,23 @@ function initMenu(){
     async.waterfall([
         function(callback) {
             //删除菜单
-            deleteMenu(callback(err, result));//回调函数        
+            deleteMenu(callback(null, result));//回调函数        
         },
         function(deleteMenuResult, callback) {
             //创建基础菜单,即普通粉丝菜单
-            createMenu(config.wechatSelfMenu,config.fansMenu,callback(err,result));
+            createMenu(config.wechatSelfMenu,config.fansMenu,callback(null,result));
         },
         function(fansMenuResult, callback) {
             //创建店主菜单
-            createMenu(config.wechatCondictionMenuURL,config.shopperOwenerMenu,callback(err,result));
+            createMenu(config.wechatCondictionMenuURL,config.shopperOwenerMenu,callback(null,result));
         },
         function(shopperOwenerMenuResult, callback) {
             //创建配送员菜单
-            createMenu(config.wechatCondictionMenuURL,config.courierMenu,callback(err,result));
+            createMenu(config.wechatCondictionMenuURL,config.courierMenu,callback(null,result));
         },
         function(courierMenuResult, callback) {
             //创建管理员菜单
-            createMenu(config.wechatCondictionMenuURL,config.adminMenu,callback(err,result));
+            createMenu(config.wechatCondictionMenuURL,config.adminMenu,callback(null,result));
         }
     ], function (err, result) {
         if(err){
