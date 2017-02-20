@@ -23,30 +23,30 @@ var constants = require('../frameConfig/constants');
 var UserData = {
     userName: "18501609618",
     mobile: "18501609618",
-    nickname:"管理员",
+    nickname: "管理员",
     password: "qwe123",
     openid: "",
     role: {
-        roleDes:"系统管理员职责",
+        roleDes: "系统管理员职责",
         roleName: constants.role.admin,//管理员角色
         menuList: [
             {
                 menuName: "系统设置",
                 funcList: [
                     {
-                        funcNum:"1",
+                        funcNum: "1",
                         funcName: "菜单管理",
                         funcLink: "/dashboard/menu"
                     },
                     {
-                        funcNum:"2",
+                        funcNum: "2",
                         funcName: "角色管理",
                         funcLink: "/dashboard/role"
                     },
                     {
-                        funcNum:"3",
-                        funcName:"用户管理",
-                        funcLink:"/dashboard/user"
+                        funcNum: "3",
+                        funcName: "用户管理",
+                        funcLink: "/dashboard/user"
                     }
                 ]
             },
@@ -54,19 +54,19 @@ var UserData = {
                 menuName: "业务设置",
                 funcList: [
                     {
-                        funcNum:"1",
+                        funcNum: "1",
                         funcName: "供应商管理",
                         funcLink: "/dashboard/supplier/supplierlist"
                     },
                     {
-                        funcNum:"2",
-                        funcName:"商品管理",
-                        funcLink:"/dashboard/goods"
+                        funcNum: "2",
+                        funcName: "商品管理",
+                        funcLink: "/dashboard/goods"
                     },
                     {
-                        funcNum:"3",
-                        funcName:"套餐管理",
-                        funcLink:"/dashboard/suite"
+                        funcNum: "3",
+                        funcName: "套餐管理",
+                        funcLink: "/dashboard/suite"
                     }
                 ]
             }
@@ -111,7 +111,7 @@ var initData = function () {
                                                                 if (err) console.log(err);
                                                                 if (funcSaveResult) {
                                                                     funclistTemp.push(funcSaveResult._id);
-                                                                    console.log("功能:["+itemfuncValue.funcName+"]" + "创建成功！")
+                                                                    console.log("功能:[" + itemfuncValue.funcName + "]" + "创建成功！")
                                                                     callback1();
                                                                 }
                                                             })
@@ -127,7 +127,7 @@ var initData = function () {
                                                     if (err) console.log(err);
                                                     if (menuSaveResult) {
                                                         menulisttemp.push(menuSaveResult._id);
-                                                        console.log("菜单:["+itemmenuValue.menuName+"]" + "创建成功！")
+                                                        console.log("菜单:[" + itemmenuValue.menuName + "]" + "创建成功！")
                                                         callback();
                                                     }
                                                 })
@@ -142,7 +142,7 @@ var initData = function () {
 
                                 var roleInstance = new roleModel(
                                     {
-                                        roleDes:"系统管理员职责",
+                                        roleDes: "系统管理员职责",
                                         roleName: constants.role.admin,
                                         menuList: menulisttemp
                                     }
@@ -150,10 +150,10 @@ var initData = function () {
                                 roleInstance.save(function (err, roleSaveResult) {
                                     if (err) console.log(err)
                                     if (roleSaveResult) {
-                                        console.log("角色:["+constants.role.admin+"]" + "创建成功！")
+                                        console.log("角色:[" + constants.role.admin + "]" + "创建成功！")
                                         var userInstance = new userModel({
                                             username: UserData.userName,
-                                            nickname:UserData.nickname,
+                                            nickname: UserData.nickname,
                                             mobile: UserData.mobile,
                                             password: bcrypt.hashSync(UserData.password, salt),
                                             openid: UserData.openid,
@@ -165,7 +165,7 @@ var initData = function () {
                                             if (err) console.log(err);
 
                                             if (userSaveResult) {
-                                                console.log("用户:["+userSaveResult.username +"]"+ "创建成功！")
+                                                console.log("用户:[" + userSaveResult.username + "]" + "创建成功！")
                                             }
                                         })
                                     }
@@ -186,62 +186,69 @@ var initData = function () {
 }
 
 //对比setSchedule中和creaeMenu的getApiToken的调用，可以看到不同的回调的使用。
-var setSchedule=function(){
+var setSchedule = function () {
     console.log("开始定时任务")
-    wechatApi.getApiToken(function(){
+    wechatApi.getApiToken(function () {
         console.log("定时任务获取apitoken")
     });
 
-    var rule2     = new schedule.RecurrenceRule();  
-   // var times2    = [1,3,5,7,9,11,13,15,17,19,21,23];  
-    rule2.minute  = 1;  
-    schedule.scheduleJob(rule2, function(){  
+    var rule2 = new schedule.RecurrenceRule();
+    // var times2    = [1,3,5,7,9,11,13,15,17,19,21,23];  
+    rule2.minute = 1;
+    schedule.scheduleJob(rule2, function () {
         console.log('定时任务:' + new Date());
-        wechatApi.getApiToken(function(){
-        console.log("定时任务获取apitoken")
+        wechatApi.getApiToken(function () {
+            console.log("定时任务获取apitoken")
         });
-    });  
+    });
 }
 
 //创建菜单
-var SeedCreateMenu=function(){
-    if(!config.apiToken){
-        wechatApi.getApiToken(function(){
-        wechatApi.initMenu();
+var SeedCreateMenu = function () {
+    if (!config.apiToken) {
+        wechatApi.getApiToken(function () {
+            wechatApi.initMenu();
         })
     }
-    else{
+    else {
         wechatApi.initMenu();
     }
 }
 
 //创建分组
-var SeedCreateTag = function(){
-       if(!config.apiToken){
-        wechatApi.getApiToken(function(){
+var SeedCreateTag = function () {
+    if (!config.apiToken) {
+        wechatApi.getApiToken(function () {
             wechatApi.InitTag();
         })
     }
-    else{
-            wechatApi.InitTag();
+    else {
+        wechatApi.InitTag();
     }
 }
 
 //初始化分组、菜单
-var  initTagAndMenu =function(){
-    if(!config.apiToken){
-        wechatApi.getApiToken(function(){
-            wechatApi.InitTag();
+var initTagAndMenu = function () {
+    if (!config.apiToken) {
+        wechatApi.getApiToken(function () {
+            //创建分组，在回调中定义菜单
+            wechatApi.InitTag(wechatApi.initMenu);
         })
     }
-    else{
-            wechatApi.InitTag();
+    else {
+        wechatApi.InitTag(wechatApi.initMenu);
     }
 }
 
 
 
-module.exports = { initData ,SeedCreateMenu,setSchedule,SeedCreateTag};
+module.exports = {
+    initData,
+    SeedCreateMenu,
+    setSchedule,
+    SeedCreateTag,
+    initTagAndMenu
+};
 
 
 

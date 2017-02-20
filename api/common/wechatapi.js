@@ -34,7 +34,7 @@ function initMenu(tagsFromWechat){
                 }
             });//回调函数        
         },
-        //eachOf来循环tagsFromWechat创建菜单
+       
         function(deleteMenuResult, callback) {
             //创建基础菜单,即普通粉丝菜单
             createMenu(config.wechatSelfMenu+config.apiToken,config.baseMenu,function(result){
@@ -47,26 +47,25 @@ function initMenu(tagsFromWechat){
         },
 
         function(deleteMenuResult,callback){
-            
-            async.eachOf(tagsFromWechat,function(value,key,callback){
+             //eachOf来循环tagsFromWechat创建菜单
+            async.eachOf(tagsFromWechat,function(value,key,callback1){
                 //根据tags的id来复制menus，构造创建数据
-                for(var i=0;i<config.conditionalMenus.length;i++){
-                    
-                }
-                if(value.name==='shopowner'){
-                    createMenu(config.wechatSelfMenu+config.apiToken,config.conditionalMenus[0],function(result){
-                        if(result){
-                            callback(null,result);
-                        }else{
-                            callback("err","");
-                        }
-                    })
-                }
-                
+               var menuTemp= config.conditionalMenus.find(d=>d.menuName===value.name)
+
+               createMenu(config.wechatCondictionMenuURL+config.apiToken,menuTemp.menu,function(result){
+                   if(result){
+                       callback1();
+                   }else{
+                       callback1("创建个性化菜单出错！")
+                   }
+               });
+     
             },function(err){
-                if(err)console.log(err);
-
-
+                if(err){
+                    console.log(err);
+                    callback(err,"");//waterfall的回调
+                }
+                callback(null,true);//waterfall的回调
             })
         },
         
