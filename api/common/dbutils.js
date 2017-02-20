@@ -9,7 +9,8 @@ module.exports = {
     createconnection: function () {
         var options = {
             user: 'ericwang1903',
-            pass: 'qwer12345'
+            pass: 'qwer12345',
+            promiseLibrary: require('bluebird')
         }
         mongoose.connect('mongodb://localhost:20008/' + Config.databaseName,options);
     },

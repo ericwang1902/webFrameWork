@@ -16,7 +16,7 @@ var app = express();
 
 
 var mongoose = require('mongoose')
-mongoose.Promise = require('bluebird');
+//mongoose.Promise = require('bluebird');
 //mongoose.Promise =global.Promise;
 //数据库连接工具类
 var dbutils = require('./api/common/dbutils');
