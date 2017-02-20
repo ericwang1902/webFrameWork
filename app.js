@@ -16,13 +16,12 @@ var app = express();
 
 
 var mongoose = require('mongoose')
-//mongoose.Promise = require('bluebird');
+mongoose.Promise = require('bluebird');
 //数据库连接
 var options = {
             user: 'ericwang1903',
             pass: 'qwer12345'
         }
-mongoose.Promise = global.Promise;
 mongoose.connect('mongodb://localhost:20008/' + Config.databaseName,options);
 
 
