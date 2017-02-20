@@ -23,7 +23,7 @@ module.exports={
     //微信用户标签url
     wechatTagURL:"https://api.weixin.qq.com/cgi-bin/tags/create?access_token=",
     //查询用户标签url
-    wechatTagCheckURL:"https://api.weixin.qq.com/cgi-bin/tags/get?access_token",
+    wechatTagCheckURL:"https://api.weixin.qq.com/cgi-bin/tags/get?access_token=",
     //获取微信全局的accesstoken的网址，这需要修改！！！！！
     wechatTokenURL:"https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=wx94e3a09e4149b262&secret=6e428e808f1620210ef32a2d2313a038",
     //全局token
