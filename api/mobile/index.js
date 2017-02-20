@@ -24,6 +24,7 @@ router.get('/index', function (req, res, next) {
 // 通过跳转到home携带code，获取openid，只能用这种跳转的方式，不能用ajax访问获取openid
 router.get('/home',getopenid, function (req, res, next) {
     console.log(JSON.stringify(req.fanSaveResult))
+    console.log("openid："+req.session.openid)
     console.log("user_access_token:" + JSON.stringify(req.session.user_access_token))
 
     // wechatapi.getApiToken(function(){
