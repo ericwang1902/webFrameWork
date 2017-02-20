@@ -8,13 +8,6 @@ var bodyParser = require('body-parser');
 //config
 var Config = require('./api/frameConfig/frameConfig');
 
-
-// routers
-var mobileRouter = require('./api/mobile');
-var sysmanage = require('./api/sysmanage')
-var app = express();
-
-
 var mongoose = require('mongoose')
 mongoose.Promise = require('bluebird');
 //数据库连接
@@ -23,6 +16,14 @@ var options = {
             pass: 'qwer12345'
         }
 mongoose.connect('mongodb://localhost:20008/' + Config.databaseName,options);
+
+
+
+// routers
+var mobileRouter = require('./api/mobile');
+var sysmanage = require('./api/sysmanage')
+var app = express();
+
 
 
 //session管理，使用express-session和connect-mongo就可以了，按照下面的代码设置，如果需要的话去看github页面即可。
