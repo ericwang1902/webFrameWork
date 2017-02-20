@@ -57,7 +57,7 @@ function initMenu(tagsFromWechat) {
                 //根据tags的id来复制menus，构造创建数据
                 console.log('value:' + JSON.stringify(value));
                 var menuTemp = config.conditionalMenus.find(d => d.menuName === value.name);
-                menuTemp.menu.matchrule.tag_id=value.id;
+                //menuTemp.menu.matchrule.tag_id=value.id;
                 console.log('menuTemp:' + JSON.stringify(value));
                 console.log('menuTemp:' + JSON.stringify(menuTemp));
                 if (menuTemp) {
