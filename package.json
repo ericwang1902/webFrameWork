@@ -25,6 +25,7 @@
     "qiniu": "^6.1.13",
     "request": "^2.79.0",
     "serve-favicon": "~2.3.0",
+    "wechat-api": "^1.32.0",
     "wechat-oauth": "^1.2.1"
   }
 }

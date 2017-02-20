@@ -3,6 +3,10 @@ var request = require('request')
 var config = require('../frameConfig/frameConfig')
 var async = require('async')
 
+var WechatAPI = require('wechat-api');
+
+var api = new WechatAPI(config.wechatConfig.appid, config.wechatConfig.appsecret);
+
 //获取全局的token
 function getApiToken(callback) {
     var tokenOptions = {
@@ -187,10 +191,6 @@ function sendNewOrderTemplateMsg(openid){
     console.log("openid~~~~~:"+openid)
     var templateId="FWQV2RtWbgSE5IZxt7fi86wA3jwNKohNlL-c4mRPxBI";
     var postData =  {
-           touser:openid,
-           template_id:templateId,
-           url:"http://www.baidu.com",            
-           data:{
                    first: {
                        value:"恭喜你购买成功！",
                        color:"#173177"
@@ -219,23 +219,20 @@ function sendNewOrderTemplateMsg(openid){
                        value:"欢迎再次购买！",
                        color:"#173177"
                    }
-           }
        }
     var postData1 = JSON.stringify(postData);
-    console.log(postData1);
 
-    var templateMsgOption={
-        url: config.wechatTemplateMsg + config.apiToken,
-        method: 'POST',
-        json: true,
-        body: {
-            postData1
-        }
-    }
-    console.log("templateMsgOption.url:"+templateMsgOption.url);
-    request(templateMsgOption,function(err,response,body){
-        console.log("发送新订单模板消息:"+JSON.stringify(body));
-    })
+
+    api.sendTemplate(openid, templateId, url, postData1, function (err, result) {
+                                if (err) {
+                                    console.log(err);
+                                    callback('微信消息发送出错！')
+                                }
+                                else{
+                                    console.log('result:' + JSON.stringify(result));
+                                    callback();
+                                }
+                            }); 
 
 }
 
