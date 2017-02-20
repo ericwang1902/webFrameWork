@@ -79,7 +79,7 @@ function createFans(req, res, next) {
         if (!fanresult) {
             var fans = new fansModel({
                 fannickname: '',
-                fanopenid: req.openid,
+                fanopenid: req.session.openid,
                 orders: [],
                 points: 0,
                 coupons: []
