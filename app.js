@@ -20,9 +20,9 @@ var mongoose = require('mongoose')
 //数据库连接
 var options = {
             user: 'ericwang1903',
-            pass: 'qwer12345',
-            promiseLibrary:require('bluebird')
+            pass: 'qwer12345'
         }
+mongoose.Promise = global.Promise
 mongoose.connect('mongodb://localhost:20008/' + Config.databaseName,options);
 
 
