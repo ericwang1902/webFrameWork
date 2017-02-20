@@ -14,14 +14,6 @@ mongoose.Promise = require('bluebird');
 var dbutils = require('./api/common/dbutils');
 dbutils.createconnection();
 
-//数据库连接
-// var options = {
-//             user: 'ericwang1903',
-//             pass: 'qwer12345'
-//         }
-// mongoose.connect('mongodb://localhost:20008/' + Config.databaseName,options);
-
-
 
 // routers
 var mobileRouter = require('./api/mobile');

@@ -184,6 +184,7 @@ function createTag(tagName, callback) {
 
 //发送新订单模板消息
 function sendNewOrderTemplateMsg(openid){
+    console.log("openid~~~~~:"+openid)
     var templateId="FWQV2RtWbgSE5IZxt7fi86wA3jwNKohNlL-c4mRPxBI";
     var postData =  {
            touser:openid,
