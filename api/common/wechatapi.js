@@ -133,6 +133,7 @@ function InitTag(){
     request(getTagOptions,function(err,response,body){
         console.log("查询tag："+body);
         var tags = JSON.parse(body).tags;//获取tags数组
+        console.log(tags.find((n) => {n.name===config.Tags[0]}))
         for(var i = 0;i<config.Tags.length;i++){
             if(!tags.find((n) => {n.name===config.Tags[i]}))//如果没有该分组
             {
