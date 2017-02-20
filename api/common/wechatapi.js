@@ -187,48 +187,47 @@ function sendNewOrderTemplateMsg(openid){
     console.log("openid~~~~~:"+openid)
     var templateId="FWQV2RtWbgSE5IZxt7fi86wA3jwNKohNlL-c4mRPxBI";
     var postData =  {
-           "touser":"\""+openid+"\"",
-           "template_id":"\""+templateId+"\"",
-           "url":"http://www.baidu.com",            
-           "data":{
-                
-                  "first": {
-                       "value":"恭喜你购买成功！",
-                       "color":"#173177"
+           touser:openid,
+           template_id:templateId,
+           url:"http://www.baidu.com",            
+           data:{
+                   first: {
+                       value:"恭喜你购买成功！",
+                       color:"#173177"
                    },
-                   "tradeDateTime":{
-                       "value":"巧克力",
-                       "color":"#173177"
+                   tradeDateTime:{
+                       value:"巧克力",
+                       color:"#173177"
                    },
-                   "orderType": {
-                       "value":"39.8元",
-                       "color":"#173177"
+                   orderType: {
+                       value:"39.8元",
+                       color:"#173177"
                    },
-                   "customerInfo": {
-                       "value":"2014年9月22日",
-                       "color":"#173177"
+                   customerInfo: {
+                       value:"2014年9月22日",
+                       color:"#173177"
                    },
-                   "orderItemName": {
-                       "value":"2014年9月22日",
-                       "color":"#173177"
+                   orderItemName: {
+                       value:"2014年9月22日",
+                       color:"#173177"
                    },
-                   "orderItemData": {
-                       "value":"2014年9月22日",
-                       "color":"#173177"
+                   orderItemData: {
+                       value:"2014年9月22日",
+                       color:"#173177"
                    },
-                   "remark":{
-                       "value":"欢迎再次购买！",
-                       "color":"#173177"
+                   remark:{
+                       value:"欢迎再次购买！",
+                       color:"#173177"
                    }
-                
            }
        }
+    var postData1 = JSON.stringify(postData);
     var templateMsgOption={
         url: config.wechatTemplateMsg + config.apiToken,
         method: 'POST',
         json: true,
         body: {
-            postData
+            postData1
         }
     }
     request(templateMsgOption,function(err,response,body){
