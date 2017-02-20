@@ -227,6 +227,18 @@ var SeedCreateTag = function(){
     }
 }
 
+//初始化分组、菜单
+var  initTagAndMenu =function(){
+    if(!config.apiToken){
+        wechatApi.getApiToken(function(){
+            wechatApi.InitTag();
+        })
+    }
+    else{
+            wechatApi.InitTag();
+    }
+}
+
 
 
 module.exports = { initData ,SeedCreateMenu,setSchedule,SeedCreateTag};

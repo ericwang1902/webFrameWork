@@ -133,25 +133,36 @@ function InitTag(){
     request(getTagOptions,function(err,response,body){
         console.log("查询tag："+body);
         var tags = JSON.parse(body).tags;//获取tags数组
-       // console.log(tags)                  
-       //console.log(!tags.find(d => d.name===config.Tags[0]))
-        for(var i = 0;i<config.Tags.length;i++){
-            if(!tags.find(d => d.name===config.Tags[i]))//如果没有该分组
-            {
-                console.log("!!!!!!!"+!tags.find(d => d.name===config.Tags[i]))
-                //新建分组
-                createTag(config.Tags[i]);
+
+        async.eachOf(tags,function(value,key,callback){
+           if(!config.Tags.find(d=>d.name ===value.name)) {
+               createTag(config.Tags.find(d=>d.name ===value.name).name,callback);
+           }else{
+                console.log(value.name+"已创建！")
             }
-            else{
-                console.log(config.Tags[i]+"已创建！")
-            }
-        }
+        },function(err){
+            if (err) console.error(err.message);
+            console.log("initTag~~~异步全部完成，下面到了menu创建")
+        })
+
+        // for(var i = 0;i<config.Tags.length;i++){
+        //     if(!tags.find(d => d.name===config.Tags[i]))//如果没有该分组
+        //     {
+                
+        //         //新建分组
+        //         createTag(config.Tags[i]);
+        //     }
+        //     else{
+        //         console.log(config.Tags[i]+"已创建！")
+        //     }
+        // }
+
     })
 
 }
 
 //创建用户标签,需要补充检查tag，判断是否创建tag的过程。
-function createTag(tagName){
+function createTag(tagName,callback){
     console.log("tag url:"+config.wechatTagURL + config.apiToken)
     var groupOptions = {
         url: config.wechatTagURL + config.apiToken,
@@ -165,7 +176,7 @@ function createTag(tagName){
     }
     request(groupOptions,function(err,response,body){
         console.log("创建tag："+JSON.stringify(body))
-        
+        callback();
     })
 }
 

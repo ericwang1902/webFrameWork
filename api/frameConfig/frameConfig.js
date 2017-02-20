@@ -29,7 +29,7 @@ module.exports={
     //全局token
     apiToken:'',
     //粉丝分组标签
-    Tags:['shopowner','fans','courier','admin'],
+    Tags:[{name:'shopowner'},{name:'fans'},{name:'courier'},{name:'admin'}],
     
     //粉丝菜单配置
     fansMenu:{
