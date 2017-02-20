@@ -22,8 +22,8 @@ router.get('/index', function (req, res, next) {
 });
 
 // 通过跳转到home携带code，获取openid，只能用这种跳转的方式，不能用ajax访问获取openid
-router.get('/home',getopenid, function (req, res, next) {
-    console.log(JSON.stringify(req.fanSaveResult))
+router.get('/home',getopenid, createFans,function (req, res, next) {
+    console.log("fanSaveResult："+JSON.stringify(req.fanSaveResult))
     console.log("openid："+req.session.openid)
     console.log("user_access_token:" + JSON.stringify(req.session.user_access_token))
 
@@ -71,6 +71,7 @@ function getopenid(req, res, next) {
 function createFans(req, res, next) {
     fansModel.findOne({ fanopenid: req.session.openid }, function (err, fanresult) {
         if (err) {
+            console.log("createFans err")
             console.log(err);
         }
         //没有创建该fans就进行创建
