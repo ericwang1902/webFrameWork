@@ -139,6 +139,7 @@ function InitTag(){
                createTag(config.Tags.find(d=>d.name ===value.name).name,callback);
            }else{
                 console.log(value.name+"已创建！")
+                callback();
             }
         },function(err){
             if (err) console.error(err.message);
