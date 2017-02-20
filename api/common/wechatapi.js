@@ -182,10 +182,63 @@ function createTag(tagName, callback) {
     })
 }
 
+//发送新订单模板消息
+function sendNewOrderTemplateMsg(openid){
+    var templateId="FWQV2RtWbgSE5IZxt7fi86wA3jwNKohNlL-c4mRPxBI";
+    var postData =  {
+           touser:openid,
+           template_id:templateId,
+           url:"http://www.baidu.com",            
+           data:{
+                   first: {
+                       value:"恭喜你购买成功！",
+                       color:"#173177"
+                   },
+                   tradeDateTime:{
+                       value:"巧克力",
+                       color:"#173177"
+                   },
+                   orderType: {
+                       value:"39.8元",
+                       color:"#173177"
+                   },
+                   customerInfo: {
+                       value:"2014年9月22日",
+                       color:"#173177"
+                   },
+                   orderItemName: {
+                       value:"2014年9月22日",
+                       color:"#173177"
+                   },
+                   orderItemData: {
+                       value:"2014年9月22日",
+                       color:"#173177"
+                   },
+                   remark:{
+                       value:"欢迎再次购买！",
+                       color:"#173177"
+                   }
+           }
+       }
+    var templateMsgOption={
+        url: config.wechatTemplateMsg + config.apiToken,
+        method: 'POST',
+        json: true,
+        body: {
+            postData
+        }
+    }
+    request(templateMsgOption,function(err,response,body){
+        console.log("发送新订单模板消息:"+body)
+    })
+
+}
+
 
 module.exports = {
     getApiToken,
     initMenu,
-    InitTag
+    InitTag,
+    sendNewOrderTemplateMsg
 
 }
