@@ -90,7 +90,9 @@ function createFans(req, res, next) {
             })
         }
         //如果该粉丝数据已经创建，就将fanSaveResult写进req
+        
         req.fanSaveResult = fanresult;
+        console.log("fanSaveResult:"+JSON.stringify(req.fanSaveResult))
 
         return next();
 
