@@ -48,10 +48,12 @@ function initMenu(tagsFromWechat){
 
         function(deleteMenuResult,callback){
              //eachOf来循环tagsFromWechat创建菜单
+             console.log('tagsFromWechat:'+JSON.stringify(tagsFromWechat));
             async.eachOf(tagsFromWechat,function(value,key,callback1){
                 //根据tags的id来复制menus，构造创建数据
+                 console.log('value.name:'+JSON.stringify(value.name));
                var menuTemp= config.conditionalMenus.find(d=>d.menuName===value.name)
-               console.log('menuTemp:'+value);
+               console.log('menuTemp:'+JSON.stringify(value));
                console.log('menuTemp:'+menuTemp);
 
                createMenu(config.wechatCondictionMenuURL+config.apiToken,menuTemp.menu,function(result){
