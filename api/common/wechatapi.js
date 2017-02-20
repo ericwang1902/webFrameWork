@@ -188,10 +188,11 @@ function sendNewOrderTemplateMsg(openid){
     var templateId="FWQV2RtWbgSE5IZxt7fi86wA3jwNKohNlL-c4mRPxBI";
     var postData =  {
            touser:openid,
-           template_id:templateId,
+           template_id:"\""+templateId+"\"",
            url:"http://www.baidu.com",            
            data:{
-                   "first": {
+                
+                  "first": {
                        "value":"恭喜你购买成功！",
                        "color":"#173177"
                    },
@@ -219,6 +220,7 @@ function sendNewOrderTemplateMsg(openid){
                        "value":"欢迎再次购买！",
                        "color":"#173177"
                    }
+                
            }
        }
     var templateMsgOption={
