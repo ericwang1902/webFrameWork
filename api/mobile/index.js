@@ -47,6 +47,7 @@ function getopenid(req, res, next) {
               
                 req.session.openid = openid;
                 req.session.user_access_token = accessToken;
+                console.log("获取openid："+req.session.openid)
                 console.log("获取access token："+req.session.user_access_token)
 
             } catch (error) {
