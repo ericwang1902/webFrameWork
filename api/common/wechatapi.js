@@ -55,11 +55,11 @@ function initMenu(tagsFromWechat) {
             console.log('tagsFromWechat:' + JSON.stringify(tagsFromWechat));
             async.eachOf(tagsFromWechat, function (value, key, callback1) {
                 //根据tags的id来复制menus，构造创建数据
-                console.log('value.name:' + JSON.stringify(value.name));
+                console.log('value:' + JSON.stringify(value));
                 var menuTemp = config.conditionalMenus.find(d => d.menuName === value.name);
                 menuTemp.menu.matchrule.tag_id=value.id;
                 console.log('menuTemp:' + JSON.stringify(value));
-                console.log('menuTemp:' + menuTemp);
+                console.log('menuTemp:' + JSON.stringify(menuTemp));
                 if (menuTemp) {
                     createMenu(config.wechatCondictionMenuURL + config.apiToken, menuTemp.menu, function (result) {
                         if (result) {
@@ -193,33 +193,33 @@ function sendNewOrderTemplateMsg(openid){
     var templateId="FWQV2RtWbgSE5IZxt7fi86wA3jwNKohNlL-c4mRPxBI";
     var url1 ="http://baidu.com";
     var postData =  {
-                   first: {
-                       value:"恭喜你购买成功！",
-                       color:"#173177"
+                   "first": {
+                       "value":"恭喜你购买成功！",
+                       "color":"#173177"
                    },
-                   tradeDateTime:{
-                       value:"巧克力",
-                       color:"#173177"
+                   "tradeDateTime":{
+                       "value":"巧克力",
+                       "color":"#173177"
                    },
-                   orderType: {
-                       value:"39.8元",
-                       color:"#173177"
+                   "orderType": {
+                       "value":"39.8元",
+                       "color":"#173177"
                    },
-                   customerInfo: {
-                       value:"2014年9月22日",
-                       color:"#173177"
+                   "customerInfo": {
+                       "value":"2014年9月22日",
+                       "color":"#173177"
                    },
-                   orderItemName: {
-                       value:"2014年9月22日",
-                       color:"#173177"
+                   "orderItemName": {
+                       "value":"2014年9月22日",
+                       "color":"#173177"
                    },
-                   orderItemData: {
-                       value:"2014年9月22日",
-                       color:"#173177"
+                   "orderItemData": {
+                       "value":"2014年9月22日",
+                       "color":"#173177"
                    },
-                   remark:{
-                       value:"欢迎再次购买！",
-                       color:"#173177"
+                   "remark":{
+                       "value":"欢迎再次购买！",
+                       "color":"#173177"
                    }
        }
     var postData1 = JSON.stringify(postData);
