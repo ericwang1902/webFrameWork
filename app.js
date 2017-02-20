@@ -22,8 +22,8 @@ var options = {
             user: 'ericwang1903',
             pass: 'qwer12345'
         }
-mongoose.Promise = global.Promise
-mongoose.connect('mongodb://localhost:20008/' + Config.databaseName,options);
+mongoose.Promise = global.Promise;
+var db=mongoose.connect('mongodb://localhost:20008/' + Config.databaseName,options);
 
 
 //session管理，使用express-session和connect-mongo就可以了，按照下面的代码设置，如果需要的话去看github页面即可。
@@ -35,8 +35,8 @@ app.use(session({
   cookie: {maxAge: 1000*100 },//session的过期时间，以此为准
   store: new MongoStore(
     {
-      mongooseConnection: mongoose.connection,
-     // mongooseConnection: dbutils.getconnection(),
+      //mongooseConnection: mongoose.connection,
+      mongooseConnection: db,
       ttl: 1*60*60
     }),
   resave: true,
