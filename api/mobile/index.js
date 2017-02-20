@@ -62,6 +62,7 @@ function getopenid(req, res, next) {
             
         });
     }else{
+        console.log("已经创建了该用户!")
         return next();
     }
 
