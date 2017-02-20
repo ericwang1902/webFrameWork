@@ -136,9 +136,9 @@ function InitTag(){
        // console.log(tags)                  
        //console.log(!tags.find(d => d.name===config.Tags[0]))
         for(var i = 0;i<config.Tags.length;i++){
-            if(!tags.find((n) => {n.name===config.Tags[i]}))//如果没有该分组
+            if(!tags.find(d => d.name===config.Tags[i]))//如果没有该分组
             {
-                console.log("!!!!!!!"+!tags.find((n) => {n.name===config.Tags[i]}))
+                console.log("!!!!!!!"+!tags.find(d => d.name===config.Tags[i]))
                 //新建分组
                 createTag(config.Tags[i]);
             }
