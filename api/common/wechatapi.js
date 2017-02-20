@@ -51,6 +51,7 @@ function initMenu(tagsFromWechat){
             async.eachOf(tagsFromWechat,function(value,key,callback1){
                 //根据tags的id来复制menus，构造创建数据
                var menuTemp= config.conditionalMenus.find(d=>d.menuName===value.name)
+               console.log('menuTemp:'+value);
                console.log('menuTemp:'+menuTemp);
 
                createMenu(config.wechatCondictionMenuURL+config.apiToken,menuTemp.menu,function(result){
@@ -148,6 +149,7 @@ function InitTag(initMenuCallback){
             //下面是取出最新的tag数组，获取到tags的id，根据id来创建menu
           request(getTagOptions,function(err,response,body){
               var finalTags = JSON.parse(body).tags;
+              console.log('finalTags:'+finalTags);
               initMenuCallback(finalTags);//创建菜单的回调
           })
         
