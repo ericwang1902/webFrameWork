@@ -223,6 +223,7 @@ function sendNewOrderTemplateMsg(openid){
        }
     var postData1 = JSON.stringify(postData);
     console.log(postData1);
+
     var templateMsgOption={
         url: config.wechatTemplateMsg + config.apiToken,
         method: 'POST',
@@ -231,6 +232,7 @@ function sendNewOrderTemplateMsg(openid){
             postData1
         }
     }
+    console.log("templateMsgOption.url:"+templateMsgOption.url);
     request(templateMsgOption,function(err,response,body){
         console.log("发送新订单模板消息:"+JSON.stringify(body));
     })
