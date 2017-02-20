@@ -15,7 +15,7 @@ var sysmanage = require('./api/sysmanage')
 var app = express();
 
 
-var mongoose = require('mongoose')
+//var mongoose = require('mongoose')
 //mongoose.Promise = require('bluebird');
 //mongoose.Promise =global.Promise;
 //数据库连接工具类
@@ -31,7 +31,8 @@ app.use(session({
   cookie: {maxAge: 1000*100 },//session的过期时间，以此为准
   store: new MongoStore(
     {
-      mongooseConnection: mongoose.connection,
+      //mongooseConnection: mongoose.connection,
+      mongooseConnection: dbutils.getconnection(),
       ttl: 1*60*60
     }),
   resave: true,
