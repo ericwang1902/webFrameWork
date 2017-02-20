@@ -22,7 +22,7 @@ function getApiToken(callback){
 
 
 //创建菜单：
-function initMenu(){
+function initMenu(tagsFromWechat){
     async.waterfall([
         function(callback) {
             //删除菜单
@@ -34,9 +34,10 @@ function initMenu(){
                 }
             });//回调函数        
         },
+        //eachOf来循环tagsFromWechat创建菜单
         function(deleteMenuResult, callback) {
             //创建基础菜单,即普通粉丝菜单
-            createMenu(config.wechatSelfMenu+config.apiToken,config.fansMenu,function(result){
+            createMenu(config.wechatSelfMenu+config.apiToken,config.baseMenu,function(result){
                 if(result){
                     callback(null,result);
                 }else{
@@ -44,36 +45,34 @@ function initMenu(){
                 }
             });
         },
-        function(fansMenuResult, callback) {
-            //创建店主菜单
-            createMenu(config.wechatCondictionMenuURL+config.apiToken,config.shopperOwenerMenu,function(result){
-                if(result){
-                    callback(null,result);
-                }else{
-                    callback("err","");
+
+        function(deleteMenuResult,callback){
+            
+            async.eachOf(tagsFromWechat,function(value,key,callback){
+                //根据tags的id来复制menus，构造创建数据
+                for(var i=0;i<config.conditionalMenus.length;i++){
+                    
                 }
-            });
+                if(value.name==='shopowner'){
+                    createMenu(config.wechatSelfMenu+config.apiToken,config.conditionalMenus[0],function(result){
+                        if(result){
+                            callback(null,result);
+                        }else{
+                            callback("err","");
+                        }
+                    })
+                }
+                
+            },function(err){
+                if(err)console.log(err);
+
+
+            })
         },
-        function(shopperOwenerMenuResult, callback) {
-            //创建配送员菜单
-            createMenu(config.wechatCondictionMenuURL+config.apiToken,config.courierMenu,function(result){
-                if(result){
-                    callback(null,result);
-                }else{
-                    callback("err","");
-                }
-            });
-        },
-        function(courierMenuResult, callback) {
-            //创建管理员菜单
-            createMenu(config.wechatCondictionMenuURL+config.apiToken,config.adminMenu,function(result){
-                if(result){
-                    callback(null,result);
-                }else{
-                    callback("err","");
-                }
-            });
-        }
+        
+
+
+
     ], function (err, result) {
         if(err){
             console.log("创建菜单出错！")
@@ -124,7 +123,7 @@ function createMenu(menuUrl,menu,callbackFunc){
 }
 
 //查询用户tag
-function InitTag(){
+function InitTag(initMenuCallback){
     //查询是否已经创建了tag
     var getTagOptions = {
         url: config.wechatTagCheckURL+config.apiToken,
@@ -144,19 +143,15 @@ function InitTag(){
         },function(err){
             if (err) console.error(err.message);
             console.log("initTag~~~异步全部完成，下面到了menu创建")
-        })
+            //经过上述async.eachof代码段，就完成了tag的新建，在系统里就有了tag数据了
 
-        // for(var i = 0;i<config.Tags.length;i++){
-        //     if(!tags.find(d => d.name===config.Tags[i]))//如果没有该分组
-        //     {
-                
-        //         //新建分组
-        //         createTag(config.Tags[i]);
-        //     }
-        //     else{
-        //         console.log(config.Tags[i]+"已创建！")
-        //     }
-        // }
+            //下面是取出最新的tag数组，获取到tags的id，根据id来创建menu
+          request(getTagOptions,function(err,response,body){
+              var finalTags = JSON.parse(body).tags;
+              initMenuCallback(finalTags);//创建菜单的回调
+          })
+        
+        })
 
     })
 

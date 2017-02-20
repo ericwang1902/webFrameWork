@@ -32,7 +32,7 @@ module.exports={
     Tags:[{name:'shopowner'},{name:'fans'},{name:'courier'},{name:'admin'}],
     
     //粉丝菜单配置
-    fansMenu:{
+    baseMenu:{
         button: [
                 {
                     type: "click", 
@@ -41,45 +41,46 @@ module.exports={
                 }
             ] 
     },
-    //店主菜单配置
-    shopperOwenerMenu:{
-        button: [
-                {
-                    type: "click", 
-                    name: "店主", 
-                    key: "V1001_TODAY_MUSIC"
-                }
-            ],
+    //条件菜单
+    conditionalMenus:[
+        {
+            button: [
+                    {
+                        type: "click", 
+                        name: "店主", 
+                        key: "V1001_TODAY_MUSIC"
+                    }
+                ],
             matchrule:{
-                tag_id:100
+                    tag_id:''
             }
-    },
-    //管理员菜单配置
-    adminMenu:{
-        button: [
-                {
-                    type: "click", 
-                    name: "管理员", 
-                    key: "V1001_TODAY_MUSIC"
+        },
+        {
+            button: [
+                    {
+                        type: "click", 
+                        name: "管理员", 
+                        key: "V1001_TODAY_MUSIC"
+                    }
+                ],
+                matchrule:{
+                    tag_id:''
                 }
-            ],
-            matchrule:{
-                tag_id:103
-            }
-    },
-    //配送员菜单配置
-    courierMenu:{
-        button: [
-                {
-                    type: "click", 
-                    name: "配送员", 
-                    key: "V1001_TODAY_MUSIC"
+        },
+        {
+            button: [
+                    {
+                        type: "click", 
+                        name: "配送员", 
+                        key: "V1001_TODAY_MUSIC"
+                    }
+                ],
+                matchrule:{
+                    tag_id:''
                 }
-            ],
-            matchrule:{
-                tag_id:102
-            }
     }
+    ]
+  
 
     
 
