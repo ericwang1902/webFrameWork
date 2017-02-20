@@ -229,7 +229,7 @@ function sendNewOrderTemplateMsg(openid){
         }
     }
     request(templateMsgOption,function(err,response,body){
-        console.log("发送新订单模板消息:"+body)
+        console.log("发送新订单模板消息:"+JSON.stringify(body));
     })
 
 }
