@@ -221,9 +221,7 @@ var initTagAndMenu = function () {
 
 module.exports = {
     initData,
-    SeedCreateMenu,
     setSchedule,
-    SeedCreateTag,
     initTagAndMenu
 };
 
