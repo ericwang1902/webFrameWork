@@ -109,7 +109,7 @@ passport.use(new LocalStrategy(
 var seed = require('./api/common/seed');
 seed.initData();
 seed.setSchedule();//设置定时获取apitoken的定时任务
-seed.initTagAndMenu();//初始化tag、菜单
+//seed.initTagAndMenu();//初始化tag、菜单，每天都有调用的次数，只需要开机运行的时候运行就行，其实还可以在改函数里，补充一个检查的逻辑。
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
