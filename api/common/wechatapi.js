@@ -123,8 +123,29 @@ function createMenu(menuUrl,menu,callbackFunc){
     })
 }
 
+//查询用户tag
+function InitTag(){
+    //查询是否已经创建了tag
+    var getTagOptions = {
+        url: config.wechatTagCheckURL+config.apiToken,
+        method: 'GET'
+    }
+    request(getTagOptions,function(err,response,body){
+        console.log("查询tag："+body);
+        var tags = JSON.parse(body).tags;//获取tags数组
+        for(var i = 0;i<config.Tags.length;i++){
+            if(!tags.find((n) => {n.name===config.Tags[i]}))//如果没有该分组
+            {
+                //新建分组
+                createTag(config.Tags[i]);
+            }
+            else{
+                console.log(config.Tags[i]+"已创建！")
+            }
+        }
+    })
 
-
+}
 
 //创建用户标签,需要补充检查tag，判断是否创建tag的过程。
 function createTag(tagName){
@@ -144,23 +165,11 @@ function createTag(tagName){
         
     })
 }
-//查询用户tag
-function checkTag(){
-    //查询是否已经创建了tag
-    var getTagOptions = {
-        url: config.wechatTagCheckURL+config.apiToken,
-        method: 'GET'
-    }
-    request(getTagOptions,function(err,response,body){
-        console.log("查询tag："+body);
-    })
-
-}
 
 
 module.exports={
     getApiToken,
     initMenu,
-    checkTag
+    InitTag
     
 }

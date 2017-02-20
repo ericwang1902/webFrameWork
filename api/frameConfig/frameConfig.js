@@ -28,8 +28,8 @@ module.exports={
     wechatTokenURL:"https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=wx94e3a09e4149b262&secret=6e428e808f1620210ef32a2d2313a038",
     //全局token
     apiToken:'',
- 
-    
+    //粉丝分组标签
+    Tags:['shopowner','fans','courier','admin'],
     
     //粉丝菜单配置
     fansMenu:{

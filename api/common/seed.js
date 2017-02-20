@@ -203,8 +203,8 @@ var setSchedule=function(){
     });  
 }
 
-
-var createMenu=function(){
+//创建菜单
+var SeedCreateMenu=function(){
     if(!config.apiToken){
         wechatApi.getApiToken(function(){
         wechatApi.initMenu();
@@ -215,20 +215,21 @@ var createMenu=function(){
     }
 }
 
-var checkTag = function(){
+//创建分组
+var SeedCreateTag = function(){
        if(!config.apiToken){
         wechatApi.getApiToken(function(){
-            wechatApi.checkTag();
+            wechatApi.InitTag();
         })
     }
     else{
-            wechatApi.checkTag();
+            wechatApi.InitTag();
     }
 }
 
 
 
-module.exports = { initData ,createMenu,setSchedule,checkTag};
+module.exports = { initData ,SeedCreateMenu,setSchedule,SeedCreateTag};
 
 
 
