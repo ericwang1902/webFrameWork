@@ -15,12 +15,15 @@ var sysmanage = require('./api/sysmanage')
 var app = express();
 
 
-//var mongoose = require('mongoose')
-//mongoose.Promise = require('bluebird');
-//mongoose.Promise =global.Promise;
-//数据库连接工具类
-var dbutils = require('./api/common/dbutils');
-dbutils.createconnection();
+var mongoose = require('mongoose')
+mongoose.Promise = require('bluebird');
+//数据库连接
+var options = {
+            user: 'ericwang1903',
+            pass: 'qwer12345'
+        }
+mongoose.connect('mongodb://localhost:20008/' + Config.databaseName,options);
+
 
 //session管理，使用express-session和connect-mongo就可以了，按照下面的代码设置，如果需要的话去看github页面即可。
 var session = require('express-session');
@@ -31,8 +34,8 @@ app.use(session({
   cookie: {maxAge: 1000*100 },//session的过期时间，以此为准
   store: new MongoStore(
     {
-      //mongooseConnection: mongoose.connection,
-      mongooseConnection: dbutils.getconnection(),
+      mongooseConnection: mongoose.connection,
+     // mongooseConnection: dbutils.getconnection(),
       ttl: 1*60*60
     }),
   resave: true,

@@ -9,7 +9,7 @@ var Config = require('../frameConfig/frameConfig')
 
 module.exports = {
     createconnection: function () {
-        mongoose.Promise = require('bluebird');
+       
         var options = {
             user: 'ericwang1903',
             pass: 'qwer12345'
