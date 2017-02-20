@@ -190,7 +190,7 @@ function createTag(tagName, callback) {
 function sendNewOrderTemplateMsg(openid){
     console.log("openid~~~~~:"+openid)
     var templateId="FWQV2RtWbgSE5IZxt7fi86wA3jwNKohNlL-c4mRPxBI";
-    var url ="http://baidu.com"
+    var url1 ="http://baidu.com";
     var postData =  {
                    first: {
                        value:"恭喜你购买成功！",
@@ -224,14 +224,13 @@ function sendNewOrderTemplateMsg(openid){
     var postData1 = JSON.stringify(postData);
 
 
-    api.sendTemplate(openid, templateId, url, postData1, function (err, result) {
+    api.sendTemplate(openid, templateId, url1, postData1, function (err, result) {
                                 if (err) {
                                     console.log(err);
-                                    callback('微信消息发送出错！')
+                              
                                 }
                                 else{
                                     console.log('result:' + JSON.stringify(result));
-                                    callback();
                                 }
                             }); 
 
