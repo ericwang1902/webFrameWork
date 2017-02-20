@@ -60,7 +60,7 @@ function initMenu(tagsFromWechat) {
                 console.log('menuTemp1:' + JSON.stringify(value));
                 console.log('menuTemp1:' + JSON.stringify(menuTemp1));
 
-                var temp=JSON.parse(menuTemp1);
+                var temp=menuTemp1;
                 temp.menu.matchrule.tag_id=value.id;
 
                 
