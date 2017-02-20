@@ -187,10 +187,10 @@ function sendNewOrderTemplateMsg(openid){
     console.log("openid~~~~~:"+openid)
     var templateId="FWQV2RtWbgSE5IZxt7fi86wA3jwNKohNlL-c4mRPxBI";
     var postData =  {
-           touser:"\""+openid+"\"",
-           template_id:templateId,
-           url:"http://www.baidu.com",            
-           data:{
+           "touser":"\""+openid+"\"",
+           "template_id":"\""+templateId+"\"",
+           "url":"http://www.baidu.com",            
+           "data":{
                 
                   "first": {
                        "value":"恭喜你购买成功！",
