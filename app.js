@@ -107,8 +107,9 @@ passport.use(new LocalStrategy(
 //seed
 var seed = require('./api/common/seed');
 seed.initData();
-seed.setSchedule();
-seed.createMenu();
+seed.setSchedule();//设置定时获取apitoken的定时任务
+seed.createMenu();//创建菜单
+seed.checkTag();//检查tag
 
 
 // view engine setup

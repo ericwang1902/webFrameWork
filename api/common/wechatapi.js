@@ -146,12 +146,21 @@ function createTag(tagName){
 }
 //查询用户tag
 function checkTag(){
+    //查询是否已经创建了tag
+    var getTagOptions = {
+        url: config.wechatTagCheckURL+config.apiToken,
+        method: 'GET'
+    }
+    request(getTagOptions,function(err,response,body){
+        console.log("查询tag："+body);
+    })
 
 }
 
 
 module.exports={
     getApiToken,
-    initMenu
+    initMenu,
+    checkTag
     
 }

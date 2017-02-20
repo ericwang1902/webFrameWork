@@ -8,6 +8,8 @@ var salt = bcrypt.genSaltSync(10);
 var schedule = require('node-schedule');
 var wechatApi = require('./wechatapi')
 
+var config = require('../frameConfig/frameConfig')
+
 
 
 var funcModel = require('../sysmanage/func/funcModel');
@@ -203,15 +205,30 @@ var setSchedule=function(){
 
 
 var createMenu=function(){
-    wechatApi.getApiToken(function(){
+    if(!config.apiToken){
+        wechatApi.getApiToken(function(){
         wechatApi.initMenu();
-    })
-    
+        })
+    }
+    else{
+        wechatApi.initMenu();
+    }
+}
+
+var checkTag = function(){
+       if(!config.apiToken){
+        wechatApi.getApiToken(function(){
+            wechatApi.checkTag();
+        })
+    }
+    else{
+            wechatApi.checkTag();
+    }
 }
 
 
 
-module.exports = { initData ,createMenu,setSchedule};
+module.exports = { initData ,createMenu,setSchedule,checkTag};
 
 
 
