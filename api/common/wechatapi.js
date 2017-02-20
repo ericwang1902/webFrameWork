@@ -56,12 +56,16 @@ function initMenu(tagsFromWechat) {
             async.eachOf(tagsFromWechat, function (value, key, callback1) {
                 //根据tags的id来复制menus，构造创建数据
                 console.log('value:' + JSON.stringify(value));
-                var menuTemp = config.conditionalMenus.find(d => d.menuName === value.name);
-                //menuTemp.menu.matchrule.tag_id=value.id;
-                console.log('menuTemp:' + JSON.stringify(value));
-                console.log('menuTemp:' + JSON.stringify(menuTemp));
-                if (menuTemp) {
-                    createMenu(config.wechatCondictionMenuURL + config.apiToken, menuTemp.menu, function (result) {
+                var menuTemp1 = config.conditionalMenus.find(d => d.menuName === value.name);
+                console.log('menuTemp1:' + JSON.stringify(value));
+                console.log('menuTemp1:' + JSON.stringify(menuTemp1));
+
+                var temp=JSON.parse(menuTemp1);
+                temp.menu.matchrule.tag_id=value.id;
+
+                
+                if (temp) {
+                    createMenu(config.wechatCondictionMenuURL + config.apiToken, temp.menu, function (result) {
                         if (result) {
                             callback1();
                         } else {
@@ -222,10 +226,8 @@ function sendNewOrderTemplateMsg(openid){
                        "color":"#173177"
                    }
        }
-    var postData1 = JSON.stringify(postData);
 
-
-    api.sendTemplate(openid, templateId, url1, postData1, function (err, result) {
+    api.sendTemplate(openid, templateId, url1, postData, function (err, result) {
                                 if (err) {
                                     console.log(err);
                               
