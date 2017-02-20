@@ -32,7 +32,7 @@ router.get('/home',getopenid, createFans,function (req, res, next) {
     //   //  wechatapi.sendNewOrderTemplateMsg(req.session.openid);//测试模板消息发送
     // });//获取全局token,后面要删掉，不能每次用户授权，就获取全局的token
     
-    //res.send("homepage")
+    res.send("homepage")
 });
 
 //第三方库获取openid和user_access_token
