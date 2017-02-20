@@ -5,14 +5,14 @@ var mongoose = require('mongoose')
 
 var Config = require('../frameConfig/frameConfig')
 
-//mongoose.Promise = require('bluebird');
+
 
 module.exports = {
     createconnection: function () {
+        mongoose.Promise = require('bluebird');
         var options = {
             user: 'ericwang1903',
-            pass: 'qwer12345',
-            promiseLibrary: require('bluebird')
+            pass: 'qwer12345'
         }
         mongoose.connect('mongodb://localhost:20008/' + Config.databaseName,options);
     },
