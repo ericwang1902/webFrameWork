@@ -27,7 +27,8 @@ router.get('/home',getopenid, createFans, function (req, res, next) {
     console.log("user_access_token:" + JSON.stringify(req.session.user_access_token))
 
     wechatapi.getApiToken(function(){
-        wechatapi.sendNewOrderTemplateMsg(req.session.openid);//测试模板消息发送
+        console.log("发送模板消息回调")
+      //  wechatapi.sendNewOrderTemplateMsg(req.session.openid);//测试模板消息发送
     });//获取全局token,后面要删掉，不能每次用户授权，就获取全局的token
     
     res.send("homepage")
