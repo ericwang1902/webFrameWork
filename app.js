@@ -17,14 +17,16 @@ var app = express();
 
 
 
-//session管理，使用express-session和connect-mongo就可以了，按照下面的代码设置，如果需要的话去看github页面即可。
-var session = require('express-session');
-var MongoStore = require('connect-mongo')(session);
+
 var mongoose = require('mongoose')
 mongoose.Promise = require('bluebird');
 //数据库连接工具类
 var dbutils = require('./api/common/dbutils');
 dbutils.createconnection();
+
+//session管理，使用express-session和connect-mongo就可以了，按照下面的代码设置，如果需要的话去看github页面即可。
+var session = require('express-session');
+var MongoStore = require('connect-mongo')(session);
 
 app.use(session({
   secret: Config.sessionSecret,
