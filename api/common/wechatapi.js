@@ -40,7 +40,7 @@ function initMenu(tagsFromWechat) {
                 if(JSON.parse(body).conditionalmenu){
                     var conditionalMenuList = JSON.parse(body).conditionalmenu;
                     //2.拿自定义菜单list匹配tags
-                    var tagsList = config.TagsFromWechat.groups;
+                    var tagsList = config.TagsFromWechat;
                     async.eachOf(conditionalMenuList,function(value,key,callback1){
                         //如果有匹配不到的，就进行创建
                         if(!tagsList.find(d=>d.id === value.matchrule.group_id)){
