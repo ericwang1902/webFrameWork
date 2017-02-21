@@ -47,7 +47,7 @@ function initMenu(tagsFromWechat) {
                         console.log("conditionalMenuList:"+JSON.stringify(conditionalMenuList));//这里的id是字符串
                         if(!tagsList.find(d=>d.id == value.matchrule.group_id)){
                             console.log("value:"+JSON.stringify(value))
-                            callback1("E001");
+                            callback1(new Error("E001"));
                         }else{
                             callback1();
                         }
@@ -60,7 +60,7 @@ function initMenu(tagsFromWechat) {
                         }
                         else{
                             console.log("已经有了tag自定义menu，无需再创建！")
-                            callback("已经有了tag自定义menu，无需再创建！")
+                            callback(new Error("已经有了tag自定义menu，无需再创建！"))
                         }
 
                     })
@@ -78,7 +78,7 @@ function initMenu(tagsFromWechat) {
                 if (result) {
                     callback(null, result);
                 } else {
-                    callback("err", "");
+                    callback(new Error("err"), "");
                 }
             });//回调函数        
         },
@@ -89,7 +89,7 @@ function initMenu(tagsFromWechat) {
                 if (result) {
                     callback(null, result);
                 } else {
-                    callback("err", "");
+                    callback(new Error("err"), "");
                 }
             });
         },
@@ -111,7 +111,7 @@ function initMenu(tagsFromWechat) {
                         if (result) {
                             callback1();
                         } else {
-                            callback1("创建个性化菜单出错！")
+                            callback1(new Error("创建个性化菜单出错！"))
                         }
                     });
                 }
@@ -119,7 +119,7 @@ function initMenu(tagsFromWechat) {
 
             }, function (err) {
                 if (err) {
-                    console.log(err);
+                    console.log(err.message);
                     callback(err, "");//waterfall的回调
                 }
                 callback(null, true);//waterfall的回调
