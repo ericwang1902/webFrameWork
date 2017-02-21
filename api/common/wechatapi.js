@@ -131,7 +131,7 @@ function initMenu(tagsFromWechat) {
 
     ], function (err, result) {
         if (err) {
-            console.log("创建菜单出错！")
+            console.log("err.message:"+err.message);
         } else {
             console.log("菜单创建成功！")
         }
