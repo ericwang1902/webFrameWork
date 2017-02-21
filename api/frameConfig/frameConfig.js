@@ -15,7 +15,8 @@ module.exports = {
     wechatSelfMenu: "https://api.weixin.qq.com/cgi-bin/menu/create?access_token=",
     //微信删除所有菜单url
     wechatTotalDelMenu: "https://api.weixin.qq.com/cgi-bin/menu/delete?access_token=",
-    
+    //微信查询所有菜单url
+    wechatGetMenuList:"https://api.weixin.qq.com/cgi-bin/menu/get?access_token=",
     //微信创建个性化菜单url
     wechatCondictionMenuURL: "https://api.weixin.qq.com/cgi-bin/menu/addconditional?access_token=",
     //微信删除菜单url，是删除所有自定义菜单
@@ -31,7 +32,8 @@ module.exports = {
     apiToken: '',
     //粉丝分组标签，需与条件菜单中的menuName一致
     Tags: [{ name: 'shopowner' }, { name: 'admin' },{ name: 'courier' }],
-
+    //微信接口获取的tag
+    TagsFromWechat:{},
     //粉丝菜单配置
     baseMenu: {
         button: [

@@ -28,7 +28,46 @@ function getApiToken(callback) {
 //创建菜单：
 function initMenu(tagsFromWechat) {
     async.waterfall([
+        //检查是否已经有了菜单(包括基础菜单和个性化菜单)
         function (callback) {
+            var getMenuOptions = {
+                url: config.wechatGetMenuList + config.apiToken,
+                method: 'GET'
+            }
+            request(getMenuOptions,function(err,response,body){
+                console.log("查询menulist："+body);
+                //1.如果有tag自定义菜单
+                if(JSON.parse(body).conditionalmenu){
+                    var conditionalMenuList = JSON.parse(body).conditionalmenu;
+                    //2.拿自定义菜单list匹配tags
+                    var tagsList = config.TagsFromWechat.groups;
+                    async.eachOf(conditionalMenuList,function(value,key,callback1){
+                        //如果有匹配不到的，就进行创建
+                        if(!tagsList.find(d=>d.id === value.matchrule.group_id)){
+                            callback1("E001");
+                        }else{
+                            callback1();
+                        }
+                    },function(err){
+                        if (err) {
+                            console.error(err.message);
+                            //下一步创建
+                             callback(null,true);//到下一步进行创建
+                        }
+                        else{
+                            callback("已经有了tag自定义menu，无需再创建！")
+                        }
+
+                    })
+                    
+
+                }else{
+                    callback(null,true);//到下一步进行创建
+                }
+
+            })
+        },
+        function (ifMenu, callback) {
             //删除菜单
             deleteMenu(function (result) {
                 if (result) {
@@ -60,9 +99,9 @@ function initMenu(tagsFromWechat) {
                 console.log('value:' + JSON.stringify(value));
                 console.log('menuTemp1:' + JSON.stringify(menuTemp1));
 
-                
+
                 if (menuTemp1) {
-                    menuTemp1.menu.matchrule.tag_id=value.id;
+                    menuTemp1.menu.matchrule.tag_id = value.id;
                     createMenu(config.wechatCondictionMenuURL + config.apiToken, menuTemp1.menu, function (result) {
                         if (result) {
                             callback1();
@@ -144,7 +183,7 @@ function InitTag(initMenuCallback) {
     request(getTagOptions, function (err, response, body) {
         console.log("查询tag：" + body);
         var tags = JSON.parse(body).tags;//获取tags数组
-
+        
         async.eachOf(config.Tags, function (value, key, callback) {
             if (!tags.find(d => d.name === value.name)) {
                 createTag(config.Tags.find(d => d.name === value.name).name, callback);
@@ -160,6 +199,7 @@ function InitTag(initMenuCallback) {
             //下面是取出最新的tag数组，获取到tags的id，根据id来创建menu
             request(getTagOptions, function (err, response, body) {
                 var finalTags = JSON.parse(body).tags;
+                config.TagsFromWechat = finalTags;//将tags存入全局
                 console.log('finalTags:' + finalTags);
                 initMenuCallback(finalTags);//创建菜单的回调
             })
@@ -190,50 +230,50 @@ function createTag(tagName, callback) {
 }
 
 //发送新订单模板消息
-function sendNewOrderTemplateMsg(openid){
-    console.log("openid~~~~~:"+openid)
-    var templateId="FWQV2RtWbgSE5IZxt7fi86wA3jwNKohNlL-c4mRPxBI";
-    var url1 ="http://baidu.com";
-    var postData =  {
-                   "first": {
-                       "value":"恭喜你购买成功！",
-                       "color":"#173177"
-                   },
-                   "tradeDateTime":{
-                       "value":"巧克力",
-                       "color":"#173177"
-                   },
-                   "orderType": {
-                       "value":"39.8元",
-                       "color":"#173177"
-                   },
-                   "customerInfo": {
-                       "value":"2014年9月22日",
-                       "color":"#173177"
-                   },
-                   "orderItemName": {
-                       "value":"2014年9月22日",
-                       "color":"#173177"
-                   },
-                   "orderItemData": {
-                       "value":"2014年9月22日",
-                       "color":"#173177"
-                   },
-                   "remark":{
-                       "value":"欢迎再次购买！",
-                       "color":"#173177"
-                   }
-       }
+function sendNewOrderTemplateMsg(openid) {
+    console.log("openid~~~~~:" + openid)
+    var templateId = "FWQV2RtWbgSE5IZxt7fi86wA3jwNKohNlL-c4mRPxBI";
+    var url1 = "http://baidu.com";
+    var postData = {
+        "first": {
+            "value": "恭喜你购买成功！",
+            "color": "#173177"
+        },
+        "tradeDateTime": {
+            "value": "巧克力",
+            "color": "#173177"
+        },
+        "orderType": {
+            "value": "39.8元",
+            "color": "#173177"
+        },
+        "customerInfo": {
+            "value": "2014年9月22日",
+            "color": "#173177"
+        },
+        "orderItemName": {
+            "value": "2014年9月22日",
+            "color": "#173177"
+        },
+        "orderItemData": {
+            "value": "2014年9月22日",
+            "color": "#173177"
+        },
+        "remark": {
+            "value": "欢迎再次购买！",
+            "color": "#173177"
+        }
+    }
 
     api.sendTemplate(openid, templateId, url1, postData, function (err, result) {
-                                if (err) {
-                                    console.log(err);
-                              
-                                }
-                                else{
-                                    console.log('result:' + JSON.stringify(result));
-                                }
-                            }); 
+        if (err) {
+            console.log(err);
+
+        }
+        else {
+            console.log('result:' + JSON.stringify(result));
+        }
+    });
 
 }
 
