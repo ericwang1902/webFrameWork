@@ -46,6 +46,7 @@ function initMenu(tagsFromWechat) {
                         console.log("tagsList:"+JSON.stringify(tagsList));//这里的id是数值
                         console.log("conditionalMenuList:"+JSON.stringify(conditionalMenuList));//这里的id是字符串
                         if(!tagsList.find(d=>d.id == value.matchrule.group_id)){
+                            console.log("value:"+JSON.stringify(value))
                             callback1("E001");
                         }else{
                             callback1();
@@ -54,9 +55,11 @@ function initMenu(tagsFromWechat) {
                         if (err) {
                             console.error(err.message);
                             //下一步创建
+                            console.log("下一步创建")
                              callback(null,true);//到下一步进行创建
                         }
                         else{
+                            console.log("已经有了tag自定义menu，无需再创建！")
                             callback("已经有了tag自定义menu，无需再创建！")
                         }
 
@@ -91,7 +94,7 @@ function initMenu(tagsFromWechat) {
             });
         },
 
-        function (deleteMenuResult, callback) {
+        function (createBaseMenuResult, callback) {
             //eachOf来循环tagsFromWechat创建菜单
             console.log('tagsFromWechat:' + JSON.stringify(tagsFromWechat));
             async.eachOf(tagsFromWechat, function (value, key, callback1) {
