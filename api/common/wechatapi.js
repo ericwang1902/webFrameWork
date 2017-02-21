@@ -43,6 +43,8 @@ function initMenu(tagsFromWechat) {
                     var tagsList = config.TagsFromWechat;
                     async.eachOf(conditionalMenuList,function(value,key,callback1){
                         //如果有匹配不到的，就进行创建
+                        console.log("tagsList:"+JSON.stringify(tagsList));
+                        console.log("conditionalMenuList:"+JSON.stringify(conditionalMenuList));
                         if(!tagsList.find(d=>d.id === value.matchrule.group_id)){
                             callback1("E001");
                         }else{
