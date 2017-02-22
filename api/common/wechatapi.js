@@ -24,7 +24,6 @@ function getApiToken(callback) {
 
 
 
-
 //创建菜单：
 function initMenu(tagsFromWechat) {
     async.waterfall([

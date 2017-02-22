@@ -7,7 +7,7 @@ var suiteSchema = new Schema({
 	'suitedes' : String,
 	'suitephoto' : String,
 	'suiteprice' : Number,
-	'suitestate' : String,
+	'suitestate' : Boolean,
 	'suitetype' : String,
 	'salesnum' : String,
 	'goodslist' : [{

@@ -89,6 +89,7 @@ module.exports = {
      * suiteController.update()
      */
     update: function (req, res) {
+        //console.log(req.body)
         var id = req.params.id;
         suiteModel.findOne({ _id: id }, function (err, suite) {
             if (err) {
@@ -108,7 +109,9 @@ module.exports = {
             suite.suitedes = req.body.suitedes ? req.body.suitedes : suite.suitedes;
             suite.suitephoto = req.body.suitephoto ? req.body.suitephoto : suite.suitephoto;
             suite.suiteprice = req.body.suiteprice ? req.body.suiteprice : suite.suiteprice;
-            suite.suitestate = req.body.suitestate ? req.body.suitestate : suite.suitestate;
+            //由于suitestate是boolean类型的，这里不能用三元运算符，如果值为false，就会直接取suite.suitestate
+            //suite.suitestate = req.body.suitestate ? req.body.suitestate : suite.suitestate;
+            suite.suitestate = req.body.suitestate;
             suite.suitetype = req.body.suitetype ? req.body.suitetype : suite.suitetype;
             suite.salesnum = req.body.salesnum ? req.body.salesnum : suite.salesnum;
             suite.goodslist = req.body.goodslist ? req.body.goodslist : suite.goodslist;
@@ -140,5 +143,7 @@ module.exports = {
             }
             return res.status(204).json();
         });
-    }
+    },
+    //移动端货架接口，增加查询条件，为了避免污染框架接口，在这里另写一个接口
+    
 };
