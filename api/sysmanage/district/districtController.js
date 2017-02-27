@@ -47,8 +47,12 @@ module.exports = {
      * districtController.create()
      */
     create: function (req, res) {
-        var district = new districtModel({			province : req.body.province,			city : req.body.city,			disctrict : req.body.disctrict
+        var district = new districtModel({
+			province : req.body.province,
+			city : req.body.city,
+			district : req.body.district
         });
+        console.log(JSON.stringify(district));
 
         district.save(function (err, district) {
             if (err) {
@@ -79,7 +83,10 @@ module.exports = {
                 });
             }
 
-            district.province = req.body.province ? req.body.province : district.province;			district.city = req.body.city ? req.body.city : district.city;			district.disctrict = req.body.disctrict ? req.body.disctrict : district.disctrict;			
+            district.province = req.body.province ? req.body.province : district.province;
+			district.city = req.body.city ? req.body.city : district.city;
+			district.district = req.body.district ? req.body.district : district.district;
+			
             district.save(function (err, district) {
                 if (err) {
                     return res.status(500).json({
