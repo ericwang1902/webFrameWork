@@ -1,13 +1,6 @@
 var mongoose = require('mongoose');
 var Schema   = mongoose.Schema;
 
-var addressSchema = new Schema({
-	'province' : String,
-	'city' : String,
-	'district' : String,
-	'street' : String,//街道、园区、小区、单位
-	'details' : String,
-	'phone' : String
-});
+var addressSchema = new Schema({	'detail' : String,	'phone' : String,	'region' : {	 	type: Schema.Types.ObjectId,	 	ref: 'region'	}});
 
 module.exports = mongoose.model('address', addressSchema);

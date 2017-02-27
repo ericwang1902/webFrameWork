@@ -47,7 +47,7 @@ module.exports = {
      * addressController.create()
      */
     create: function (req, res) {
-        var address = new addressModel({			province : req.body.province,			city : req.body.city,			district : req.body.district,			street : req.body.street,			details : req.body.details,			phone : req.body.phone
+        var address = new addressModel({			detail : req.body.detail,			phone : req.body.phone,			region : req.body.region
         });
 
         address.save(function (err, address) {
@@ -79,7 +79,7 @@ module.exports = {
                 });
             }
 
-            address.province = req.body.province ? req.body.province : address.province;			address.city = req.body.city ? req.body.city : address.city;			address.district = req.body.district ? req.body.district : address.district;			address.street = req.body.street ? req.body.street : address.street;			address.details = req.body.details ? req.body.details : address.details;			address.phone = req.body.phone ? req.body.phone : address.phone;			
+            address.detail = req.body.detail ? req.body.detail : address.detail;			address.phone = req.body.phone ? req.body.phone : address.phone;			address.region = req.body.region ? req.body.region : address.region;			
             address.save(function (err, address) {
                 if (err) {
                     return res.status(500).json({
