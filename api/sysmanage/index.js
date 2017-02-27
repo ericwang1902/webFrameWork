@@ -10,6 +10,9 @@ var userRouter = require('./user/userRoutes');
 var supplierRouter = require('./supplier/supplierRoutes')
 var goodsRouter = require('./goods/goodsRoutes');
 var suiteRouter = require('./suite/suiteRoutes');
+var districtRouter = require('./district/districtRoutes');
+var regionRouter = require('./region/regionRoutes');
+var addressRouter = require('./address/addressRoutes');
 
 var qiniuToken = require('../common/qiniu')
 
@@ -39,6 +42,18 @@ router.use('/goods',goodsRouter);
 //suite router
 //sysmanage/suite
 router.use('/suite',suiteRouter);
+
+//district router 
+//sysmanage/district
+router.use('/district',districtRouter);
+
+//region router
+//sysmanage/region
+router.use('/region',regionRouter);
+
+//address router
+//sysmanage/address
+router.use('/address',addressRouter);
 
 //图片上传uploadtoken
 router.get('/qiniu',qiniuToken.getToken);

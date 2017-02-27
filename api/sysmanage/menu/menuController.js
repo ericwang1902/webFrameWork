@@ -94,6 +94,7 @@ module.exports = {
         }
 
         var menu = new menuModel({
+            menuNum:menuInstance.menuNum,
             menuName: menuInstance.menuName,
             funcList: funcListTemp//这是func的objectId的array
         });
@@ -136,7 +137,8 @@ module.exports = {
                     message: 'No such menu'
                 });
             }
-
+            
+             menu.menuNum = req.body.menuNum ?req.body.menuNum:menu.menuNum;
              menu.menuName = req.body.menuName ? req.body.menuName : menu.menuName;
              menu.funcList = funclist ? funclist : menu.funcList;
             

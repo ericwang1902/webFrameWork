@@ -31,6 +31,7 @@ var UserData = {
         roleName: constants.role.admin,//管理员角色
         menuList: [
             {
+                menuNum:"1",
                 menuName: "系统设置",
                 funcList: [
                     {
@@ -50,7 +51,8 @@ var UserData = {
                     }
                 ]
             },
-            {
+            {   
+                menuNum:"0",
                 menuName: "业务设置",
                 funcList: [
                     {
@@ -67,6 +69,11 @@ var UserData = {
                         funcNum: "3",
                         funcName: "套餐管理",
                         funcLink: "/dashboard/suite"
+                    },
+                    {
+                        funcNum:"4",
+                        funcName:"区域管理",
+                        funcLink:"/dashboard/region"
                     }
                 ]
             }
@@ -120,6 +127,7 @@ var initData = function () {
                                             }, function (err) {
                                                 //---------------------------------------menucreate
                                                 var menuInstance = new menuModel({
+                                                    menuNum:itemmenuValue.menuNum,
                                                     menuName: itemmenuValue.menuName,
                                                     funcList: funclistTemp
                                                 })

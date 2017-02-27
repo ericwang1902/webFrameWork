@@ -55,6 +55,7 @@ module.exports = {
                 populate: {
                     path: "menuList",
                     select: "_id menuName funcList",
+                    options: { sort: {menuNum:1} },
                     model: "menu",
                     populate: {
                         path: "funcList",
