@@ -11,15 +11,20 @@ module.exports = {
      * regionController.list()
      */
     list: function (req, res) {
-        regionModel.find(function (err, regions) {
-            if (err) {
-                return res.status(500).json({
-                    message: 'Error when getting region.',
-                    error: err
-                });
-            }
-            return res.json(regions);
-        });
+        regionModel.find()
+            .populate({
+                path: "district",
+                model: "district"
+            })
+            .exec(function (err, regions) {
+                if (err) {
+                    return res.status(500).json({
+                        message: 'Error when getting region.',
+                        error: err
+                    });
+                }
+                return res.json(regions);
+            })
     },
 
     /**
@@ -27,7 +32,7 @@ module.exports = {
      */
     show: function (req, res) {
         var id = req.params.id;
-        regionModel.findOne({_id: id}, function (err, region) {
+        regionModel.findOne({ _id: id }, function (err, region) {
             if (err) {
                 return res.status(500).json({
                     message: 'Error when getting region.',
@@ -47,7 +52,9 @@ module.exports = {
      * regionController.create()
      */
     create: function (req, res) {
-        var region = new regionModel({			rregionname : req.body.rregionname,			district : req.body.district
+        var region = new regionModel({
+            regionname: req.body.regionname,
+            district: req.body.district
         });
 
         region.save(function (err, region) {
@@ -66,7 +73,7 @@ module.exports = {
      */
     update: function (req, res) {
         var id = req.params.id;
-        regionModel.findOne({_id: id}, function (err, region) {
+        regionModel.findOne({ _id: id }, function (err, region) {
             if (err) {
                 return res.status(500).json({
                     message: 'Error when getting region',
@@ -79,7 +86,9 @@ module.exports = {
                 });
             }
 
-            region.rregionname = req.body.rregionname ? req.body.rregionname : region.rregionname;			region.district = req.body.district ? req.body.district : region.district;			
+            region.regionname = req.body.regionname ? req.body.regionname : region.rregionname;
+            region.district = req.body.district ? req.body.district : region.district;
+
             region.save(function (err, region) {
                 if (err) {
                     return res.status(500).json({
