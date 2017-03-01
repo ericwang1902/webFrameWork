@@ -76,7 +76,27 @@ passport.deserializeUser(function (id, done) {
 
 passport.use(new LocalStrategy(
   function (username, password, done) {
-    usermodel.findOne({ username: username }, function (err, user) {
+
+    usermodel.findOne({username: username })
+             .populate({
+                path: "role",//usermodel里的属性名
+                selcet: "_id roleName menuList",
+                model: "role",//path对应的model名
+                populate: {
+                    path: "menuList",
+                    select: "_id menuName funcList",
+                    options: { sort: {menuNum:1} },
+                    model: "menu",
+                    populate: {
+                        path: "funcList",
+                        select: "_id funcNum funcName funcLink",
+                        options: { sort: {funcNum:1} },
+                        model: "func"
+                    }
+
+                }
+            })
+             .exec(function (err, user) {
       if (err) return console.error(err);
       //console.log(user)
       if (!user) {
@@ -99,6 +119,7 @@ passport.use(new LocalStrategy(
         })
       }
     })
+    
   }
 ));
 

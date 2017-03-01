@@ -80,7 +80,7 @@ router.post('/login',passportAuth, function (req, res, next) {
     return res.json({
         state: 200,
         authresult: true,
-        userId:req.user._id,
+        user:req.user,
         info: "info"
     })
 });
