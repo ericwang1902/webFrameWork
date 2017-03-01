@@ -16,6 +16,7 @@ var funcModel = require('../sysmanage/func/funcModel');
 var menuModel = require('../sysmanage/menu/menuModel');
 var roleModel = require('../sysmanage/role/roleModel');
 var userModel = require('../sysmanage/user/userModel');
+var districtModel = require('../sysmanage/district/districtModel');
 
 var constants = require('../frameConfig/constants');
 
@@ -31,7 +32,7 @@ var UserData = {
         roleName: constants.role.admin,//管理员角色
         menuList: [
             {
-                menuNum:"1",
+                menuNum: "1",
                 menuName: "系统设置",
                 funcList: [
                     {
@@ -51,8 +52,8 @@ var UserData = {
                     }
                 ]
             },
-            {   
-                menuNum:"0",
+            {
+                menuNum: "0",
                 menuName: "业务设置",
                 funcList: [
                     {
@@ -71,9 +72,9 @@ var UserData = {
                         funcLink: "/dashboard/suite"
                     },
                     {
-                        funcNum:"4",
-                        funcName:"区域管理",
-                        funcLink:"/dashboard/region"
+                        funcNum: "4",
+                        funcName: "区域管理",
+                        funcLink: "/dashboard/region"
                     }
                 ]
             }
@@ -82,72 +83,97 @@ var UserData = {
 }
 
 //Agent角色管理
-var AgentRoleData ={
-        roleDes: "区域代理",
-        roleName: constants.role.agent,//管理员角色
-        menuList: [
-            {   
-                menuNum:"0",
-                menuName: "业务设置",
-                funcList: [
-                    {
-                        funcNum: "1",
-                        funcName: "供应商管理",
-                        funcLink: "/dashboard/supplier/supplierlist"
-                    },
-                    {
-                        funcNum: "2",
-                        funcName: "商品管理",
-                        funcLink: "/dashboard/goods"
-                    },
-                    {
-                        funcNum: "3",
-                        funcName: "套餐管理",
-                        funcLink: "/dashboard/suite"
-                    },
-                    {
-                        funcNum:"4",
-                        funcName:"区域管理",
-                        funcLink:"/dashboard/region"
-                    }
-                ]
-            }
-        ]//菜单列表
-    
+var AgentRoleData = {
+    roleDes: "区域代理",
+    roleName: constants.role.agent,//管理员角色
+    menuList: [
+        {
+            menuNum: "0",
+            menuName: "业务设置",
+            funcList: [
+                {
+                    funcNum: "1",
+                    funcName: "供应商管理",
+                    funcLink: "/dashboard/supplier/supplierlist"
+                },
+                {
+                    funcNum: "2",
+                    funcName: "商品管理",
+                    funcLink: "/dashboard/goods"
+                },
+                {
+                    funcNum: "3",
+                    funcName: "套餐管理",
+                    funcLink: "/dashboard/suite"
+                }
+            ]
+        }
+    ]//菜单列表
+
 }
 
 var initData = function () {
     async.waterfall([
         //创建全局的一个区域给管理员关联
-        
-        //创建管理员
         function(callback){
+            initGlobalDistrict(function(districtId){
+                callback(null,districtId);
+            });
+        },
+        //创建管理员
+        function (districtId,callback) {
             //初始化系统管理员用户
-            initAdminUser(function(){
-                callback(null,true)
+            initAdminUser(districtId,function () {
+                callback(null, true)
             });//这个callback就时上面一行的callback，该callback时async waterfall中的，有两个参数    
         },
-        function(initadminresult,callback){
+        function (initadminresult, callback) {
             //调用代理菜单的初始化
-            initAgentRole(function(){
-                callback(null,true)
+            initAgentRole(function () {
+                callback(null, true)
             });
-            
+
         }
-    ],function(err,result){
-        if(err) console.log(err);
+    ], function (err, result) {
+        if (err) console.log(err);
         console.log("管理员和agent 创建成功！")
     })
 
 }
 
 //初始化新建一个全局的区域给管理员使用
- var initGlobalDistrict = function(callback){
+var initGlobalDistrict = function (callback) {
+    var GlobaleDistrict = new districtModel({
+        province: "全局",
+        city: "全局",
+        district: "全局"
+    })
+    districtModel.findOne({
+        province: "全局",
+        city: "全局",
+        district: "全局"
+    })
+    .exec(function(err,districtResult){
+        if(err) console.log(err);
+        if(!districtResult){
+            //创建该区域
+            GlobaleDistrict.save(function(err,districtSaveResult){
+                if(err) console.log(err);
+                if(districtSaveResult){
+                    console.log("创建全局区域成功！")
+                    callback(districtSaveResult._id);
+                }
+            })
+        }else{
+            console.log("该全局区域已经存在！")
+            callback(districtResult._id);
+        }
 
- }
+    })
+}
 
 //初始化系统管理员用户，系统所有功能也都是通过该函数进行创建
-var initAdminUser = function(callback){
+var initAdminUser = function (districtId,callback) {
     userModel
         .findOne({ userName: UserData.userName })
         .exec(function (err, userResult) {
@@ -190,7 +216,7 @@ var initAdminUser = function(callback){
                                             }, function (err) {
                                                 //---------------------------------------menucreate
                                                 var menuInstance = new menuModel({
-                                                    menuNum:itemmenuValue.menuNum,
+                                                    menuNum: itemmenuValue.menuNum,
                                                     menuName: itemmenuValue.menuName,
                                                     funcList: funclistTemp
                                                 })
@@ -228,7 +254,8 @@ var initAdminUser = function(callback){
                                             mobile: UserData.mobile,
                                             password: bcrypt.hashSync(UserData.password, salt),
                                             openid: UserData.openid,
-                                            role: roleSaveResult._id
+                                            role: roleSaveResult._id,
+                                            district:districtId
 
                                         })
 
@@ -257,88 +284,88 @@ var initAdminUser = function(callback){
 }
 
 // 初始化agent角色，以及旗下菜单
-var initAgentRole = function(callback9){
+var initAgentRole = function (callback9) {
     async.waterfall([
         //新建agent下面的菜单
-        function(callback){
+        function (callback) {
             //循环检查roledata下面的菜单是否已经创建
             var menulist = [];
-            async.each(AgentRoleData.menuList,function(menuitem,callback1){
+            async.each(AgentRoleData.menuList, function (menuitem, callback1) {
                 //对menuitem进行检查是否已经创建，如果没创建就进行创建
-                menuModel.findOne({menuName:menuitem.menuName})
-                         .exec(function(err,menuResult){
-                             if(err)console.log(err)
-                             if(!menuResult){
-                                 //创建该menu
-                                 //1.查询该menuitem下面的预制功能列表，构造funcid数组
-                                 var funclist = [];
-                                 async.each(menuitem.funcList,function(funcitem,callback2){
-                                     funcModel.findOne({funcName:funcitem.funcName})
-                                              .exec(function(err,funcResult){
-                                                  if(err)console.log(err);
-                                                  if(!funcResult){
-                                                      callback2('为agent设置的功能，系统内尚未创建，请核对管理员初始化时的功能名称！')
-                                                  }else{
-                                                    funclist.push(funcResult._id);
-                                                    callback2();
-                                                  }
-                                              })
+                menuModel.findOne({ menuName: menuitem.menuName })
+                    .exec(function (err, menuResult) {
+                        if (err) console.log(err)
+                        if (!menuResult) {
+                            //创建该menu
+                            //1.查询该menuitem下面的预制功能列表，构造funcid数组
+                            var funclist = [];
+                            async.each(menuitem.funcList, function (funcitem, callback2) {
+                                funcModel.findOne({ funcName: funcitem.funcName })
+                                    .exec(function (err, funcResult) {
+                                        if (err) console.log(err);
+                                        if (!funcResult) {
+                                            callback2('为agent设置的功能，系统内尚未创建，请核对管理员初始化时的功能名称！')
+                                        } else {
+                                            funclist.push(funcResult._id);
+                                            callback2();
+                                        }
+                                    })
 
-                                 },function(err){
-                                     if(err)console.log(err);
-                                     //2.1中已经完成改menuitem下面的funclist创建，这里开始创建menu
-                                     var menuInstance = new menuModel({
-                                         menuNum:menuitem.menuNum,
-                                         menuName:menuitem.menuName,
-                                         funcList:funclist
-                                     })
-                                     menuInstance.save(function(err,menuSaveResult){
-                                         if(err)console.log(err);
-                                         if(menuSaveResult){
-                                            menulist.push(menuSaveResult._id);
-                                            callback1();
-                                         }
-                                     })                                 
-                                 })
-                             }else{
-                                 //已经有该menu,就把改menu的id放进到menulist中去
-                                 console.log(menuResult.menuName+"已经创建！")
-                                 menulist.push(menuResult._id);
-                                 callback1()
-                             }
-                         })
-            },function(err){
-                if(err)console.log(err);
-                callback(null,menulist);
+                            }, function (err) {
+                                if (err) console.log(err);
+                                //2.1中已经完成改menuitem下面的funclist创建，这里开始创建menu
+                                var menuInstance = new menuModel({
+                                    menuNum: menuitem.menuNum,
+                                    menuName: menuitem.menuName,
+                                    funcList: funclist
+                                })
+                                menuInstance.save(function (err, menuSaveResult) {
+                                    if (err) console.log(err);
+                                    if (menuSaveResult) {
+                                        menulist.push(menuSaveResult._id);
+                                        callback1();
+                                    }
+                                })
+                            })
+                        } else {
+                            //已经有该menu,就把改menu的id放进到menulist中去
+                            console.log(menuResult.menuName + "已经创建！")
+                            menulist.push(menuResult._id);
+                            callback1()
+                        }
+                    })
+            }, function (err) {
+                if (err) console.log(err);
+                callback(null, menulist);
             })
         },
         //创建agent角色
-        function(menulist,callback){
-            roleModel.findOne({roleName:AgentRoleData.roleName})
-                     .exec(function(err,roleResult){
-                         if(err)console.log(err);
-                         if(!roleResult){
-                            //创建改角色
-                            var roleInstance = new roleModel({
-                                roleName:AgentRoleData.roleName,
-                                roleDes:AgentRoleData.roleDes,
-                                menuList:menulist
-                            })
-                            roleInstance.save(function(err,roleResult){
-                                if(err)console.log(err);
-                                if(roleResult){
-                                    callback(null,true);
-                                }
-                            })
-                         }else{
-                             callback("该角色已经存在！")
-                         }
-                     })
-            
+        function (menulist, callback) {
+            roleModel.findOne({ roleName: AgentRoleData.roleName })
+                .exec(function (err, roleResult) {
+                    if (err) console.log(err);
+                    if (!roleResult) {
+                        //创建改角色
+                        var roleInstance = new roleModel({
+                            roleName: AgentRoleData.roleName,
+                            roleDes: AgentRoleData.roleDes,
+                            menuList: menulist
+                        })
+                        roleInstance.save(function (err, roleResult) {
+                            if (err) console.log(err);
+                            if (roleResult) {
+                                callback(null, true);
+                            }
+                        })
+                    } else {
+                        callback("该角色已经存在！")
+                    }
+                })
+
         }
-    ],function(err,result){
+    ], function (err, result) {
         if (err) {
-            console.log("err.message:"+err.message);
+            console.log("err.message:" + err.message);
         } else {
             callback9();
             console.log("区域代理角色创建成功！")

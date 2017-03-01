@@ -29,6 +29,11 @@ module.exports = {
                     }
 
                 }
+            }
+            )
+            .populate({
+                path: "district",
+                model: "district"
             })
             .exec(function (err, users) {
                 if (err) {
@@ -55,16 +60,20 @@ module.exports = {
                 populate: {
                     path: "menuList",
                     select: "_id menuName funcList",
-                    options: { sort: {menuNum:1} },
+                    options: { sort: { menuNum: 1 } },
                     model: "menu",
                     populate: {
                         path: "funcList",
                         select: "_id funcNum funcName funcLink",
-                        options: { sort: {funcNum:1} },
+                        options: { sort: { funcNum: 1 } },
                         model: "func"
                     }
 
                 }
+            })
+            .populate({
+                path: "district",
+                model: "district"
             })
             .exec(function (err, user) {
                 if (err) {
@@ -73,7 +82,7 @@ module.exports = {
                         error: err
                     });
                 }
-                console.log(JSON.stringify(user))
+                //console.log(JSON.stringify(user))
                 return res.json(user);
             })
     },
@@ -83,9 +92,10 @@ module.exports = {
      */
     create: function (req, res) {
         var userInstance = req.body;
+        console.log(JSON.stringify(userInstance))
         var roleListTemp = [];
 
-        for(var i =0;i<userInstance.roleSelection.length;i++){
+        for (var i = 0; i < userInstance.roleSelection.length; i++) {
             roleListTemp.push(userInstance.roleSelection[i]._id);
         }
 
@@ -94,10 +104,10 @@ module.exports = {
         var user = new userModel({
             username: userInstance.userName,
             mobile: userInstance.userName,
-            nickname:userInstance.nickName,
+            nickname: userInstance.nickName,
             password: bcrypt.hashSync(userInstance.passWord, salt),
             openid: "",
-            district:userInstance.district,
+            district: userInstance.district,
             role: roleListTemp
         });
 
@@ -117,21 +127,21 @@ module.exports = {
      */
     update: function (req, res) {
 
-        console.log(req.params.id)
-        console.log(req.body);
+        //console.log(req.params.id)
+        //console.log(req.body);
 
         var id = req.params.id;
 
-        var roleSelection = req.body.roleSelection ? req.body.roleSelection: [];
-        var roleList =[];
-        if(roleSelection.length!=0){
-            for(var i=0;i<roleSelection.length;i++){
+        var roleSelection = req.body.roleSelection ? req.body.roleSelection : [];
+        var roleList = [];
+        if (roleSelection.length != 0) {
+            for (var i = 0; i < roleSelection.length; i++) {
                 roleList.push(roleSelection[i]._id);
             }
-        }else{
-            roleList=null;
+        } else {
+            roleList = null;
         }
-        
+
 
         userModel.findOne({ _id: id }, function (err, user) {
             if (err) {
@@ -148,11 +158,11 @@ module.exports = {
 
             user.username = req.body.userName ? req.body.userName : user.username;
             user.mobile = req.body.userName ? req.body.userName : user.mobile;
-            user.nickname = req.body.nickname ? req.body.nickname :user.nickname;
-            user.password =  req.body.passWord ? bcrypt.hashSync(req.body.passWord) : user.password;
+            user.nickname = req.body.nickname ? req.body.nickname : user.nickname;
+            user.password = req.body.passWord ? bcrypt.hashSync(req.body.passWord) : user.password;
             user.openid = req.body.openid ? req.body.openid : user.openid;
             user.role = roleList ? roleList : user.role;
-            user.district = req.body.district ? req.body.district :user.district;
+            user.district = req.body.district ? req.body.district : user.district;
 
             user.save(function (err, user) {
                 if (err) {
