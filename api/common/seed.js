@@ -81,10 +81,71 @@ var UserData = {
     }
 }
 
+//Agent角色管理
+var AgentRoleData ={
+    role: {
+        roleDes: "区域代理",
+        roleName: constants.role.admin,//管理员角色
+        menuList: [
+            {
+                menuNum:"1",
+                menuName: "系统设置",
+                funcList: [
+                    {
+                        funcNum: "1",
+                        funcName: "菜单管理",
+                        funcLink: "/dashboard/menu"
+                    },
+                    {
+                        funcNum: "2",
+                        funcName: "角色管理",
+                        funcLink: "/dashboard/role"
+                    },
+                    {
+                        funcNum: "3",
+                        funcName: "用户管理",
+                        funcLink: "/dashboard/user"
+                    }
+                ]
+            },
+            {   
+                menuNum:"0",
+                menuName: "业务设置",
+                funcList: [
+                    {
+                        funcNum: "1",
+                        funcName: "供应商管理",
+                        funcLink: "/dashboard/supplier/supplierlist"
+                    },
+                    {
+                        funcNum: "2",
+                        funcName: "商品管理",
+                        funcLink: "/dashboard/goods"
+                    },
+                    {
+                        funcNum: "3",
+                        funcName: "套餐管理",
+                        funcLink: "/dashboard/suite"
+                    },
+                    {
+                        funcNum:"4",
+                        funcName:"区域管理",
+                        funcLink:"/dashboard/region"
+                    }
+                ]
+            }
+        ]//菜单列表
+    }
+}
+
 var initData = function () {
-    var userModelInstance = new userModel();
+    this.initAdminUser();//初始化系统管理员用户
 
 
+}
+
+//初始化系统管理员用户
+var initAdminUser = function(){
     userModel
         .findOne({ userName: UserData.userName })
         .exec(function (err, userResult) {
@@ -189,7 +250,10 @@ var initData = function () {
 
             }
         })
+}
 
+// 初始化agent角色，以及旗下菜单
+var initAgentRole = function(){
 
 }
 

@@ -97,6 +97,7 @@ module.exports = {
             nickname:userInstance.nickName,
             password: bcrypt.hashSync(userInstance.passWord, salt),
             openid: "",
+            district:userInstance.district,
             role: roleListTemp
         });
 
@@ -151,6 +152,7 @@ module.exports = {
             user.password =  req.body.passWord ? bcrypt.hashSync(req.body.passWord) : user.password;
             user.openid = req.body.openid ? req.body.openid : user.openid;
             user.role = roleList ? roleList : user.role;
+            user.district = req.body.district ? req.body.district :user.district;
 
             user.save(function (err, user) {
                 if (err) {

@@ -7,6 +7,10 @@ var userSchema = new Schema({
 	'mobile' : String,
 	'password' : String,
 	'openid' : String,
+	'district':{
+	 	type: Schema.Types.ObjectId,
+	 	ref: 'district'
+	},
 	'role' : [{
 	 	type: Schema.Types.ObjectId,
 	 	ref: 'role'
