@@ -19,6 +19,7 @@ dbutils.createconnection();
 var mobileRouter = require('./api/mobile');
 var sysmanage = require('./api/sysmanage')
 var app = express();
+var usercheckmiddle = require('./api/common/usercheckmidlle')
 
 
 
@@ -44,6 +45,8 @@ var passport = require('passport')//3.验证
 var LocalStrategy = require('passport-local').Strategy;//4.登录策略
 var bcrypt = require('bcryptjs');//5.数据加密
 var usermodel = require('./api/sysmanage/user/userModel');
+
+
 
 //解决跨域访问问题的代码，就下面这段中间件
 app.all('*', function (req, res, next) {
@@ -150,7 +153,9 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 //http://localhost:8085/MP_verify_fA2T6ARFofWXJQ9b.txt 即可访问
 app.use('/mobile', mobileRouter);
-app.use('/sysmanage', sysmanage);
+app.use('/sysmanage',usercheckmiddle.getUserInfo, sysmanage);
+
+
 
 
 // catch 404 and forward to error handler

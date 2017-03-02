@@ -49,6 +49,11 @@ var UserData = {
                         funcNum: "3",
                         funcName: "用户管理",
                         funcLink: "/dashboard/user"
+                    },
+                    {
+                        funcNum: "4",
+                        funcName: "区域管理",
+                        funcLink: "/dashboard/region"
                     }
                 ]
             },
@@ -70,11 +75,6 @@ var UserData = {
                         funcNum: "3",
                         funcName: "套餐管理",
                         funcLink: "/dashboard/suite"
-                    },
-                    {
-                        funcNum: "4",
-                        funcName: "区域管理",
-                        funcLink: "/dashboard/region"
                     }
                 ]
             }
@@ -128,7 +128,7 @@ var initData = function () {
             });//这个callback就时上面一行的callback，该callback时async waterfall中的，有两个参数    
         },
         function (initadminresult, callback) {
-            //调用代理菜单的初始化
+            //初始化区域代理AGENT菜单的初始化
             initAgentRole(function () {
                 callback(null, true)
             });

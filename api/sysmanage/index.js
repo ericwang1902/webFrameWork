@@ -16,6 +16,7 @@ var addressRouter = require('./address/addressRoutes');
 
 var qiniuToken = require('../common/qiniu')
 
+
 //only function router
 //sysmanage/function
 router.use('/func', funcRouter);
@@ -76,7 +77,7 @@ router.post('/test',function(req,res){
 router.post('/login',passportAuth, function (req, res, next) {
     req.session.seesionUserId = req.user._id;
     req.session.user = req.user;
-    console.log(JSON.stringify(req.session.user))//登录验证后，用户的信息会在req.user里
+    console.log("session:"+JSON.stringify(req.session.user))//登录验证后，用户的信息会在req.user里
     console.log('success!')
     return res.json({
         state: 200,

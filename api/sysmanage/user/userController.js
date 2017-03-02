@@ -12,38 +12,51 @@ module.exports = {
      * userController.list()
      */
     list: function (req, res) {
-        userModel
-            .find()
-            .populate({
-                path: "role",
-                select: "_id roleName menuList",
-                model: "role",
-                populate: {
-                    path: "menuList",
-                    select: "_id menuName funcList",
-                    model: "menu",
-                    populate: {
-                        path: "funcList",
-                        select: "_id funcName funcLink",
-                        model: "func"
-                    }
+        //构造查询条件，admin例外
+        var role = req.user.role[0].roleName;
+        var districtId= req.user.district._id;
+        var conditions = {};
+        console.log(role);
+        if (role == 'ADMIN') {
+            conditions={}
+        }else{
+            conditions={district: districtId}
+        }
 
+        userModel
+                .find(conditions)
+                .populate({
+                    path: "role",
+                    select: "_id roleName menuList",
+                    model: "role",
+                    populate: {
+                        path: "menuList",
+                        select: "_id menuName funcList",
+                        model: "menu",
+                        populate: {
+                            path: "funcList",
+                            select: "_id funcName funcLink",
+                            model: "func"
+                        }
+
+                    }
                 }
-            }
-            )
-            .populate({
-                path: "district",
-                model: "district"
-            })
-            .exec(function (err, users) {
-                if (err) {
-                    return res.status(500).json({
-                        message: 'Error when getting user.',
-                        error: err
-                    });
-                }
-                return res.json(users);
-            })
+                )
+                .populate({
+                    path: "district",
+                    model: "district"
+                })
+                .exec(function (err, users) {
+                    if (err) {
+                        return res.status(500).json({
+                            message: 'Error when getting user.',
+                            error: err
+                        });
+                    }
+                    return res.json(users);
+                })
+
+
     },
 
     /**

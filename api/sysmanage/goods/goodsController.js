@@ -11,9 +11,18 @@ module.exports = {
      * goodsController.list()
      */
     list: function (req, res) {
-        var districtId = req.query.districtId;
+         //构造查询条件，admin例外
+        var role = req.user.role[0].roleName;
+        var districtId= req.user.district._id;
+        var conditions = {};
+        console.log(role);
+        if (role == 'ADMIN') {
+            conditions={}
+        }else{
+            conditions={district: districtId}
+        }
         goodsModel
-            .find({ district: districtId })
+            .find(conditions)
             .populate('supplier')
             .exec(function (err, goodslist) {
                 if (err) {

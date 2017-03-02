@@ -10,6 +10,10 @@ var suiteSchema = new Schema({
 	'suitestate' : Boolean,
 	'suitetype' : String,
 	'salesnum' : String,
+	'district': {
+		type: Schema.Types.ObjectId,
+		ref: 'district'
+	},
 	'goodslist' : [{
 		type: Schema.Types.ObjectId,
 		ref: 'goods'

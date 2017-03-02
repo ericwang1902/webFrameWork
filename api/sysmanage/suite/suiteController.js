@@ -11,10 +11,19 @@ module.exports = {
      * suiteController.list()
      */
     list: function (req, res) {
-        var districtId = req.query.districtId;
+         //构造查询条件，admin例外
+        var role = req.user.role[0].roleName;
+        var districtId= req.user.district._id;
+        var conditions = {};
+        console.log(role);
+        if (role == 'ADMIN') {
+            conditions={}
+        }else{
+            conditions={district: districtId}
+        }
 
         suiteModel
-            .find({ districtId: districtId })
+            .find(conditions)
             .populate({
                 path: "goodslist",
                 model: "goods"
@@ -73,7 +82,8 @@ module.exports = {
             suitestate: req.body.suitestate,
             suitetype: req.body.suitetype,
             salesnum: req.body.salesnum,
-            goodslist: req.body.goodslist
+            goodslist: req.body.goodslist,
+            district:req.body.district
         });
 
         suite.save(function (err, suite) {
@@ -117,6 +127,7 @@ module.exports = {
             suite.suitetype = req.body.suitetype ? req.body.suitetype : suite.suitetype;
             suite.salesnum = req.body.salesnum ? req.body.salesnum : suite.salesnum;
             suite.goodslist = req.body.goodslist ? req.body.goodslist : suite.goodslist;
+            suite.district = req.body.district ? req.body.district :suite.district;
 
             suite.save(function (err, suite) {
                 if (err) {
