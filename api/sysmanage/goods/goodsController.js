@@ -24,6 +24,10 @@ module.exports = {
         goodsModel
             .find(conditions)
             .populate('supplier')
+            .populate({
+                path:'district',
+                model:'district'
+            })
             .exec(function (err, goodslist) {
                 if (err) {
                     return res.status(500).json({
@@ -74,7 +78,7 @@ module.exports = {
             supplier: req.body.supplier,
             salesnum: req.body.salesnum,
             goodsjudge: req.body.goodsjudge,
-            district:req.body.district
+            district:req.user.district._id
         });
 
         goods.save(function (err, goods) {
@@ -120,7 +124,7 @@ module.exports = {
             goods.supplier = req.body.supplier ? req.body.supplier : goods.supplier;
             goods.salesnum = req.body.salesnum ? req.body.salesnum : goods.salesnum;
             goods.goodsjudge = req.body.goodsjudge ? req.body.goodsjudge : goods.goodsjudge;
-            goods.district = req.bod.district ? req.bod.district :goods.district;
+            goods.district = req.user.district._id ? req.user.district._id :goods.district;
             
             goods.save(function (err, goods) {
                 if (err) {

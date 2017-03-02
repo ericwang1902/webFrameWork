@@ -28,6 +28,10 @@ module.exports = {
                 path: "goodslist",
                 model: "goods"
             })
+            .populate({
+                path:'district',
+                model:'district'
+            })
             .exec(function (err, suites) {
                 if (err) {
                     return res.status(500).json({
@@ -51,6 +55,10 @@ module.exports = {
             .populate({
                 path: "goodslist",
                 model: "goods"
+            })
+            .populate({
+                path:'district',
+                model:'district'
             })
             .exec(function (err, suite) {
                 if (err) {
@@ -83,7 +91,7 @@ module.exports = {
             suitetype: req.body.suitetype,
             salesnum: req.body.salesnum,
             goodslist: req.body.goodslist,
-            district:req.body.district
+            district:req.user.district._id
         });
 
         suite.save(function (err, suite) {
@@ -127,7 +135,7 @@ module.exports = {
             suite.suitetype = req.body.suitetype ? req.body.suitetype : suite.suitetype;
             suite.salesnum = req.body.salesnum ? req.body.salesnum : suite.salesnum;
             suite.goodslist = req.body.goodslist ? req.body.goodslist : suite.goodslist;
-            suite.district = req.body.district ? req.body.district :suite.district;
+            suite.district = req.user.district._id ? req.user.district._id :suite.district;
 
             suite.save(function (err, suite) {
                 if (err) {

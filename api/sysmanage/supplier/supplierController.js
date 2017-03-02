@@ -11,23 +11,46 @@ module.exports = {
      * supplierController.list()
      */
     list: function (req, res) {
-         //构造查询条件，admin例外
+        //构造查询条件，admin例外
         var role = req.user.role[0].roleName;
-        var districtId= req.user.district._id;
+        var districtId = req.user.district._id;
         var conditions = {};
         console.log(role);
         if (role == 'ADMIN') {
-            conditions={}
-        }else{
-            conditions={district: districtId}
+            conditions = {}
+        } else {
+            conditions = { district: districtId }
         }
 
         supplierModel.find(conditions)
-            .populate('supplieruser')
             .populate({
-                path:'workers',
-                select:'_id username nickname',
-                model:'user'
+                path: "supplieruser",
+                model: "user",
+                populate: {
+                    path: "role",
+                    select: "_id roleName menuList",
+                    model: "role",
+                    populate: {
+                        path: "menuList",
+                        select: "_id menuName funcList",
+                        model: "menu",
+                        populate: {
+                            path: "funcList",
+                            select: "_id funcName funcLink",
+                            model: "func"
+                        }
+                    }
+                },
+                populate: {
+                    path: "district",
+                    model: "district"
+                }
+            }
+            )
+            .populate({
+                path: 'workers',
+                select: '_id username nickname',
+                model: 'user'
             })
             .exec(function (err, suppliers) {
                 if (err) {
@@ -74,7 +97,7 @@ module.exports = {
         var supplier = new supplierModel({
             suppliernum: req.body.suppliernum,
             suppliername: req.body.suppliername,
-            district:req.user.district._id,
+            district: req.user.district._id,
             supplierdes: req.body.supplierdes,
             supplieruser: req.body.supplieruser,
             workers: req.body.workers
@@ -114,7 +137,7 @@ module.exports = {
             supplier.supplierdes = req.body.supplierdes ? req.body.supplierdes : supplier.supplierdes;
             supplier.supplieruser = req.body.supplieruser ? req.body.supplieruser : supplier.supplieruser;
             supplier.workers = req.body.workers ? req.body.workers : supplier.workers;
-            supplier.district = req.user.district._id ? req.user.district._id:supplier.district;
+            supplier.district = req.user.district._id ? req.user.district._id : supplier.district;
 
             supplier.save(function (err, supplier) {
                 if (err) {

@@ -105,7 +105,7 @@ module.exports = {
      */
     create: function (req, res) {
         var userInstance = req.body;
-        console.log(JSON.stringify(userInstance))
+        console.log("~~~~~~~~~~~~~~~~~~~"+JSON.stringify(userInstance))
         var roleListTemp = [];
 
         for (var i = 0; i < userInstance.roleSelection.length; i++) {
@@ -171,7 +171,7 @@ module.exports = {
 
             user.username = req.body.userName ? req.body.userName : user.username;
             user.mobile = req.body.userName ? req.body.userName : user.mobile;
-            user.nickname = req.body.nickname ? req.body.nickname : user.nickname;
+            user.nickname = req.body.nickName ? req.body.nickName : user.nickname;
             user.password = req.body.passWord ? bcrypt.hashSync(req.body.passWord) : user.password;
             user.openid = req.body.openid ? req.body.openid : user.openid;
             user.role = roleList ? roleList : user.role;
