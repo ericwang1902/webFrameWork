@@ -11,7 +11,9 @@ module.exports = {
      * goodsController.list()
      */
     list: function (req, res) {
-        goodsModel.find()
+        var districtId = req.query.districtId;
+        goodsModel
+            .find({ district: districtId })
             .populate('supplier')
             .exec(function (err, goodslist) {
                 if (err) {
@@ -62,7 +64,8 @@ module.exports = {
             weight: req.body.weight,
             supplier: req.body.supplier,
             salesnum: req.body.salesnum,
-            goodsjudge: req.body.goodsjudge
+            goodsjudge: req.body.goodsjudge,
+            district:req.body.district
         });
 
         goods.save(function (err, goods) {
@@ -80,7 +83,7 @@ module.exports = {
      * goodsController.update()
      */
     update: function (req, res) {
-        
+
         var id = req.params.id;
         console.log(req.body);
         goodsModel.findOne({ _id: id }, function (err, goods) {
@@ -108,7 +111,8 @@ module.exports = {
             goods.supplier = req.body.supplier ? req.body.supplier : goods.supplier;
             goods.salesnum = req.body.salesnum ? req.body.salesnum : goods.salesnum;
             goods.goodsjudge = req.body.goodsjudge ? req.body.goodsjudge : goods.goodsjudge;
-
+            goods.district = req.bod.district ? req.bod.district :goods.district;
+            
             goods.save(function (err, goods) {
                 if (err) {
                     return res.status(500).json({

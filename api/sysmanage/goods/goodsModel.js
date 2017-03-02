@@ -11,6 +11,10 @@ var goodsSchema = new Schema({
 	'goodsstate' : String,
 	'goodstype' : String,
 	'weight' : String,//权重
+	'district': {
+		type: Schema.Types.ObjectId,
+		ref: 'district'
+	},
 	'supplier' : {
 	 	type: Schema.Types.ObjectId,
 	 	ref: 'supplier'

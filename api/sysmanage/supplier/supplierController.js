@@ -11,7 +11,8 @@ module.exports = {
      * supplierController.list()
      */
     list: function (req, res) {
-        supplierModel.find()
+        var districtId = req.query.districtId;
+        supplierModel.find({ district: districtId })
             .populate('supplieruser')
             .populate({
                 path:'workers',
@@ -63,6 +64,7 @@ module.exports = {
         var supplier = new supplierModel({
             suppliernum: req.body.suppliernum,
             suppliername: req.body.suppliername,
+            district:req.body.district,
             supplierdes: req.body.supplierdes,
             supplieruser: req.body.supplieruser,
             workers: req.body.workers
@@ -102,6 +104,7 @@ module.exports = {
             supplier.supplierdes = req.body.supplierdes ? req.body.supplierdes : supplier.supplierdes;
             supplier.supplieruser = req.body.supplieruser ? req.body.supplieruser : supplier.supplieruser;
             supplier.workers = req.body.workers ? req.body.workers : supplier.workers;
+            supplier.district = req.body.district ? req.body.district:supplier.district;
 
             supplier.save(function (err, supplier) {
                 if (err) {

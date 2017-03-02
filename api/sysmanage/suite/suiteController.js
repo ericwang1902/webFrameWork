@@ -11,8 +11,10 @@ module.exports = {
      * suiteController.list()
      */
     list: function (req, res) {
+        var districtId = req.query.districtId;
+
         suiteModel
-            .find()
+            .find({ districtId: districtId })
             .populate({
                 path: "goodslist",
                 model: "goods"
@@ -145,5 +147,5 @@ module.exports = {
         });
     },
     //移动端货架接口，增加查询条件，为了避免污染框架接口，在这里另写一个接口
-    
+
 };
