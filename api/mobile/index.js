@@ -26,7 +26,7 @@ router.get('/home', getopenid, createFans, function (req, res, next) {
 
 
 
-    res.redirect("http://localhost:8090/#/?userid="+req.fanSaveResult._id);
+    res.redirect(config.mobileUserInitURL+"?userid="+req.fanSaveResult._id);
 
 
 

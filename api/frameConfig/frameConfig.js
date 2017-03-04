@@ -1,6 +1,5 @@
 //framework全局开发配置文件
 
-
 module.exports = {
     //数据库名称
     databaseName: "frameworkDatabase",
@@ -16,7 +15,7 @@ module.exports = {
     //微信删除所有菜单url
     wechatTotalDelMenu: "https://api.weixin.qq.com/cgi-bin/menu/delete?access_token=",
     //微信查询所有菜单url
-    wechatGetMenuList:"https://api.weixin.qq.com/cgi-bin/menu/get?access_token=",
+    wechatGetMenuList: "https://api.weixin.qq.com/cgi-bin/menu/get?access_token=",
     //微信创建个性化菜单url
     wechatCondictionMenuURL: "https://api.weixin.qq.com/cgi-bin/menu/addconditional?access_token=",
     //微信删除菜单url，是删除所有自定义菜单
@@ -31,9 +30,9 @@ module.exports = {
     //全局token
     apiToken: '',
     //粉丝分组标签，需与条件菜单中的menuName一致
-    Tags: [{ name: 'shopowner' }, { name: 'admin' },{ name: 'courier' }],
+    Tags: [{ name: 'shopowner' }, { name: 'admin' }, { name: 'courier' }],
     //微信接口获取的tag
-    TagsFromWechat:{},
+    TagsFromWechat: {},
     //粉丝菜单配置
     baseMenu: {
         button: [
@@ -96,8 +95,15 @@ module.exports = {
 
     ],
     //发送模板消息网址
-    wechatTemplateMsg:"https://api.weixin.qq.com/cgi-bin/message/template/send?access_token="
+    wechatTemplateMsg: "https://api.weixin.qq.com/cgi-bin/message/template/send?access_token=",
+    //mobile部分的url
+
+    mobileBaseURL : 'http://localhost:8090/#/',
+    mobileUserInitURL:mobileBaseURL+'initfan'
     
+
+    
+
 
 
 
