@@ -1,4 +1,5 @@
 //framework全局开发配置文件
+var mobileBaseURL = 'http://localhost:8090/#/';
 
 module.exports = {
     //数据库名称
@@ -96,9 +97,10 @@ module.exports = {
     ],
     //发送模板消息网址
     wechatTemplateMsg: "https://api.weixin.qq.com/cgi-bin/message/template/send?access_token=",
+    
+    
+    
     //mobile部分的url
-
-    mobileBaseURL : 'http://localhost:8090/#/',
     mobileUserInitURL:mobileBaseURL+'initfan'
     
 
