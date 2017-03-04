@@ -22,36 +22,47 @@ router.get('/index', function (req, res, next) {
 });
 
 // 通过跳转到home携带code，获取openid，只能用这种跳转的方式，不能用ajax访问获取openid
-router.get('/home',getopenid, createFans,function (req, res, next) {
-    console.log("fanSaveResult："+JSON.stringify(req.fanSaveResult))
-    console.log("openid："+req.session.openid)
-    console.log("user_access_token:" + JSON.stringify(req.session.user_access_token))
+router.get('/home', getopenid, createFans, function (req, res, next) {
 
-    wechatapi.getApiToken(function(){
-        console.log("发送模板消息回调")
-       wechatapi.sendNewOrderTemplateMsg(req.session.openid);//测试模板消息发送
-    });//获取全局token,后面要删掉，不能每次用户授权，就获取全局的token
-    
+
+
+    res.redirect("http://localhost:8090?userid="+req.fanSaveResult._id);
+
+
+
+
+
+
+
+  //  console.log("fanSaveResult：" + JSON.stringify(req.fanSaveResult))
+   // console.log("openid：" + req.session.openid)
+   // console.log("user_access_token:" + JSON.stringify(req.session.user_access_token))
+
+    // wechatapi.getApiToken(function () {
+    //     console.log("发送模板消息回调")
+    //     wechatapi.sendNewOrderTemplateMsg(req.session.openid);//测试模板消息发送
+    // });//获取全局token,后面要删掉，不能每次用户授权，就获取全局的token
+
     // res.send("homepage")
-    res.redirect("http://localhost:8090/")
+   // res.redirect("http://localhost:8090/")
 });
 
 //第三方库获取openid和user_access_token
 function getopenid(req, res, next) {
     //如果session中的user_access_token已经过期
-    console.log("session中的user_access_token:"+req.session.user_access_token);
+    console.log("session中的user_access_token:" + req.session.user_access_token);
     if (!req.session.user_access_token) {
-        
+
         client.getAccessToken(req.query.code, function (err, result) {
             try {
                 var openid = result.data.openid;
                 var accessToken = result.data.access_token;
-              
+
                 req.session.openid = openid;
                 req.session.user_access_token = accessToken;
-                console.log("获取openid："+req.session.openid)
-                console.log("获取access token："+req.session.user_access_token)
-                
+                console.log("获取openid：" + req.session.openid)
+                console.log("获取access token：" + req.session.user_access_token)
+
 
             } catch (error) {
                 console.log(err)
@@ -60,9 +71,9 @@ function getopenid(req, res, next) {
                 })
             }
             return next();
-            
+
         });
-    }else{
+    } else {
         console.log("已经创建了该用户!")
         return next();
     }
@@ -94,13 +105,14 @@ function createFans(req, res, next) {
                 req.fanSaveResult = fanSaveResult;
                 return next();
             })
-        }
-        //如果该粉丝数据已经创建，就将fanSaveResult写进req
-        
-        req.fanSaveResult = fanresult;
-        console.log("fanSaveResult:"+JSON.stringify(req.fanSaveResult))
+        } else {
+            //如果该粉丝数据已经创建，就将fanSaveResult写进req
+            req.fanSaveResult = fanresult;
+            console.log("fanSaveResult:" + JSON.stringify(req.fanSaveResult))
 
-        return next();
+            return next();
+        }
+
 
     })
 }
