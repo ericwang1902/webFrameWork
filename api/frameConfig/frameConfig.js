@@ -101,9 +101,9 @@ module.exports = {
     
     
     //mobile部分的url
-    mobileUserInitURL:mobileBaseURL+'initfan'
+    mobileUserInitURL:mobileBaseURL+'initfan',
     
-
+    mobileUserHome:mobileBaseURL+'home'
     
 
 

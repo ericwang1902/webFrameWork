@@ -24,9 +24,15 @@ router.get('/index', function (req, res, next) {
 // 通过跳转到home携带code，获取openid，只能用这种跳转的方式，不能用ajax访问获取openid
 router.get('/home', getopenid, createFans, function (req, res, next) {
 
+    //获取了fan的数据之后，判断该fan是否有district数据，如果没有，就跳转到initfans；如果有，就直接跳转到前端home路由
 
+    if(req.fanSaveResult.redirect){
+        res.redirect(config.mobileUserInitURL+"?userid="+req.fanSaveResult._id);
+    }else{
+        res.redirect(config.mobileUserHome+"?userid="+req.fanSaveResult._id);
+    }
 
-    res.redirect(config.mobileUserInitURL+"?userid="+req.fanSaveResult._id);
+    
 
 
 
