@@ -11,15 +11,20 @@ module.exports = {
      * fansController.list()
      */
     list: function (req, res) {
-        fansModel.find(function (err, fanss) {
-            if (err) {
-                return res.status(500).json({
-                    message: 'Error when getting fans.',
-                    error: err
-                });
-            }
-            return res.json(fanss);
-        });
+        fansModel.find()
+            .populate({
+                path: 'district',
+                model: 'district'
+            })
+            .exec(function (err, fanslist) {
+                if (err) {
+                    return res.status(500).json({
+                        message: 'Error when getting fans.',
+                        error: err
+                    });
+                }
+                return res.json(fanss);
+            })
     },
 
     /**
@@ -27,27 +32,39 @@ module.exports = {
      */
     show: function (req, res) {
         var id = req.params.id;
-        fansModel.findOne({_id: id}, function (err, fans) {
-            if (err) {
-                return res.status(500).json({
-                    message: 'Error when getting fans.',
-                    error: err
-                });
-            }
-            if (!fans) {
-                return res.status(404).json({
-                    message: 'No such fans'
-                });
-            }
-            return res.json(fans);
-        });
+        fansModel.findOne({ _id: id })
+            .populate({
+                path: 'district',
+                model: 'district'
+            })
+            .exec(function (err, fans) {
+                if (err) {
+                    return res.status(500).json({
+                        message: 'Error when getting fans.',
+                        error: err
+                    });
+                }
+                if (!fans) {
+                    return res.status(404).json({
+                        message: 'No such fans'
+                    });
+                }
+                return res.json(fans);
+            })
+
     },
 
     /**
      * fansController.create()
      */
     create: function (req, res) {
-        var fans = new fansModel({			fannickname : req.body.fannickname,			fanopenid : req.body.fanopenid,			orders : req.body.orders,			points : req.body.points,			coupons : req.body.coupons
+        var fans = new fansModel({
+            fannickname: req.body.fannickname,
+            fanopenid: req.body.fanopenid,
+            orders: req.body.orders,
+            points: req.body.points,
+            coupons: req.body.coupons,
+            district: req.body.district
         });
 
         fans.save(function (err, fans) {
@@ -66,7 +83,7 @@ module.exports = {
      */
     update: function (req, res) {
         var id = req.params.id;
-        fansModel.findOne({_id: id}, function (err, fans) {
+        fansModel.findOne({ _id: id }, function (err, fans) {
             if (err) {
                 return res.status(500).json({
                     message: 'Error when getting fans',
@@ -79,7 +96,13 @@ module.exports = {
                 });
             }
 
-            fans.fannickname = req.body.fannickname ? req.body.fannickname : fans.fannickname;			fans.fanopenid = req.body.fanopenid ? req.body.fanopenid : fans.fanopenid;			fans.orders = req.body.orders ? req.body.orders : fans.orders;			fans.points = req.body.points ? req.body.points : fans.points;			fans.coupons = req.body.coupons ? req.body.coupons : fans.coupons;			
+            fans.fannickname = req.body.fannickname ? req.body.fannickname : fans.fannickname;
+            fans.fanopenid = req.body.fanopenid ? req.body.fanopenid : fans.fanopenid;
+            fans.orders = req.body.orders ? req.body.orders : fans.orders;
+            fans.points = req.body.points ? req.body.points : fans.points;
+            fans.coupons = req.body.coupons ? req.body.coupons : fans.coupons;
+            fans.district = req.body.district ? req.body.district : fans.district;
+
             fans.save(function (err, fans) {
                 if (err) {
                     return res.status(500).json({

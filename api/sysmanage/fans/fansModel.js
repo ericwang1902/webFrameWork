@@ -6,7 +6,11 @@ var fansSchema = new Schema({
 	'fanopenid' : String,
 	'orders' : Array,
 	'points' : Number,
-	'coupons' : Array
+	'coupons' : Array,
+	'district': {
+		type: Schema.Types.ObjectId,
+		ref: 'district'
+	}
 });
 
 module.exports = mongoose.model('fans', fansSchema);
