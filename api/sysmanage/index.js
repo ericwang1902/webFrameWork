@@ -14,6 +14,9 @@ var districtRouter = require('./district/districtRoutes');
 var regionRouter = require('./region/regionRoutes');
 var addressRouter = require('./address/addressRoutes');
 
+var mdistrictRouter = require('./district/mdistrictRouter');
+
+
 var qiniuToken = require('../common/qiniu')
 
 
@@ -47,6 +50,10 @@ router.use('/suite',suiteRouter);
 //district router 
 //sysmanage/district
 router.use('/district',districtRouter);
+
+//mobile district router
+//sysmanage/mdistrict
+router.use('/mdistrict',mdistrictRouter);
 
 //region router
 //sysmanage/region
