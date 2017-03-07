@@ -138,7 +138,7 @@ module.exports = {
                 var resultArray = [];
                 for (var i = 0; i < districtArray.length; i++) {
                     //如果在provincelist中没有该数组元素，就添加进去
-                    if (!resultArray.find(d => d.name == districtArray[i].province)) {
+                    if (!resultArray.find(d => d.name == districtArray[i].province) && districtArray[i].province != '全局') {
                         resultArray.push({
                             name: districtArray[i].province,
                             value: districtArray[i].province,
@@ -148,7 +148,7 @@ module.exports = {
                 }
 
                 for (var i = 0; i < districtArray.length; i++) {
-                    if (!resultArray.find(d => d.name == districtArray[i].city)) {
+                    if (!resultArray.find(d => d.name == districtArray[i].city)&& districtArray[i].city != '全局') {
                         resultArray.push({
                             name: districtArray[i].city,
                             value: districtArray[i].city,
@@ -157,7 +157,7 @@ module.exports = {
                     }
                 }
                 for (var i = 0; i < districtArray.length; i++) {
-                    if (!resultArray.find(d => d.name == districtArray[i].district)) {
+                    if (!resultArray.find(d => d.name == districtArray[i].district)&& districtArray[i].city != '全局') {
                         resultArray.push({
                             name: districtArray[i].district,
                             value: districtArray[i].district,
