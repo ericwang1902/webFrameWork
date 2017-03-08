@@ -15,6 +15,7 @@ var regionRouter = require('./region/regionRoutes');
 var addressRouter = require('./address/addressRoutes');
 
 var mdistrictRouter = require('./district/mdistrictRouter');
+var mregionRouter  = require('./region/mregionRouter')
 
 
 var qiniuToken = require('../common/qiniu')
@@ -58,6 +59,10 @@ router.use('/mdistrict',mdistrictRouter);
 //region router
 //sysmanage/region
 router.use('/region',regionRouter);
+
+//mregion router 
+//sysmanage/mregion
+router.use('/mregion',mregionRouter);
 
 //address router
 //sysmanage/address

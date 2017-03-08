@@ -116,5 +116,24 @@ module.exports = {
             }
             return res.status(204).json();
         });
+    },
+
+    /*
+    mregions
+    */
+    mregion: function (req, res) {
+        var districtid = req.query.districtid;
+
+        regionModel.find({})
+            .exec(function (err, regions) {
+                if (err) {
+                    return res.status(500).json({
+                        message: 'Error when deleting the region.',
+                        error: err
+                    });
+                }
+                return res.json(regions);
+            })
+
     }
 };
