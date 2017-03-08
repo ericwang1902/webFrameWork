@@ -160,7 +160,7 @@ module.exports = {
                     if (!resultArray.find(d => d.name == districtArray[i].district)&& districtArray[i].city != '全局') {
                         resultArray.push({
                             name: districtArray[i].district,
-                            value: districtArray[i].district,
+                            value: districtArray[i]._id,
                             parent: districtArray[i].city
                         })
                     }
