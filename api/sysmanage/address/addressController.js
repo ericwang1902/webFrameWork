@@ -11,15 +11,26 @@ module.exports = {
      * addressController.list()
      */
     list: function (req, res) {
-        addressModel.find(function (err, addresss) {
-            if (err) {
-                return res.status(500).json({
-                    message: 'Error when getting address.',
-                    error: err
-                });
-            }
-            return res.json(addresss);
-        });
+        addressModel.find()
+            .populate({
+                path: "region",
+                model: "region",
+                populate:{
+                    path:"district",
+                    model:"district"
+                }
+            })
+            .exec(function (err, addresss) {
+                if (err) {
+                    return res.status(500).json({
+                        message: 'Error when getting address.',
+                        error: err
+                    });
+                }
+                return res.json(addresss);
+            })
+
+
     },
 
     /**
@@ -27,7 +38,7 @@ module.exports = {
      */
     show: function (req, res) {
         var id = req.params.id;
-        addressModel.findOne({_id: id}, function (err, address) {
+        addressModel.findOne({ _id: id }, function (err, address) {
             if (err) {
                 return res.status(500).json({
                     message: 'Error when getting address.',
@@ -48,11 +59,11 @@ module.exports = {
      */
     create: function (req, res) {
         var address = new addressModel({
-			detail : req.body.detail,
-			phone : req.body.phone,
-			region : req.body.region,
-            name:req.body.name,
-            fans:req.body.fans
+            detail: req.body.detail,
+            phone: req.body.phone,
+            region: req.body.region,
+            name: req.body.name,
+            fans: req.body.fans
         });
 
         address.save(function (err, address) {
@@ -71,7 +82,7 @@ module.exports = {
      */
     update: function (req, res) {
         var id = req.params.id;
-        addressModel.findOne({_id: id}, function (err, address) {
+        addressModel.findOne({ _id: id }, function (err, address) {
             if (err) {
                 return res.status(500).json({
                     message: 'Error when getting address',
@@ -85,11 +96,11 @@ module.exports = {
             }
 
             address.detail = req.body.detail ? req.body.detail : address.detail;
-			address.phone = req.body.phone ? req.body.phone : address.phone;
-			address.region = req.body.region ? req.body.region : address.region;
-            address.name = req.body.name ? req.body.name: address.name;
-            address.fans = req.body.fans ? req.body.fans:address.fans;
-			
+            address.phone = req.body.phone ? req.body.phone : address.phone;
+            address.region = req.body.region ? req.body.region : address.region;
+            address.name = req.body.name ? req.body.name : address.name;
+            address.fans = req.body.fans ? req.body.fans : address.fans;
+
             address.save(function (err, address) {
                 if (err) {
                     return res.status(500).json({
