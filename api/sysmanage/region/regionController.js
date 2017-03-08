@@ -124,7 +124,7 @@ module.exports = {
     mregion: function (req, res) {
         var districtid = req.query.districtid;
 
-        regionModel.find({})
+        regionModel.find({district:districtid})
             .exec(function (err, regions) {
                 if (err) {
                     return res.status(500).json({
