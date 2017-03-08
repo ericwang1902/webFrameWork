@@ -15,9 +15,9 @@ module.exports = {
             .populate({
                 path: "region",
                 model: "region",
-                populate:{
-                    path:"district",
-                    model:"district"
+                populate: {
+                    path: "district",
+                    model: "district"
                 }
             })
             .exec(function (err, addresss) {
@@ -38,7 +38,14 @@ module.exports = {
      */
     show: function (req, res) {
         var id = req.params.id;
-        addressModel.findOne({ _id: id }, function (err, address) {
+        addressModel.findOne({ _id: id }).populate({
+            path: "region",
+            model: "region",
+            populate: {
+                path: "district",
+                model: "district"
+            }
+        }).exec(function (err, address) {
             if (err) {
                 return res.status(500).json({
                     message: 'Error when getting address.',
@@ -51,7 +58,7 @@ module.exports = {
                 });
             }
             return res.json(address);
-        });
+        })
     },
 
     /**
