@@ -16,6 +16,10 @@ module.exports = {
                 path: 'district',
                 model: 'district'
             })
+            .populate({
+                path: 'address',
+                model: 'address'
+            })
             .exec(function (err, fanslist) {
                 if (err) {
                     return res.status(500).json({
@@ -36,6 +40,10 @@ module.exports = {
             .populate({
                 path: 'district',
                 model: 'district'
+            })
+            .populate({
+                path: 'address',
+                model: 'address'
             })
             .exec(function (err, fans) {
                 if (err) {
@@ -64,7 +72,8 @@ module.exports = {
             orders: req.body.orders,
             points: req.body.points,
             coupons: req.body.coupons,
-            district: req.body.district
+            district: req.body.district,
+            address:req.body.address
         });
 
         fans.save(function (err, fans) {
@@ -102,6 +111,7 @@ module.exports = {
             fans.points = req.body.points ? req.body.points : fans.points;
             fans.coupons = req.body.coupons ? req.body.coupons : fans.coupons;
             fans.district = req.body.district ? req.body.district : fans.district;
+            fans.address =req.body.address ? req.body.address :fans.address;
 
             fans.save(function (err, fans) {
                 if (err) {

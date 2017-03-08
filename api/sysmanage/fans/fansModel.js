@@ -10,6 +10,10 @@ var fansSchema = new Schema({
 	'district': {
 		type: Schema.Types.ObjectId,
 		ref: 'district'
+	},
+	'address':{
+		type: Schema.Types.ObjectId,
+		ref: 'address'
 	}
 });
 
