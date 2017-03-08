@@ -143,7 +143,7 @@ module.exports = {
         conditions = {
             fans: fansid
         }
-        addressModel.find({ conditions })
+        addressModel.find(conditions )
             .exec(function (err, addresss) {
                 if (err) {
                     return res.status(500).json({
