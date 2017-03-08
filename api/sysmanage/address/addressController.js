@@ -143,7 +143,15 @@ module.exports = {
         conditions = {
             fans: fansid
         }
-        addressModel.find(conditions )
+        addressModel.find(conditions)
+            .populate({
+                path: "region",
+                model: "region",
+                populate: {
+                    path: "district",
+                    model: "district"
+                }
+            })
             .exec(function (err, addresss) {
                 if (err) {
                     return res.status(500).json({
