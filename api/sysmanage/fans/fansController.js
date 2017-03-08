@@ -23,7 +23,7 @@ module.exports = {
                         error: err
                     });
                 }
-                return res.json(fanss);
+                return res.json(fanslist);
             })
     },
 
