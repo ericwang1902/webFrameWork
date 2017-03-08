@@ -16,6 +16,7 @@ var addressRouter = require('./address/addressRoutes');
 
 var mdistrictRouter = require('./district/mdistrictRouter');
 var mregionRouter  = require('./region/mregionRouter')
+var maddressRouter = require('./address/maddressRouter');
 
 
 var qiniuToken = require('../common/qiniu')
@@ -67,6 +68,8 @@ router.use('/mregion',mregionRouter);
 //address router
 //sysmanage/address
 router.use('/address',addressRouter);
+//maddressRouter
+router.use('/maddress',maddressRouter);
 
 //图片上传uploadtoken
 router.get('/qiniu',qiniuToken.getToken);

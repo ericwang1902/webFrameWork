@@ -135,5 +135,24 @@ module.exports = {
             }
             return res.status(204).json();
         });
+    },
+    //maddress
+    maddress: function (req, res) {
+        var fansid = req.query.fansid;
+        var conditions = {};
+        conditions = {
+            fans: fansid
+        }
+        addressModel.find({ conditions })
+            .exec(function (err, addresss) {
+                if (err) {
+                    return res.status(500).json({
+                        message: 'Error when deleting the address.',
+                        error: err
+                    });
+                }
+                return res.json(addresss);
+            })
+
     }
 };
