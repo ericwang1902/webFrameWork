@@ -141,7 +141,7 @@ module.exports = {
                         }
                         regionsback.push(temp);
                     }
-                    return res.json(regions);
+                    return res.json(regionsback);
                 }
                 
             })
