@@ -132,7 +132,18 @@ module.exports = {
                         error: err
                     });
                 }
-                return res.json(regions);
+                if(regions){
+                    var regionsback = [];
+                    for(var i =0;i<regions.length;i++){
+                        var temp={
+                            key:regions[i]._id,
+                            value:regions[i].regionname
+                        }
+                        regionsback.push(temp);
+                    }
+                    return res.json(regions);
+                }
+                
             })
 
     }
