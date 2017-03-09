@@ -45,6 +45,7 @@ router.use('/supplier',supplierRouter);
 
 //goods router
 //sysmanage/goods
+
 router.use('/goods',goodsRouter);
 
 //suite router
