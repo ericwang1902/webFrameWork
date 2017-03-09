@@ -18,6 +18,7 @@ var fanRouter = require('./fans/fansRoutes')
 var mdistrictRouter = require('./district/mdistrictRouter');
 var mregionRouter  = require('./region/mregionRouter')
 var maddressRouter = require('./address/maddressRouter');
+var msuiteRouter = require('./suite/msuiteRouter');
 
 
 var qiniuToken = require('../common/qiniu')
@@ -49,6 +50,9 @@ router.use('/goods',goodsRouter);
 //suite router
 //sysmanage/suite
 router.use('/suite',suiteRouter);
+//msuiteRouter
+//sysmanage/msuite
+router.use('/msuite',msuiteRouter);
 
 //district router 
 //sysmanage/district

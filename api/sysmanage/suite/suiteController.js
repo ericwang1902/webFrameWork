@@ -11,15 +11,15 @@ module.exports = {
      * suiteController.list()
      */
     list: function (req, res) {
-         //构造查询条件，admin例外
+        //构造查询条件，admin例外
         var role = req.user.role[0].roleName;
-        var districtId= req.user.district._id;
+        var districtId = req.user.district._id;
         var conditions = {};
         console.log(role);
         if (role == 'ADMIN') {
-            conditions={}
-        }else{
-            conditions={district: districtId}
+            conditions = {}
+        } else {
+            conditions = { district: districtId }
         }
 
         suiteModel
@@ -29,8 +29,8 @@ module.exports = {
                 model: "goods"
             })
             .populate({
-                path:'district',
-                model:'district'
+                path: 'district',
+                model: 'district'
             })
             .exec(function (err, suites) {
                 if (err) {
@@ -57,8 +57,8 @@ module.exports = {
                 model: "goods"
             })
             .populate({
-                path:'district',
-                model:'district'
+                path: 'district',
+                model: 'district'
             })
             .exec(function (err, suite) {
                 if (err) {
@@ -91,7 +91,7 @@ module.exports = {
             suitetype: req.body.suitetype,
             salesnum: req.body.salesnum,
             goodslist: req.body.goodslist,
-            district:req.user.district._id
+            district: req.user.district._id
         });
 
         suite.save(function (err, suite) {
@@ -135,7 +135,7 @@ module.exports = {
             suite.suitetype = req.body.suitetype ? req.body.suitetype : suite.suitetype;
             suite.salesnum = req.body.salesnum ? req.body.salesnum : suite.salesnum;
             suite.goodslist = req.body.goodslist ? req.body.goodslist : suite.goodslist;
-            suite.district = req.user.district._id ? req.user.district._id :suite.district;
+            suite.district = req.user.district._id ? req.user.district._id : suite.district;
 
             suite.save(function (err, suite) {
                 if (err) {
@@ -166,5 +166,28 @@ module.exports = {
         });
     },
     //移动端货架接口，增加查询条件，为了避免污染框架接口，在这里另写一个接口
+    msuite: function (req, res) {
+        var districtId = req.fan.district._id;
+        var conditions = { district: districtId }
+        suiteModel
+            .find(conditions)
+            .populate({
+                path: "goodslist",
+                model: "goods"
+            })
+            .populate({
+                path: 'district',
+                model: 'district'
+            })
+            .exec(function (err, suites) {
+                if (err) {
+                    return res.status(500).json({
+                        message: 'Error when getting suite.',
+                        error: err
+                    });
+                }
+                return res.json(suites);
+            })
+    }
 
 };
