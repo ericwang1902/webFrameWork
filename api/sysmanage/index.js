@@ -14,11 +14,13 @@ var districtRouter = require('./district/districtRoutes');
 var regionRouter = require('./region/regionRoutes');
 var addressRouter = require('./address/addressRoutes');
 var fanRouter = require('./fans/fansRoutes')
+var orderRouter = require('./order/orderRoutes');
 
 var mdistrictRouter = require('./district/mdistrictRouter');
 var mregionRouter  = require('./region/mregionRouter')
 var maddressRouter = require('./address/maddressRouter');
 var msuiteRouter = require('./suite/msuiteRouter');
+
 
 
 var qiniuToken = require('../common/qiniu')
@@ -79,6 +81,9 @@ router.use('/maddress',maddressRouter);
 
 //fansRoute
 router.use('/fans',fanRouter);
+
+//orderRoute
+router.use('/order',orderRouter);
 
 //图片上传uploadtoken
 router.get('/qiniu',qiniuToken.getToken);
