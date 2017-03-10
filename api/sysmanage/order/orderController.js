@@ -47,7 +47,27 @@ module.exports = {
      * orderController.create()
      */
     create: function (req, res) {
-        var order = new orderModel({			ordernum : req.body.ordernum,			suitelist : req.body.suitelist,			goodslist : req.body.goodslist,			totalamount : req.body.totalamount,			coupon : req.body.coupon,			paytype : req.body.paytype,			paystate : req.body.paystate,			ordertime : req.body.ordertime,			preparetime : req.body.preparetime,			finishtime : req.body.finishtime,			picktime : req.body.picktime,			receivetime : req.body.receivetime,			paytime : req.body.paytime,			fanid : req.body.fanid,			address : req.body.address,			note : req.body.note,			ficorder : req.body.ficorder
+        var order = new orderModel({
+			ordernum : req.body.ordernum,
+			suitelist : req.body.suitelist,
+			goodslist : req.body.goodslist,
+			totalamount : req.body.totalamount,
+			coupon : req.body.coupon,
+			paytype : req.body.paytype,
+			paystate : req.body.paystate,
+			ordertime : req.body.ordertime,
+			preparetime : req.body.preparetime,
+			finishtime : req.body.finishtime,
+			picktime : req.body.picktime,
+			receivetime : req.body.receivetime,
+			paytime : req.body.paytime,
+			fanid : req.body.fanid,
+            district: req.body.district,
+            region:req.body.region,
+			address : req.body.address,
+			note : req.body.note,
+			ficorder : req.body.ficorder,
+            taotalcount:req.body.taotalcount
         });
 
         order.save(function (err, order) {
@@ -79,7 +99,27 @@ module.exports = {
                 });
             }
 
-            order.ordernum = req.body.ordernum ? req.body.ordernum : order.ordernum;			order.suitelist = req.body.suitelist ? req.body.suitelist : order.suitelist;			order.goodslist = req.body.goodslist ? req.body.goodslist : order.goodslist;			order.totalamount = req.body.totalamount ? req.body.totalamount : order.totalamount;			order.coupon = req.body.coupon ? req.body.coupon : order.coupon;			order.paytype = req.body.paytype ? req.body.paytype : order.paytype;			order.paystate = req.body.paystate ? req.body.paystate : order.paystate;			order.ordertime = req.body.ordertime ? req.body.ordertime : order.ordertime;			order.preparetime = req.body.preparetime ? req.body.preparetime : order.preparetime;			order.finishtime = req.body.finishtime ? req.body.finishtime : order.finishtime;			order.picktime = req.body.picktime ? req.body.picktime : order.picktime;			order.receivetime = req.body.receivetime ? req.body.receivetime : order.receivetime;			order.paytime = req.body.paytime ? req.body.paytime : order.paytime;			order.fanid = req.body.fanid ? req.body.fanid : order.fanid;			order.address = req.body.address ? req.body.address : order.address;			order.note = req.body.note ? req.body.note : order.note;			order.ficorder = req.body.ficorder ? req.body.ficorder : order.ficorder;			
+            order.ordernum = req.body.ordernum ? req.body.ordernum : order.ordernum;
+			order.suitelist = req.body.suitelist ? req.body.suitelist : order.suitelist;
+			order.goodslist = req.body.goodslist ? req.body.goodslist : order.goodslist;
+			order.totalamount = req.body.totalamount ? req.body.totalamount : order.totalamount;
+			order.coupon = req.body.coupon ? req.body.coupon : order.coupon;
+			order.paytype = req.body.paytype ? req.body.paytype : order.paytype;
+			order.paystate = req.body.paystate ? req.body.paystate : order.paystate;
+			order.ordertime = req.body.ordertime ? req.body.ordertime : order.ordertime;
+			order.preparetime = req.body.preparetime ? req.body.preparetime : order.preparetime;
+			order.finishtime = req.body.finishtime ? req.body.finishtime : order.finishtime;
+			order.picktime = req.body.picktime ? req.body.picktime : order.picktime;
+			order.receivetime = req.body.receivetime ? req.body.receivetime : order.receivetime;
+			order.paytime = req.body.paytime ? req.body.paytime : order.paytime;
+			order.fanid = req.body.fanid ? req.body.fanid : order.fanid;
+            order.district = req.body.district ?req.body.district :order.district,
+            order.region = req.body.region ? req.body.region :order.reion,
+			order.address = req.body.address ? req.body.address : order.address;
+			order.note = req.body.note ? req.body.note : order.note;
+			order.ficorder = req.body.ficorder ? req.body.ficorder : order.ficorder;
+			order.taotalcount=req.body.taotalcount ? req.body.taotalcount:order.taotalcount;
+            
             order.save(function (err, order) {
                 if (err) {
                     return res.status(500).json({
