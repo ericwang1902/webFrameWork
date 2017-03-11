@@ -1,4 +1,5 @@
 var orderModel = require('./orderModel.js');
+var moment = require('moment')
 
 /**
  * orderController.js
@@ -47,20 +48,22 @@ module.exports = {
      * orderController.create()
      */
     create: function (req, res) {
+         
+
         var order = new orderModel({
-			ordernum : req.body.ordernum,
+			ordernum : moment.format('YYYYMMDDHHmmssSSS'),
 			suitelist : req.body.suitelist,
 			goodslist : req.body.goodslist,
 			totalamount : req.body.totalamount,
 			coupon : req.body.coupon,
 			paytype : req.body.paytype,
 			paystate : req.body.paystate,
-			ordertime : req.body.ordertime,
+			ordertime : moment(),//下单时间
 			preparetime : req.body.preparetime,
 			finishtime : req.body.finishtime,
 			picktime : req.body.picktime,
 			receivetime : req.body.receivetime,
-			paytime : req.body.paytime,
+			paytime : moment(),//支付时间
 			fanid : req.body.fanid,
             district: req.body.district,
             region:req.body.region,
