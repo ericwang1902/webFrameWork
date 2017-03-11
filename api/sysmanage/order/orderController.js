@@ -48,10 +48,10 @@ module.exports = {
      * orderController.create()
      */
     create: function (req, res) {
-         
+         console.log("ordernum:"+moment.format('YYYYMMDDHHmmssSSS'));
 
         var order = new orderModel({
-			ordernum : moment.format('YYYYMMDDHHmmssSSS'),
+			ordernum : req.body.ordernum,
 			suitelist : req.body.suitelist,
 			goodslist : req.body.goodslist,
 			totalamount : req.body.totalamount,
@@ -72,7 +72,6 @@ module.exports = {
 			ficorder : req.body.ficorder,
             taotalcount:req.body.taotalcount
         });
-        console.log("ordermodel:"+JSON.stringify(order));
 
         order.save(function (err, order) {
             if (err) {
