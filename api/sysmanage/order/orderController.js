@@ -51,19 +51,19 @@ module.exports = {
          console.log("ordernum:"+moment().format('YYYYMMDDHHmmssSSS'));
 
         var order = new orderModel({
-			ordernum : req.body.ordernum,
+			ordernum : moment().format('YYYYMMDDHHmmssSSS'),
 			suitelist : req.body.suitelist,
 			goodslist : req.body.goodslist,
 			totalamount : req.body.totalamount,
 			coupon : req.body.coupon,
 			paytype : req.body.paytype,
 			paystate : req.body.paystate,
-			ordertime : req.body.ordertime,//下单时间
+			ordertime : moment(),//下单时间
 			preparetime : req.body.preparetime,
 			finishtime : req.body.finishtime,
 			picktime : req.body.picktime,
 			receivetime : req.body.receivetime,
-			paytime : req.body.paytime,//支付时间
+			paytime : moment(),//支付时间
 			fanid : req.body.fanid,
             district: req.body.district,
             region:req.body.region,
