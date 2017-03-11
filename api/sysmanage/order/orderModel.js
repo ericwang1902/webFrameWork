@@ -26,7 +26,7 @@ var orderSchema = new Schema({
 	'district':{
 	 	type: Schema.Types.ObjectId,
 	 	ref: 'district'
-	},//
+	},//属于哪个区域
 	'region':{
 	 	type: Schema.Types.ObjectId,
 	 	ref: 'region'

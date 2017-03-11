@@ -12,15 +12,26 @@ module.exports = {
      * orderController.list()
      */
     list: function (req, res) {
-        orderModel.find(function (err, orders) {
-            if (err) {
-                return res.status(500).json({
-                    message: 'Error when getting order.',
-                    error: err
-                });
-            }
-            return res.json(orders);
-        });
+        //构造查询条件，admin例外
+        var role = req.user.role[0].roleName;
+        var districtId = req.user.district._id;
+        var conditions = {};
+        console.log(role);
+        if (role == 'ADMIN') {
+            conditions = {}
+        } else {
+            conditions = { district: districtId }
+        }
+        orderModel.find(conditions)
+            .exec(function (err, orders) {
+                if (err) {
+                    return res.status(500).json({
+                        message: 'Error when getting order.',
+                        error: err
+                    });
+                }
+                return res.json(orders);
+            })
     },
 
     /**
@@ -155,7 +166,7 @@ module.exports = {
     morderlist: function (req, res) {
         var fansid = req.query.fansid;
 
-        orderModel.find({fanid:fansid})
+        orderModel.find({ fanid: fansid })
             .exec(function (err, orderlist) {
                 if (err) {
                     return res.status(500).json({
