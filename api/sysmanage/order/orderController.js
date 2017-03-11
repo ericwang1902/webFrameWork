@@ -192,6 +192,7 @@ module.exports = {
                 path: 'fanid',
                 model: 'fans'
             })
+            .options({ sort: { paytime: -1 } })
             .exec(function (err, orderlist) {
                 if (err) {
                     return res.status(500).json({
