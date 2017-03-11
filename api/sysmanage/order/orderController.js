@@ -23,6 +23,26 @@ module.exports = {
             conditions = { district: districtId }
         }
         orderModel.find(conditions)
+            .populate({
+                path: 'suitelist',
+                model: 'suite'
+            })
+            .populate({
+                path: 'goodslist',
+                model: 'goods'
+            })
+            .populate({
+                path: 'district',
+                model: 'district'
+            })
+            .populate({
+                path: 'region',
+                model: 'region'
+            })
+            .populate({
+                path: 'fanid',
+                model: 'fans'
+            })
             .exec(function (err, orders) {
                 if (err) {
                     return res.status(500).json({
@@ -166,7 +186,28 @@ module.exports = {
     morderlist: function (req, res) {
         var fansid = req.query.fansid;
 
+
         orderModel.find({ fanid: fansid })
+            .populate({
+                path: 'suitelist',
+                model: 'suite'
+            })
+            .populate({
+                path: 'goodslist',
+                model: 'goods'
+            })
+            .populate({
+                path: 'district',
+                model: 'district'
+            })
+            .populate({
+                path: 'region',
+                model: 'region'
+            })
+            .populate({
+                path: 'fanid',
+                model: 'fans'
+            })
             .exec(function (err, orderlist) {
                 if (err) {
                     return res.status(500).json({
