@@ -35,6 +35,7 @@ module.exports = {
                 path: 'fanid',
                 model: 'fans'
             })
+            .sort({'paytime':-1})
             .exec(function (err, orders) {
                 if (err) {
                     return res.status(500).json({
@@ -192,7 +193,7 @@ module.exports = {
                 path: 'fanid',
                 model: 'fans'
             })
-            .options({ sort: { paytime: -1 } })
+            .sort({'paytime':-1})
             .exec(function (err, orderlist) {
                 if (err) {
                     return res.status(500).json({
