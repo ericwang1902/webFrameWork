@@ -77,9 +77,9 @@ var UserData = {
                         funcLink: "/dashboard/suite"
                     },
                     {
-                        funcNum:"4",
-                        funcName:"订单管理",
-                        funcLink:"/dashboard/order"
+                        funcNum: "4",
+                        funcName: "订单管理",
+                        funcLink: "/dashboard/order"
                     }
                 ]
             }
@@ -110,6 +110,11 @@ var AgentRoleData = {
                     funcNum: "3",
                     funcName: "套餐管理",
                     funcLink: "/dashboard/suite"
+                },
+                {
+                    funcNum: "4",
+                    funcName: "订单管理",
+                    funcLink: "/dashboard/order"
                 }
             ]
         }
@@ -120,15 +125,15 @@ var AgentRoleData = {
 var initData = function () {
     async.waterfall([
         //创建全局的一个区域给管理员关联
-        function(callback){
-            initGlobalDistrict(function(districtId){
-                callback(null,districtId);
+        function (callback) {
+            initGlobalDistrict(function (districtId) {
+                callback(null, districtId);
             });
         },
         //创建管理员
-        function (districtId,callback) {
+        function (districtId, callback) {
             //初始化系统管理员用户
-            initAdminUser(districtId,function () {
+            initAdminUser(districtId, function () {
                 callback(null, true)
             });//这个callback就时上面一行的callback，该callback时async waterfall中的，有两个参数    
         },
@@ -158,27 +163,27 @@ var initGlobalDistrict = function (callback) {
         city: "全局",
         district: "全局"
     })
-    .exec(function(err,districtResult){
-        if(err) console.log(err);
-        if(!districtResult){
-            //创建该区域
-            GlobaleDistrict.save(function(err,districtSaveResult){
-                if(err) console.log(err);
-                if(districtSaveResult){
-                    console.log("创建全局区域成功！")
-                    callback(districtSaveResult._id);
-                }
-            })
-        }else{
-            console.log("该全局区域已经存在！")
-            callback(districtResult._id);
-        }
+        .exec(function (err, districtResult) {
+            if (err) console.log(err);
+            if (!districtResult) {
+                //创建该区域
+                GlobaleDistrict.save(function (err, districtSaveResult) {
+                    if (err) console.log(err);
+                    if (districtSaveResult) {
+                        console.log("创建全局区域成功！")
+                        callback(districtSaveResult._id);
+                    }
+                })
+            } else {
+                console.log("该全局区域已经存在！")
+                callback(districtResult._id);
+            }
 
-    })
+        })
 }
 
 //初始化系统管理员用户，系统所有功能也都是通过该函数进行创建
-var initAdminUser = function (districtId,callback) {
+var initAdminUser = function (districtId, callback) {
     userModel
         .findOne({ userName: UserData.userName })
         .exec(function (err, userResult) {
@@ -260,7 +265,7 @@ var initAdminUser = function (districtId,callback) {
                                             password: bcrypt.hashSync(UserData.password, salt),
                                             openid: UserData.openid,
                                             role: roleSaveResult._id,
-                                            district:districtId
+                                            district: districtId
 
                                         })
 
