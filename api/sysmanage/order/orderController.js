@@ -24,14 +24,6 @@ module.exports = {
         }
         orderModel.find(conditions)
             .populate({
-                path: 'suitelist',
-                model: 'suite'
-            })
-            .populate({
-                path: 'goodslist',
-                model: 'goods'
-            })
-            .populate({
                 path: 'district',
                 model: 'district'
             })
@@ -188,14 +180,6 @@ module.exports = {
 
 
         orderModel.find({ fanid: fansid })
-            .populate({
-                path: 'suitelist',
-                model: 'suite'
-            })
-            .populate({
-                path: 'goodslist',
-                model: 'goods'
-            })
             .populate({
                 path: 'district',
                 model: 'district'
