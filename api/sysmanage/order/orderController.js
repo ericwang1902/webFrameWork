@@ -72,6 +72,7 @@ module.exports = {
 			ficorder : req.body.ficorder,
             taotalcount:req.body.taotalcount
         });
+        console.log("ordermodel:"+JSON.stringify(order));
 
         order.save(function (err, order) {
             if (err) {
