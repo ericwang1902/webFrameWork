@@ -1,5 +1,5 @@
 var orderModel = require('./orderModel.js');
-var moment = require('moment')
+//var moment = require('moment');
 
 /**
  * orderController.js
@@ -48,7 +48,7 @@ module.exports = {
      * orderController.create()
      */
     create: function (req, res) {
-         console.log("ordernum:"+moment.format('YYYYMMDDHHmmssSSS'));
+         //console.log("ordernum:"+moment.format('YYYYMMDDHHmmssSSS'));
 
         var order = new orderModel({
 			ordernum : req.body.ordernum,
