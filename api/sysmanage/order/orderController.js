@@ -58,12 +58,12 @@ module.exports = {
 			coupon : req.body.coupon,
 			paytype : req.body.paytype,
 			paystate : req.body.paystate,
-			ordertime : moment(),//下单时间
+			ordertime : req.body.ordertime,//下单时间
 			preparetime : req.body.preparetime,
 			finishtime : req.body.finishtime,
 			picktime : req.body.picktime,
 			receivetime : req.body.receivetime,
-			paytime : moment(),//支付时间
+			paytime : req.body.paytime,//支付时间
 			fanid : req.body.fanid,
             district: req.body.district,
             region:req.body.region,
