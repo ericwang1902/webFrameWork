@@ -196,6 +196,7 @@ module.exports = {
                     return res.status(500).json({
                         message: 'Error when getting suite.',
                         error: err
+                        
                     });
                 }
                 return res.json(suites);
