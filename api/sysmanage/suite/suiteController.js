@@ -26,7 +26,11 @@ module.exports = {
             .find(conditions)
             .populate({
                 path: "goodslist",
-                model: "goods"
+                model: "goods",
+                populate: {
+                    path: "supplier",
+                    model: "supplier"
+                }
             })
             .populate({
                 path: 'district',
