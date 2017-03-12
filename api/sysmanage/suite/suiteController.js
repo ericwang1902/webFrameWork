@@ -58,7 +58,11 @@ module.exports = {
             .findOne({ _id: id })
             .populate({
                 path: "goodslist",
-                model: "goods"
+                model: "goods",
+                populate: {
+                    path: "supplier",
+                    model: "supplier"
+                }
             })
             .populate({
                 path: 'district',
@@ -175,9 +179,13 @@ module.exports = {
         var conditions = { district: districtId }
         suiteModel
             .find(conditions)
-            .populate({
+           .populate({
                 path: "goodslist",
-                model: "goods"
+                model: "goods",
+                populate: {
+                    path: "supplier",
+                    model: "supplier"
+                }
             })
             .populate({
                 path: 'district',
