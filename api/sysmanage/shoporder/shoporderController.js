@@ -1,4 +1,6 @@
 var shoporderModel = require('./shoporderModel.js');
+var moment = require('moment');
+var constants = require('../../frameConfig/constants')
 
 /**
  * shoporderController.js
@@ -47,7 +49,17 @@ module.exports = {
      * shoporderController.create()
      */
     create: function (req, res) {
-        var shoporder = new shoporderModel({			ordernum : req.body.ordernum,			goodslist : req.body.goodslist,			ordertime : req.body.ordertime,			preparetime : req.body.preparetime,			finishtime : req.body.finishtime,			picktime : req.body.picktime,			receivetime : req.body.receivetime,			ficorder : req.body.ficorder,			supplierid : req.body.supplierid
+        var shoporder = new shoporderModel({
+			ordernum : 'S'+moment().format('YYYYMMDDHHmmssSSS'),
+			goodslist : req.body.goodslist,
+            status:constants.ficstatus[1].shop,
+			ordertime : moment(),//订单生成时间
+			preparetime : req.body.preparetime,
+			finishtime : req.body.finishtime,
+			picktime : req.body.picktime,
+			receivetime : req.body.receivetime,
+			ficorder : req.body.ficorder,
+			supplier : req.body.supplier
         });
 
         shoporder.save(function (err, shoporder) {
@@ -79,7 +91,16 @@ module.exports = {
                 });
             }
 
-            shoporder.ordernum = req.body.ordernum ? req.body.ordernum : shoporder.ordernum;			shoporder.goodslist = req.body.goodslist ? req.body.goodslist : shoporder.goodslist;			shoporder.ordertime = req.body.ordertime ? req.body.ordertime : shoporder.ordertime;			shoporder.preparetime = req.body.preparetime ? req.body.preparetime : shoporder.preparetime;			shoporder.finishtime = req.body.finishtime ? req.body.finishtime : shoporder.finishtime;			shoporder.picktime = req.body.picktime ? req.body.picktime : shoporder.picktime;			shoporder.receivetime = req.body.receivetime ? req.body.receivetime : shoporder.receivetime;			shoporder.ficorder = req.body.ficorder ? req.body.ficorder : shoporder.ficorder;			shoporder.supplierid = req.body.supplierid ? req.body.supplierid : shoporder.supplierid;			
+            shoporder.ordernum = req.body.ordernum ? req.body.ordernum : shoporder.ordernum;
+			shoporder.goodslist = req.body.goodslist ? req.body.goodslist : shoporder.goodslist;
+			shoporder.ordertime = req.body.ordertime ? req.body.ordertime : shoporder.ordertime;
+			shoporder.preparetime = req.body.preparetime ? req.body.preparetime : shoporder.preparetime;
+			shoporder.finishtime = req.body.finishtime ? req.body.finishtime : shoporder.finishtime;
+			shoporder.picktime = req.body.picktime ? req.body.picktime : shoporder.picktime;
+			shoporder.receivetime = req.body.receivetime ? req.body.receivetime : shoporder.receivetime;
+			shoporder.ficorder = req.body.ficorder ? req.body.ficorder : shoporder.ficorder;
+			shoporder.supplier = req.body.supplier ? req.body.supplier : shoporder.supplier;
+			
             shoporder.save(function (err, shoporder) {
                 if (err) {
                     return res.status(500).json({

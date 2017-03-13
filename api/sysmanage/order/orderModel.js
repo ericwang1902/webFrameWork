@@ -11,6 +11,7 @@ var orderSchema = new Schema({
 	 	type: Schema.Types.ObjectId,
 	 	ref: 'coupon'
 	},
+	'status':String,//订单状态
 	'paytype' : String,//wechat
 	'paystate' : String,//1
 	'ordertime' : Date,//post time

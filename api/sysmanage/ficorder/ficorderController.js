@@ -1,4 +1,6 @@
 var ficorderModel = require('./ficorderModel.js');
+var moment  = require('moment');
+
 
 /**
  * ficorderController.js
@@ -47,7 +49,9 @@ module.exports = {
      * ficorderController.create()
      */
     create: function (req, res) {
-        var ficorder = new ficorderModel({			ficordernum : req.body.ficordernum,			ficorderstate : req.body.ficorderstate
+        var ficorder = new ficorderModel({
+			ficordernum : 'F' + moment().format('YYYYMMDDHHmmssSSS'),
+			ficorderstate : req.body.ficorderstate
         });
 
         ficorder.save(function (err, ficorder) {
@@ -79,7 +83,9 @@ module.exports = {
                 });
             }
 
-            ficorder.ficordernum = req.body.ficordernum ? req.body.ficordernum : ficorder.ficordernum;			ficorder.ficorderstate = req.body.ficorderstate ? req.body.ficorderstate : ficorder.ficorderstate;			
+            ficorder.ficordernum = req.body.ficordernum ? req.body.ficordernum : ficorder.ficordernum;
+			ficorder.ficorderstate = req.body.ficorderstate ? req.body.ficorderstate : ficorder.ficorderstate;
+			
             ficorder.save(function (err, ficorder) {
                 if (err) {
                     return res.status(500).json({
