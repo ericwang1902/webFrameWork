@@ -1,6 +1,7 @@
 var orderModel = require('./orderModel.js');
 var moment = require('moment');
 var constants = require('../../frameConfig/constants')
+var async = require('async');
 
 /**
  * orderController.js
@@ -84,7 +85,7 @@ module.exports = {
             suitelist: req.body.suitelist,
             goodslist: req.body.goodslist,
             totalamount: req.body.totalamount,
-        
+
             coupon: req.body.coupon,
             paytype: req.body.paytype,
             paystate: req.body.paystate,
@@ -152,7 +153,7 @@ module.exports = {
             order.note = req.body.note ? req.body.note : order.note;
             order.ficorder = req.body.ficorder ? req.body.ficorder : order.ficorder;
             order.taotalcount = req.body.taotalcount ? req.body.taotalcount : order.taotalcount;
-            
+
             order.save(function (err, order) {
                 if (err) {
                     return res.status(500).json({
@@ -209,6 +210,42 @@ module.exports = {
                 }
                 return res.json(orderlist);
             })
+    },
+    //分发订单时，批量更新客户订单的ficorder
+    pupdate: function (req, res) {
+        var orderlist = req.body.orderlist;
+
+        async.each(orderlist, function (order, callback) {
+            orderModel.findOne({ _id: order._id })
+                .exec(function (err, orderresult) {
+                    if (err) {
+                        console.log(err);
+                        callback(err);
+                    }
+                    orderresult.ficorder = order.ficorder;
+                    orderresult.save(function (err, result) {
+                        if (err) {
+                            console.log(err);
+                            callback(err);
+                        }
+
+                        callback();
+                    })
+                })
+
+        }, function (err) {
+            if (err) {
+                console.log(err);
+                return res.status(500).json({
+                    message: 'Error when updating the order.',
+                    error: err
+                });
+            } else {
+                console.log("order都更新了");
+                return res.status(201).json({ result: 'success' });
+            }
+        })
+
     }
 
 };

@@ -147,7 +147,7 @@ module.exports = {
             if (err) {
                 console.log(err);
                  return res.status(500).json({
-                    message: 'Error when deleting the shoporder.',
+                    message: 'Error when creating the shoporder.',
                     error: err
                 });
             } else {

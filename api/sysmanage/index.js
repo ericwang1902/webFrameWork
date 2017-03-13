@@ -15,6 +15,7 @@ var regionRouter = require('./region/regionRoutes');
 var addressRouter = require('./address/addressRoutes');
 var fanRouter = require('./fans/fansRoutes')
 var orderRouter = require('./order/orderRoutes');
+var porderRouter = require('./order/porderRouter');
 var ficorderRouter = require('./ficorder/ficorderRoutes');
 var shoporderRouter = require('./shoporder/shoporderRoutes');
 var pshoporderRouter = require('./shoporder/pshoporderRoutes');
@@ -87,6 +88,8 @@ router.use('/fans',fanRouter);
 
 //orderRoute
 router.use('/order',orderRouter);
+//porderRouter
+router.use('/porder',porderRouter);
 //morderrouter
 router.use('/morder',morderRouter);
 //ficorderRouter
