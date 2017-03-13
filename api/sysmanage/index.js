@@ -16,6 +16,7 @@ var addressRouter = require('./address/addressRoutes');
 var fanRouter = require('./fans/fansRoutes')
 var orderRouter = require('./order/orderRoutes');
 var ficorderRouter = require('./ficorder/ficorderRoutes');
+var shoporderRouter = require('./shoporder/pshoporderRoutes');
 var pshoporderRouter = require('./shoporder/pshoporderRoutes');
 
 var mdistrictRouter = require('./district/mdistrictRouter');
@@ -93,6 +94,9 @@ router.use('/ficorder',ficorderRouter);
 
 //pshoporderRouter
 router.use('/pshoporder',pshoporderRouter);
+
+//shoporderRouter
+router.use('/shoporder',shoporderRouter);
 
 //图片上传uploadtoken
 router.get('/qiniu',qiniuToken.getToken);
