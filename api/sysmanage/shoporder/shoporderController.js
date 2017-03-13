@@ -29,7 +29,7 @@ module.exports = {
      */
     show: function (req, res) {
         var id = req.params.id;
-        shoporderModel.findOne({_id: id}, function (err, shoporder) {
+        shoporderModel.findOne({ _id: id }, function (err, shoporder) {
             if (err) {
                 return res.status(500).json({
                     message: 'Error when getting shoporder.',
@@ -50,16 +50,15 @@ module.exports = {
      */
     create: function (req, res) {
         var shoporder = new shoporderModel({
-			ordernum : 'S'+moment().format('YYYYMMDDHHmmssSSS'),
-			goodslist : req.body.goodslist,
-            status:constants.ficstatus[1].shop,
-			ordertime : moment(),//订单生成时间
-			preparetime : req.body.preparetime,
-			finishtime : req.body.finishtime,
-			picktime : req.body.picktime,
-			receivetime : req.body.receivetime,
-			ficorder : req.body.ficorder,
-			supplier : req.body.supplier
+            ordernum: 'S' + moment().format('YYYYMMDDHHmmssSSS'),
+            goodslist: req.body.goodslist,
+            ordertime: moment(),//订单生成时间
+            preparetime: req.body.preparetime,
+            finishtime: req.body.finishtime,
+            picktime: req.body.picktime,
+            receivetime: req.body.receivetime,
+            ficorder: req.body.ficorder,
+            supplier: req.body.supplier
         });
 
         shoporder.save(function (err, shoporder) {
@@ -78,7 +77,7 @@ module.exports = {
      */
     update: function (req, res) {
         var id = req.params.id;
-        shoporderModel.findOne({_id: id}, function (err, shoporder) {
+        shoporderModel.findOne({ _id: id }, function (err, shoporder) {
             if (err) {
                 return res.status(500).json({
                     message: 'Error when getting shoporder',
@@ -92,15 +91,15 @@ module.exports = {
             }
 
             shoporder.ordernum = req.body.ordernum ? req.body.ordernum : shoporder.ordernum;
-			shoporder.goodslist = req.body.goodslist ? req.body.goodslist : shoporder.goodslist;
-			shoporder.ordertime = req.body.ordertime ? req.body.ordertime : shoporder.ordertime;
-			shoporder.preparetime = req.body.preparetime ? req.body.preparetime : shoporder.preparetime;
-			shoporder.finishtime = req.body.finishtime ? req.body.finishtime : shoporder.finishtime;
-			shoporder.picktime = req.body.picktime ? req.body.picktime : shoporder.picktime;
-			shoporder.receivetime = req.body.receivetime ? req.body.receivetime : shoporder.receivetime;
-			shoporder.ficorder = req.body.ficorder ? req.body.ficorder : shoporder.ficorder;
-			shoporder.supplier = req.body.supplier ? req.body.supplier : shoporder.supplier;
-			
+            shoporder.goodslist = req.body.goodslist ? req.body.goodslist : shoporder.goodslist;
+            shoporder.ordertime = req.body.ordertime ? req.body.ordertime : shoporder.ordertime;
+            shoporder.preparetime = req.body.preparetime ? req.body.preparetime : shoporder.preparetime;
+            shoporder.finishtime = req.body.finishtime ? req.body.finishtime : shoporder.finishtime;
+            shoporder.picktime = req.body.picktime ? req.body.picktime : shoporder.picktime;
+            shoporder.receivetime = req.body.receivetime ? req.body.receivetime : shoporder.receivetime;
+            shoporder.ficorder = req.body.ficorder ? req.body.ficorder : shoporder.ficorder;
+            shoporder.supplier = req.body.supplier ? req.body.supplier : shoporder.supplier;
+
             shoporder.save(function (err, shoporder) {
                 if (err) {
                     return res.status(500).json({
@@ -128,5 +127,33 @@ module.exports = {
             }
             return res.status(204).json();
         });
+    },
+    //分发订单时，批量创建商铺订单的接口
+    pcreate: function (req, res) {
+        var shoporderlist = req.body.shoporderlist;
+
+        async.each(shoporderlist, function (shoporder, callback) {
+            var shoporder = new shoporderModel(shoporder);
+            shoporder.save(function(err,result){
+                if(err){
+                    console.log(err);
+                    callback(err);
+                }
+                callback();
+            })
+
+        }, function (err) {
+            if (err) {
+                console.log(err);
+                 return res.status(500).json({
+                    message: 'Error when deleting the shoporder.',
+                    error: err
+                });
+            } else {
+                console.log("shoporder都存储了！");
+                return res.status(201).json({result:'success'});
+            }
+        })
+
     }
 };

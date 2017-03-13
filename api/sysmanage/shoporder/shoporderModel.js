@@ -4,7 +4,6 @@ var Schema   = mongoose.Schema;
 var shoporderSchema = new Schema({
 	'ordernum' : String,
 	'goodslist' : Array,//ok
-	'status':String,//商铺订单的状态
 	'ordertime' : Date,
 	'preparetime' : Date,
 	'finishtime' : Date,

@@ -36,6 +36,10 @@ module.exports = {
                 path: 'fanid',
                 model: 'fans'
             })
+            .populate({
+                path: 'ficorder',
+                model: 'ficorder'
+            })
             .sort({ 'paytime': -1 })
             .exec(function (err, orders) {
                 if (err) {
@@ -80,7 +84,7 @@ module.exports = {
             suitelist: req.body.suitelist,
             goodslist: req.body.goodslist,
             totalamount: req.body.totalamount,
-            status: constants.ficstatus[0].cust,//初始下单的装为“已下单”
+        
             coupon: req.body.coupon,
             paytype: req.body.paytype,
             paystate: req.body.paystate,
@@ -148,8 +152,7 @@ module.exports = {
             order.note = req.body.note ? req.body.note : order.note;
             order.ficorder = req.body.ficorder ? req.body.ficorder : order.ficorder;
             order.taotalcount = req.body.taotalcount ? req.body.taotalcount : order.taotalcount;
-            order.status = req.body.status ? req.body.status : order.status;
-
+            
             order.save(function (err, order) {
                 if (err) {
                     return res.status(500).json({
