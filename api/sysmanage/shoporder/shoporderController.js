@@ -1,7 +1,7 @@
 var shoporderModel = require('./shoporderModel.js');
 var moment = require('moment');
 var constants = require('../../frameConfig/constants')
-
+var async = require('async');
 /**
  * shoporderController.js
  *
