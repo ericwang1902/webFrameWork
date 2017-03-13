@@ -16,7 +16,7 @@ var addressRouter = require('./address/addressRoutes');
 var fanRouter = require('./fans/fansRoutes')
 var orderRouter = require('./order/orderRoutes');
 var ficorderRouter = require('./ficorder/ficorderRoutes');
-var pshoporderRouter = require('./shoporder/pshoperordderRoute');
+var pshoporderRouter = require('./shoporder/pshoporderRoutes');
 
 var mdistrictRouter = require('./district/mdistrictRouter');
 var mregionRouter  = require('./region/mregionRouter')
