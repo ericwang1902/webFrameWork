@@ -22,7 +22,7 @@ module.exports = {
         if (role == 'ADMIN') {
             conditions = {}
         } else {
-            conditions = { district: districtId }
+            conditions = { district: districtId,ficorder:'' }
         }
         orderModel.find(conditions)
             .populate({
