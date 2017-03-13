@@ -22,7 +22,7 @@ module.exports = {
         if (role == 'ADMIN') {
             conditions = {}
         } else {
-            conditions = { district: districtId,ficorder: {$in: [null] }}
+            conditions = { district: districtId,ficorder: {$exists: false }}
         }
             
         orderModel.find(conditions)
