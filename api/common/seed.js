@@ -85,6 +85,16 @@ var UserData = {
                         funcNum: "5",
                         funcName: "商户订单",
                         funcLink: "/dashboard/shoporder"
+                    },
+                    {
+                        funcNum: "5",
+                        funcName: "店主中心",
+                        funcLink: "/dashboard/shoppercenter"
+                    },
+                    {
+                        funcNum: "6",
+                        funcName: "配送员中心",
+                        funcLink: "/dashboard/couriercenter"
                     }
                 ]
             }
@@ -186,27 +196,27 @@ var initData = function () {
         },
         function (initadminresult, callback) {
             //初始化区域代理AGENT菜单的初始化
-            initAgentRole(AgentRoleData,function () {
+            initAgentRole(AgentRoleData, function () {
                 callback(null, true)
             });
 
         },
         function (initaAgentroleresult, callback) {
             //初始化店主菜单的初始化
-            initAgentRole(ShopperRoleData,function () {
+            initAgentRole(ShopperRoleData, function () {
                 callback(null, true)
             });
 
         },
         function (initShopperRoleDataresult, callback) {
             //初始化配送员菜单的初始化
-            initAgentRole(CourierRoleData,function () {
+            initAgentRole(CourierRoleData, function () {
                 callback(null, true)
             });
         }
     ], function (err, result) {
         if (err) console.log(err);
-        console.log("管理员和agent 创建成功！")
+        console.log("管理员、代理、店主、配送员相关初始数据创建成功！")
     })
 
 }
@@ -354,7 +364,7 @@ var initAdminUser = function (districtId, callback) {
 }
 
 // 初始化agent角色，以及旗下菜单
-var initAgentRole = function (RoleData,callback9) {
+var initAgentRole = function (RoleData, callback9) {
     async.waterfall([
         //新建agent下面的菜单
         function (callback) {
@@ -438,7 +448,7 @@ var initAgentRole = function (RoleData,callback9) {
             console.log("err.message:" + err.message);
         } else {
             callback9();
-            console.log("区域代理角色创建成功！")
+            console.log("角色创建成功！")
         }
     }
     )
