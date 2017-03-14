@@ -22,9 +22,14 @@ module.exports = {
         if (role == 'ADMIN') {
             conditions = {}
         } else {
-            conditions = { district: districtId,ficorder: {$exists: false }}
+            if (!req.query.delivered) {//没有分发
+                conditions = { district: districtId, ficorder: { $exists: false } }
+            } else {
+                conditions = { district: districtId, ficorder: { $exists: true } }
+            }
+
         }
-            
+
         orderModel.find(conditions)
             .populate({
                 path: 'district',
