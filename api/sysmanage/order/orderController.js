@@ -21,15 +21,15 @@ module.exports = {
         console.log(role);
         if (role == 'ADMIN') {
             if (!req.query.delivered) {//没有分发
-                conditions = { ficorder: { $exists: false } }
+                conditions = { region: req.query.region, ficorder: { $exists: false } }
             } else {
-                conditions = { ficorder: { $exists: true } }
+                conditions = { region: req.query.region, ficorder: { $exists: true } }
             }
         } else {
             if (!req.query.delivered) {//没有分发
-                conditions = { district: districtId, ficorder: { $exists: false } }
+                conditions = { region: req.query.region, district: districtId, ficorder: { $exists: false } }
             } else {
-                conditions = { district: districtId, ficorder: { $exists: true } }
+                conditions = { region: req.query.region, district: districtId, ficorder: { $exists: true } }
             }
 
         }
