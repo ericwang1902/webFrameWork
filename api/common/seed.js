@@ -190,6 +190,19 @@ var initData = function () {
                 callback(null, true)
             });
 
+        },
+        function (initaAgentroleresult, callback) {
+            //初始化店主菜单的初始化
+            initAgentRole(ShopperRoleData,function () {
+                callback(null, true)
+            });
+
+        },
+        function (initShopperRoleDataresult, callback) {
+            //初始化配送员菜单的初始化
+            initAgentRole(CourierRoleData,function () {
+                callback(null, true)
+            });
         }
     ], function (err, result) {
         if (err) console.log(err);
