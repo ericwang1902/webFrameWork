@@ -11,7 +11,17 @@ module.exports = {
      * regionController.list()
      */
     list: function (req, res) {
-        regionModel.find()
+         //构造查询条件，admin例外
+        var role = req.user.role[0].roleName;
+        var districtId= req.user.district._id;
+        var conditions = {};
+        console.log(role);
+        if (role == 'ADMIN') {
+            conditions={}
+        }else{
+            conditions={district: districtId}
+        }
+        regionModel.find(conditions)
             .populate({
                 path: "district",
                 model: "district"
