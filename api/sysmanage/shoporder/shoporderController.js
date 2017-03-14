@@ -13,15 +13,29 @@ module.exports = {
      * shoporderController.list()
      */
     list: function (req, res) {
-        shoporderModel.find(function (err, shoporders) {
-            if (err) {
-                return res.status(500).json({
-                    message: 'Error when getting shoporder.',
-                    error: err
-                });
-            }
-            return res.json(shoporders);
-        });
+        //构造查询条件，admin例外
+        var role = req.user.role[0].roleName;
+        var districtId = req.user.district._id;
+        var conditions = {};
+        console.log(role);
+        if (role == 'ADMIN') {
+            conditions = {}
+        } else {
+            conditions = { district: districtId }
+        }
+
+        shoporderModel.find(conditions)
+            .exec(function (err, shoporders) {
+                if (err) {
+                    return res.status(500).json({
+                        message: 'Error when getting shoporder.',
+                        error: err
+                    });
+                }
+                return res.json(shoporders);
+            })
+
+
     },
 
     /**
@@ -52,6 +66,7 @@ module.exports = {
         var shoporder = new shoporderModel({
             ordernum: 'S' + moment().format('YYYYMMDDHHmmssSSS'),
             goodslist: req.body.goodslist,
+            district:req.body.district,
             ordertime: moment(),//订单生成时间
             preparetime: req.body.preparetime,
             finishtime: req.body.finishtime,
@@ -99,6 +114,7 @@ module.exports = {
             shoporder.receivetime = req.body.receivetime ? req.body.receivetime : shoporder.receivetime;
             shoporder.ficorder = req.body.ficorder ? req.body.ficorder : shoporder.ficorder;
             shoporder.supplier = req.body.supplier ? req.body.supplier : shoporder.supplier;
+            shoporder.district =req.body.district ? req.body.district : shoporder.district;
 
             shoporder.save(function (err, shoporder) {
                 if (err) {
@@ -135,8 +151,8 @@ module.exports = {
 
         async.each(shoporderlist, function (shoporder, callback) {
             var shoporder = new shoporderModel(shoporder);
-            shoporder.save(function(err,result){
-                if(err){
+            shoporder.save(function (err, result) {
+                if (err) {
                     console.log(err);
                     callback(err);
                 }
@@ -146,13 +162,13 @@ module.exports = {
         }, function (err) {
             if (err) {
                 console.log(err);
-                 return res.status(500).json({
+                return res.status(500).json({
                     message: 'Error when creating the shoporder.',
                     error: err
                 });
             } else {
                 console.log("shoporder都存储了！");
-                return res.status(201).json({result:'success'});
+                return res.status(201).json({ result: 'success' });
             }
         })
 

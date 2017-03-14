@@ -9,6 +9,10 @@ var shoporderSchema = new Schema({
 	'finishtime' : Date,
 	'picktime' : Date,
 	'receivetime' : Date,
+	'district': {
+	 	type: Schema.Types.ObjectId,
+	 	ref: 'district'
+	},
 	'ficorder' : {
 	 	type: Schema.Types.ObjectId,
 	 	ref: 'ficorder'
