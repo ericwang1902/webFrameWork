@@ -162,7 +162,21 @@ module.exports = {
         console.log(shoporderlist);
 
         async.each(shoporderlist, function (shoporder, callback) {
-            var shoporder = new shoporderModel(shoporder);
+            var shoporder = new shoporderModel(
+                {
+                    ordernum: 'S' + moment().format('YYYYMMDDHHmmssSSS'),
+                    goodslist: shoporder.goodslist,
+                    district:shoporder.district,
+                    ordertime: moment(),//订单生成时间
+                    preparetime: '',
+                    finishtime: '',
+                    picktime: '',
+                    receivetime: '',
+                    ficorder: shoporder.ficorder,
+                    supplier: shoporder.supplier
+                }
+            );
+
             shoporder.save(function (err, result) {
                 if (err) {
                     console.log(err);
