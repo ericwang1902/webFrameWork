@@ -109,7 +109,7 @@ var AgentRoleData = {
     menuList: [
         {
             menuNum: "0",
-            menuName: "业务设置",
+            menuName: "业务管理",
             funcList: [
                 {
                     funcNum: "1",
