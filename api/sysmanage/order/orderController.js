@@ -21,15 +21,24 @@ module.exports = {
         console.log(role);
         if (role == 'ADMIN') {
             if (!req.query.delivered) {//没有分发
-                conditions = { region: req.query.region ? req.query.region :{}, ficorder: { $exists: false } }
+                conditions = {  ficorder: { $exists: false } }
             } else {
-                conditions = { region: req.query.region ? req.query.region :{}, ficorder: { $exists: true } }
+                conditions = {  ficorder: { $exists: true } }
             }
         } else {
             if (!req.query.delivered) {//没有分发
-                conditions = { region: req.query.region ? req.query.region :{}, district: districtId, ficorder: { $exists: false } }
+                if(!req.query.region){
+                    conditions = {  district: districtId, ficorder: { $exists: false } }
+                }else{
+                    conditions = { region:req.query.region, district: districtId, ficorder: { $exists: false } }
+                }   
+                
             } else {
-                conditions = { region: req.query.region ? req.query.region :{}, district: districtId, ficorder: { $exists: true } }
+                if(!req.query.region){
+                    conditions = {  district: districtId, ficorder: { $exists: true } }
+                }else{
+                    conditions = { region:req.query.region, district: districtId, ficorder: { $exists: true } }
+                }   
             }
 
         }
