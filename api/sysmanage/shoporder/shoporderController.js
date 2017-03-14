@@ -25,6 +25,18 @@ module.exports = {
         }
 
         shoporderModel.find(conditions)
+            .populate({
+                path:'district',
+                model:'district'
+            })
+            .populate({
+                path:'ficorder',
+                model:'ficorder'
+            })
+            .populate({
+                path:'supplier',
+                model:'supplier'
+            })
             .exec(function (err, shoporders) {
                 if (err) {
                     return res.status(500).json({
