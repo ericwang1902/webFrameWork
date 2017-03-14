@@ -20,16 +20,16 @@ module.exports = {
         var conditions = {};
         console.log(role);
         if (role == 'ADMIN') {
-            if (!req.query.delivered) {//没有分发
+            if (!req.query.delivered) {//没有分发的客户订单
                 conditions = {  ficorder: { $exists: false } }
-            } else {
+            } else {//已经分发的客户订单
                 conditions = {  ficorder: { $exists: true } }
             }
         } else {
-            if (!req.query.delivered) {//没有分发
+            if (!req.query.delivered) {//没有分发的客户订单
                 if(!req.query.region){
                     conditions = {  district: districtId, ficorder: { $exists: false } }
-                }else{
+                }else{//已经分发的客户订单
                     conditions = { region:req.query.region, district: districtId, ficorder: { $exists: false } }
                 }   
                 

@@ -78,8 +78,13 @@ var UserData = {
                     },
                     {
                         funcNum: "4",
-                        funcName: "订单管理",
+                        funcName: "客户订单",
                         funcLink: "/dashboard/order"
+                    },
+                    {
+                        funcNum: "5",
+                        funcName: "商户订单",
+                        funcLink: "/dashboard/shoporder"
                     }
                 ]
             }
@@ -113,8 +118,13 @@ var AgentRoleData = {
                 },
                 {
                     funcNum: "4",
-                    funcName: "订单管理",
+                    funcName: "客户订单",
                     funcLink: "/dashboard/order"
+                },
+                {
+                    funcNum: "5",
+                    funcName: "商户订单",
+                    funcLink: "/dashboard/shoporder"
                 }
             ]
         }
