@@ -149,7 +149,7 @@ var initData = function () {
         },
         function (initadminresult, callback) {
             //初始化区域代理AGENT菜单的初始化
-            initAgentRole(function () {
+            initAgentRole(AgentRoleData,function () {
                 callback(null, true)
             });
 
@@ -304,13 +304,13 @@ var initAdminUser = function (districtId, callback) {
 }
 
 // 初始化agent角色，以及旗下菜单
-var initAgentRole = function (callback9) {
+var initAgentRole = function (RoleData,callback9) {
     async.waterfall([
         //新建agent下面的菜单
         function (callback) {
             //循环检查roledata下面的菜单是否已经创建
             var menulist = [];
-            async.each(AgentRoleData.menuList, function (menuitem, callback1) {
+            async.each(RoleData.menuList, function (menuitem, callback1) {
                 //对menuitem进行检查是否已经创建，如果没创建就进行创建
                 menuModel.findOne({ menuName: menuitem.menuName })
                     .exec(function (err, menuResult) {
@@ -361,14 +361,14 @@ var initAgentRole = function (callback9) {
         },
         //创建agent角色
         function (menulist, callback) {
-            roleModel.findOne({ roleName: AgentRoleData.roleName })
+            roleModel.findOne({ roleName: RoleData.roleName })
                 .exec(function (err, roleResult) {
                     if (err) console.log(err);
                     if (!roleResult) {
                         //创建改角色
                         var roleInstance = new roleModel({
-                            roleName: AgentRoleData.roleName,
-                            roleDes: AgentRoleData.roleDes,
+                            roleName: RoleData.roleName,
+                            roleDes: RoleData.roleDes,
                             menuList: menulist
                         })
                         roleInstance.save(function (err, roleResult) {
