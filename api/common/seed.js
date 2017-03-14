@@ -131,6 +131,43 @@ var AgentRoleData = {
     ]//菜单列表
 
 }
+//shop owner 
+var ShopperRoleData = {
+    roleDes: "店主",
+    roleName: constants.role.shopper,//管理员角色
+    menuList: [
+        {
+            menuNum: "0",
+            menuName: "店主菜单",
+            funcList: [
+                {
+                    funcNum: "1",
+                    funcName: "店主中心",
+                    funcLink: "/dashboard/shoppercenter"
+                }
+            ]
+        }
+    ]//菜单列表
+}
+
+//courier  
+var CourierRoleData = {
+    roleDes: "配送员",
+    roleName: constants.role.courier,//管理员角色
+    menuList: [
+        {
+            menuNum: "0",
+            menuName: "配送员菜单",
+            funcList: [
+                {
+                    funcNum: "1",
+                    funcName: "配送员中心",
+                    funcLink: "/dashboard/couriercenter"
+                }
+            ]
+        }
+    ]//菜单列表
+}
 
 var initData = function () {
     async.waterfall([
