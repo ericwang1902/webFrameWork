@@ -20,7 +20,11 @@ module.exports = {
         var conditions = {};
         console.log(role);
         if (role == 'ADMIN') {
-            conditions = {}
+            if (!req.query.delivered) {//没有分发
+                conditions = { ficorder: { $exists: false } }
+            } else {
+                conditions = { ficorder: { $exists: true } }
+            }
         } else {
             if (!req.query.delivered) {//没有分发
                 conditions = { district: districtId, ficorder: { $exists: false } }
