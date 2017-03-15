@@ -103,7 +103,10 @@ module.exports = {
     //mobile部分的url
     mobileUserInitURL:mobileBaseURL+'initfan',
     
-    mobileUserHome:mobileBaseURL+'home'
+    mobileUserHome:mobileBaseURL+'home',
+
+    //用户绑定
+    mobileUserBind:mobileBaseURL +'userbind'
     
 
 

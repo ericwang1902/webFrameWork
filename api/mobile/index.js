@@ -21,6 +21,7 @@ router.get('/index', function (req, res, next) {
     res.redirect(url);
 });
 
+
 // 通过跳转到home携带code，获取openid，只能用这种跳转的方式，不能用ajax访问获取openid
 router.get('/home', getopenid, createFans, function (req, res, next) {
 
@@ -30,14 +31,6 @@ router.get('/home', getopenid, createFans, function (req, res, next) {
     }else{
         res.redirect(config.mobileUserHome+"?userid="+req.fanSaveResult._id);
     }
-
-    
-
-
-
-
-
-
 
   //  console.log("fanSaveResult：" + JSON.stringify(req.fanSaveResult))
    // console.log("openid：" + req.session.openid)
@@ -51,6 +44,21 @@ router.get('/home', getopenid, createFans, function (req, res, next) {
     // res.send("homepage")
    // res.redirect("http://localhost:8090/")
 });
+
+//mobile/bind 用来获取用户openid⭐️️️️️️️️️️
+//店主、配送员、区域代理的openid的绑定
+router.get('/bind', function (req, res, next) {
+    var url = client.getAuthorizeURL('http://' + 'aft.robustudio.com' + '/mobile/bindjump', 'aft', 'snsapi_userinfo');
+    res.redirect(url);
+});
+
+//bind页面跳转到bindjump，获取openid
+router.get('/bindjump',getopenid,function(req,res,next){
+    var openid = req.session.openid;
+    console.log("用户绑定openid:"+openid);
+    res.redirect(config.mobileUserBind+"?openid="+openid);//将openid通过querystring传递到userbind表单页面  
+})
+
 
 //第三方库获取openid和user_access_token
 function getopenid(req, res, next) {
