@@ -37,6 +37,7 @@ module.exports = {
                 path:'supplier',
                 model:'supplier'
             })
+            .sort({ 'ordertime': -1 })
             .exec(function (err, shoporders) {
                 if (err) {
                     return res.status(500).json({
