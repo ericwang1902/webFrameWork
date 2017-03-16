@@ -1,37 +1,30 @@
 var express = require('express');
 var router = express.Router();
+var wechatutil = require('../common/wechatutil');//微信粉丝部分的方法封装
+var wechatapi = require('../common/wechatapi')//微信公共接口的方法封装
 
 var fansModel = require('../sysmanage/fans/fansModel');
-
-var wechatutil = require('../common/wechatutil');
-
-var wechatapi = require('../common/wechatapi')
-
 var mobileRouter =require('./mobilerouter');
-
 var config = require('../frameConfig/frameConfig');
-
-
-
 
 // 这里的路由都是/mobile/xxx，不需要加sysmanage
 /*  index用来获取openid，并用来跳转到home */
 router.get('/index', function (req, res, next) {
-    //  var url = client.getAuthorizeURL('http://' + 'aft.robustudio.com' + '/mobile/home', 'aft', 'snsapi_userinfo');
     var url = wechatutil.getwechatauthurl('aft.robustudio.com','/mobile/home');
     res.redirect(url);
 });
 
-
 // 通过跳转到home携带code，获取openid，只能用这种跳转的方式，不能用ajax访问获取openid
 router.get('/home', wechatutil.getopenid, wechatutil.createFans, function (req, res, next) {
 
+    wechatapi.sendNewOrderTemplateMsg(req.session.openid);
     //获取了fan的数据之后，判断该fan是否有district数据，如果没有，就跳转到initfans；如果有，就直接跳转到前端home路由
     if(!req.fanSaveResult.district){
         res.redirect(config.mobileUserInitURL+"?userid="+req.fanSaveResult._id);
     }else{
         res.redirect(config.mobileUserHome+"?userid="+req.fanSaveResult._id);
     }
+
 
   //  console.log("fanSaveResult：" + JSON.stringify(req.fanSaveResult))
    // console.log("openid：" + req.session.openid)
