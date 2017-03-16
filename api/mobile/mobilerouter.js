@@ -4,9 +4,10 @@ var router = express.Router();
 var userController = require('../sysmanage/user/userController');
 
 /*
-    GET mobilesite的地区选择器数据
+ mobile/bind来绑定用户的openid
  */
 router.post('/',userController.userbind);
+
 
 
 

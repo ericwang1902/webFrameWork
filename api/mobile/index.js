@@ -7,6 +7,11 @@ var fansModel = require('../sysmanage/fans/fansModel');
 var mobileRouter =require('./mobilerouter');
 var config = require('../frameConfig/frameConfig');
 
+var adminRouter = require('./adminrouter');
+var agentRouter = require('./agentrouter')
+var courierRouter = require('./courierrouter');
+var shopperrRouter = require('./shopperrouter');
+
 // 这里的路由都是/mobile/xxx，不需要加sysmanage
 /*  index用来获取openid，并用来跳转到home */
 router.get('/index', function (req, res, next) {
@@ -44,6 +49,20 @@ router.get('/bindjump',wechatutil.getopenid,function(req,res,next){
 
 //用户绑定页面网址
 router.use('/userbind',mobileRouter);
+
+
+//以下四个主要用来配微信的菜单url
+//管理员微信端路由,mobile/admin
+router.use('/admin',adminRouter);
+
+//区域代理微信端路由,mobile/agent
+router.use('/agent',agentRouter);
+
+//配送员微信端路由,mobile/courier
+router.use('/courier',courierRouter);
+
+//店主微信端路由,mobile/shopper
+router.use('/shopper',shopperrRouter);
 
 
 
