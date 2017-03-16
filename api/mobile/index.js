@@ -51,7 +51,7 @@ router.get('/bind', function (req, res, next) {
 });
 
 //bind页面跳转到bindjump，获取openid
-router.get('/bindjump',getopenid,function(req,res,next){
+router.get('/bindjump',wechatutil.getopenid,function(req,res,next){
     var openid = req.session.openid;
     console.log("用户绑定openid:"+openid);
     res.redirect(config.mobileUserBind+"?openid="+openid);//将openid通过querystring传递到userbind表单页面  
