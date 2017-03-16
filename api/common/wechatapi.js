@@ -292,7 +292,7 @@ var setfanstag = function (openid, rolename) {
         var group_id = '';
 
         for (var i = 0; i < tags.length; i++) {
-            if (rolename == tags[i].name) {
+            if (rolename.toUpperCase() == tags[i].name.toUpperCase()) {
                 group_id = tags[i].id;
             }
         }
