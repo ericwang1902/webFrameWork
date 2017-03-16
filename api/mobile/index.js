@@ -9,6 +9,9 @@ var wechatapi = require('../common/wechatapi')
 
 var mobileRouter =require('./mobilerouter');
 
+var config = require('../frameConfig/frameConfig');
+
+
 
 
 // 这里的路由都是/mobile/xxx，不需要加sysmanage
