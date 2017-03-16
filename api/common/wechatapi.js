@@ -33,40 +33,40 @@ function initMenu(tagsFromWechat) {
                 url: config.wechatGetMenuList + config.apiToken,
                 method: 'GET'
             }
-            request(getMenuOptions,function(err,response,body){
-                console.log("查询menulist："+body);
+            request(getMenuOptions, function (err, response, body) {
+                console.log("查询menulist：" + body);
                 //1.如果有tag自定义菜单
-                if(JSON.parse(body).conditionalmenu){
+                if (JSON.parse(body).conditionalmenu) {
                     var conditionalMenuList = JSON.parse(body).conditionalmenu;
                     //2.拿自定义菜单list匹配tags
                     var tagsList = config.TagsFromWechat;
-                    async.eachOf(conditionalMenuList,function(value,key,callback1){
+                    async.eachOf(conditionalMenuList, function (value, key, callback1) {
                         //如果有匹配不到的，就进行创建
-                        console.log("tagsList:"+JSON.stringify(tagsList));//这里的id是数值
-                        console.log("conditionalMenuList:"+JSON.stringify(conditionalMenuList));//这里的id是字符串
-                        if(!tagsList.find(d=>d.id == value.matchrule.group_id)){
-                            console.log("value:"+JSON.stringify(value))
+                        console.log("tagsList:" + JSON.stringify(tagsList));//这里的id是数值
+                        console.log("conditionalMenuList:" + JSON.stringify(conditionalMenuList));//这里的id是字符串
+                        if (!tagsList.find(d => d.id == value.matchrule.group_id)) {
+                            console.log("value:" + JSON.stringify(value))
                             callback1(new Error("E001"));
-                        }else{
+                        } else {
                             callback1();
                         }
-                    },function(err){
+                    }, function (err) {
                         if (err) {
                             console.error(err.message);
                             //下一步创建
                             console.log("下一步创建")
-                             callback(null,true);//到下一步进行创建
+                            callback(null, true);//到下一步进行创建
                         }
-                        else{
+                        else {
                             console.log("已经有了tag自定义menu，无需再创建！")
                             callback(new Error("已经有了tag自定义menu，无需再创建！"))
                         }
 
                     })
-                    
 
-                }else{
-                    callback(null,true);//到下一步进行创建
+
+                } else {
+                    callback(null, true);//到下一步进行创建
                 }
 
             })
@@ -130,7 +130,7 @@ function initMenu(tagsFromWechat) {
 
     ], function (err, result) {
         if (err) {
-            console.log("err.message:"+err.message);
+            console.log("err.message:" + err.message);
         } else {
             console.log("菜单创建成功！")
         }
@@ -187,7 +187,7 @@ function InitTag(initMenuCallback) {
     request(getTagOptions, function (err, response, body) {
         console.log("查询tag：" + body);
         var tags = JSON.parse(body).tags;//获取tags数组
-        
+
         async.eachOf(config.Tags, function (value, key, callback) {
             if (!tags.find(d => d.name === value.name)) {
                 createTag(config.Tags.find(d => d.name === value.name).name, callback);
@@ -233,7 +233,7 @@ function createTag(tagName, callback) {
     })
 }
 
-//发送新订单模板消息
+//发送新订单模板消息,用的是第三方库
 function sendNewOrderTemplateMsg(openid) {
     console.log("openid~~~~~:" + openid)
     var templateId = "FWQV2RtWbgSE5IZxt7fi86wA3jwNKohNlL-c4mRPxBI";
@@ -278,6 +278,28 @@ function sendNewOrderTemplateMsg(openid) {
             console.log('result:' + JSON.stringify(result));
         }
     });
+
+}
+//设置粉丝分组(用于微信绑定后端用户的时候)
+var setfanstag = function (openid, rolename) {
+    var getTagOptions = {
+        url: config.wechatTagCheckURL + config.apiToken,
+        method: 'GET'
+    }
+    request(getTagOptions, function (err, response, body) {
+        console.log("查询tag：" + body);
+        var tags = JSON.parse(body).tags;//获取tags数组
+        var group_id = '';
+
+        for (var i = 0; i < tags.length; i++) {
+            if (rolename == tags[i].name) {
+                group_id = tags[i].id;
+            }
+        }
+        api.moveUserToGroup(openid, group_id, callback);
+
+    })
+
 
 }
 
