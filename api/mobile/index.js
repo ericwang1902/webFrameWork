@@ -17,7 +17,8 @@ var config = require('../frameConfig/frameConfig');
 // 这里的路由都是/mobile/xxx，不需要加sysmanage
 /*  index用来获取openid，并用来跳转到home */
 router.get('/index', function (req, res, next) {
-    var url = client.getAuthorizeURL('http://' + 'aft.robustudio.com' + '/mobile/home', 'aft', 'snsapi_userinfo');
+    //  var url = client.getAuthorizeURL('http://' + 'aft.robustudio.com' + '/mobile/home', 'aft', 'snsapi_userinfo');
+    var url = wechatutil.getwechatauthurl('aft.robustudio.com','/mobile/home');
     res.redirect(url);
 });
 

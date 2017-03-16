@@ -7,6 +7,9 @@ var OAuth = require('wechat-oauth');
 var config = require('../frameConfig/frameConfig');
 var client = new OAuth(config.wechatConfig.appid, config.wechatConfig.appsecret);
 
+var getwechatauthurl= function(domain,path){
+   return  client.getAuthorizeURL('http://' + domain + path, 'aft', 'snsapi_userinfo');
+}
 //第三方库获取openid和user_access_token
 var getopenid = function (req, res, next) {
     //如果session中的user_access_token已经过期
@@ -78,5 +81,6 @@ var createFans = function (req, res, next) {
 
 module.exports = {
     getopenid,
-    createFans
+    createFans,
+    getwechatauthurl
 }
