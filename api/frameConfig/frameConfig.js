@@ -31,7 +31,7 @@ module.exports = {
     //全局token
     apiToken: '',
     //粉丝分组标签，需与条件菜单中的menuName一致
-    Tags: [{ name: 'shopowner' }, { name: 'admin' }, { name: 'courier' }],
+    Tags: [{ name: 'ADMIN' }, { name: 'AGENT' }, { name: 'SHOPPER' },{ name: 'COURIER' }],
     //微信接口获取的tag
     TagsFromWechat: {},
     //粉丝菜单配置
@@ -47,7 +47,7 @@ module.exports = {
     //条件菜单，menuName需与粉丝分组标签的name一致
     conditionalMenus: [
         {
-            menuName: 'shopowner',
+            menuName: 'SHOPPER',
             menu: {
                 button: [
                     {
@@ -63,7 +63,7 @@ module.exports = {
         }
         ,
         {
-            menuName: 'admin',
+            menuName: 'ADMIN',
             menu: {
                 button: [
                     {
@@ -79,7 +79,22 @@ module.exports = {
         }
         ,
         {
-            menuName: 'courier',
+            menuName: 'COURIER',
+            menu: {
+                button: [
+                    {
+                        type: "click",
+                        name: "配送员",
+                        key: "V1001_TODAY_MUSIC"
+                    }
+                ],
+                matchrule: {
+                    tag_id: ''
+                }
+            }
+        },
+        {
+            menuName: 'AGENT',
             menu: {
                 button: [
                     {
