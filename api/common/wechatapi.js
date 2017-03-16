@@ -281,7 +281,7 @@ function sendNewOrderTemplateMsg(openid) {
 
 }
 //设置粉丝分组(用于微信绑定后端用户的时候)
-var setfanstag = function (openid, rolename) {
+var setfanstag = function (openid, rolename,callback) {
     var getTagOptions = {
         url: config.wechatTagCheckURL + config.apiToken,
         method: 'GET'
@@ -296,7 +296,9 @@ var setfanstag = function (openid, rolename) {
                 group_id = tags[i].id;
             }
         }
-        api.moveUserToGroup(openid, group_id, callback);
+        api.moveUserToGroup(openid, group_id, function(){
+            callback();
+        });
 
     })
 
@@ -308,6 +310,7 @@ module.exports = {
     getApiToken,
     initMenu,
     InitTag,
-    sendNewOrderTemplateMsg
+    sendNewOrderTemplateMsg,
+    setfanstag
 
 }

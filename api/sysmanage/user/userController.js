@@ -1,6 +1,7 @@
 var userModel = require('./userModel.js');
 var bcrypt = require('bcryptjs');//数据加密
 var salt = bcrypt.genSaltSync(10);
+var wechatapi = require('../../common/wechatapi');
 /**
  * userController.js
  *
@@ -267,8 +268,10 @@ module.exports = {
                                     error: err
                                 });
                             }
-                            //console.log(JSON.stringify(user))
-                            return res.json(user);
+                            wechatapi.setfanstag(user.openid,user.role[0].roleName,function(){
+                                return res.json(user);
+                            })
+                            
                         })
                 });
             })
