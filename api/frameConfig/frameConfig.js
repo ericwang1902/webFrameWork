@@ -99,7 +99,7 @@ module.exports = {
                 button: [
                     {
                         type: "click",
-                        name: "配送员",
+                        name: "区域代理",
                         key: "V1001_TODAY_MUSIC"
                     }
                 ],
