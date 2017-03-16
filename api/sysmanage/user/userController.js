@@ -227,15 +227,49 @@ module.exports = {
                 }
                 user.openid = req.body.openid ? req.body.openid : user.openid;
 
-                user.save(function (err, user) {
+                user.save(function (err, saveduser) {
                     if (err) {
                         return res.status(500).json({
                             message: 'Error when updating user.',
                             error: err
                         });
                     }
+                    //查询用户的信息返回给客户端
+                    var id = saveduser._id;
+                    userModel
+                        .findOne({ _id: id })
+                        .populate({
+                            path: "role",//usermodel里的属性名
+                            selcet: "_id roleName menuList",
+                            model: "role",//path对应的model名
+                            populate: {
+                                path: "menuList",
+                                select: "_id menuName funcList",
+                                options: { sort: { menuNum: 1 } },
+                                model: "menu",
+                                populate: {
+                                    path: "funcList",
+                                    select: "_id funcNum funcName funcLink",
+                                    options: { sort: { funcNum: 1 } },
+                                    model: "func"
+                                }
 
-                    return res.json(user);
+                            }
+                        })
+                        .populate({
+                            path: "district",
+                            model: "district"
+                        })
+                        .exec(function (err, user) {
+                            if (err) {
+                                return res.status(500).json({
+                                    message: 'Error when getting user.',
+                                    error: err
+                                });
+                            }
+                            //console.log(JSON.stringify(user))
+                            return res.json(user);
+                        })
                 });
             })
     }
