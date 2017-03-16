@@ -14,6 +14,8 @@ var client = new OAuth(config.wechatConfig.appid, config.wechatConfig.appsecret)
 
 var wechatapi = require('../common/wechatapi')
 
+var mobileRouter =require('./mobilerouter');
+
 
 /*  index用来获取openid，并用来跳转到home */
 router.get('/index', function (req, res, next) {
@@ -58,6 +60,8 @@ router.get('/bindjump',getopenid,function(req,res,next){
     console.log("用户绑定openid:"+openid);
     res.redirect(config.mobileUserBind+"?openid="+openid);//将openid通过querystring传递到userbind表单页面  
 })
+
+router.use('/userbind',mobileRouter);//用户绑定
 
 
 //第三方库获取openid和user_access_token

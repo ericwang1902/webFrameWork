@@ -170,7 +170,7 @@ module.exports = {
             }
 
             user.username = req.body.userName ? req.body.userName : user.username;
-            user.mobile = req.body.userName ? req.body.userName : user.mobile;
+            user.mobile = req.body.mobile ? req.body.mobile : user.mobile;
             user.nickname = req.body.nickName ? req.body.nickName : user.nickname;
             user.password = req.body.passWord ? bcrypt.hashSync(req.body.passWord) : user.password;
             user.openid = req.body.openid ? req.body.openid : user.openid;
