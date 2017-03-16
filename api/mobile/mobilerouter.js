@@ -6,7 +6,7 @@ var userController = require('../sysmanage/user/userController');
 /*
     GET mobilesite的地区选择器数据
  */
-router.post('/',userController.update);
+router.post('/',userController.userbind);
 
 
 

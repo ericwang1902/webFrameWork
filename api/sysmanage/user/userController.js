@@ -14,47 +14,47 @@ module.exports = {
     list: function (req, res) {
         //构造查询条件，admin例外
         var role = req.user.role[0].roleName;
-        var districtId= req.user.district._id;
+        var districtId = req.user.district._id;
         var conditions = {};
         console.log(role);
         if (role == 'ADMIN') {
-            conditions={}
-        }else{
-            conditions={district: districtId}
+            conditions = {}
+        } else {
+            conditions = { district: districtId }
         }
 
         userModel
-                .find(conditions)
-                .populate({
-                    path: "role",
-                    select: "_id roleName menuList",
-                    model: "role",
+            .find(conditions)
+            .populate({
+                path: "role",
+                select: "_id roleName menuList",
+                model: "role",
+                populate: {
+                    path: "menuList",
+                    select: "_id menuName funcList",
+                    model: "menu",
                     populate: {
-                        path: "menuList",
-                        select: "_id menuName funcList",
-                        model: "menu",
-                        populate: {
-                            path: "funcList",
-                            select: "_id funcName funcLink",
-                            model: "func"
-                        }
+                        path: "funcList",
+                        select: "_id funcName funcLink",
+                        model: "func"
+                    }
 
-                    }
                 }
-                )
-                .populate({
-                    path: "district",
-                    model: "district"
-                })
-                .exec(function (err, users) {
-                    if (err) {
-                        return res.status(500).json({
-                            message: 'Error when getting user.',
-                            error: err
-                        });
-                    }
-                    return res.json(users);
-                })
+            }
+            )
+            .populate({
+                path: "district",
+                model: "district"
+            })
+            .exec(function (err, users) {
+                if (err) {
+                    return res.status(500).json({
+                        message: 'Error when getting user.',
+                        error: err
+                    });
+                }
+                return res.json(users);
+            })
 
 
     },
@@ -105,7 +105,7 @@ module.exports = {
      */
     create: function (req, res) {
         var userInstance = req.body;
-        console.log("~~~~~~~~~~~~~~~~~~~"+JSON.stringify(userInstance))
+        console.log("~~~~~~~~~~~~~~~~~~~" + JSON.stringify(userInstance))
         var roleListTemp = [];
 
         for (var i = 0; i < userInstance.roleSelection.length; i++) {
@@ -204,5 +204,39 @@ module.exports = {
             }
             return res.status(204).json();
         });
+    },
+
+    /*
+    user bind
+    */
+    userbind: function (req, res) {
+        var usernamev = req.body.username;
+        console.log(req.body);
+        userModel.findOne({ username: usernamev })
+            .exec(function (err, user) {
+                if (err) {
+                    return res.status(500).json({
+                        message: 'Error when getting user',
+                        error: err
+                    });
+                }
+                if (!user) {
+                    return res.status(404).json({
+                        message: 'No such user'
+                    });
+                }
+                user.openid = req.body.openid ? req.body.openid : user.openid;
+
+                user.save(function (err, user) {
+                    if (err) {
+                        return res.status(500).json({
+                            message: 'Error when updating user.',
+                            error: err
+                        });
+                    }
+
+                    return res.json(user);
+                });
+            })
     }
 };
