@@ -262,8 +262,8 @@ function sendNewOrderTemplateMsg(openid, shopper, callback) {
             "color": "#173177"
         },
         "orderItemName": {
-            "value": "小熊下午茶",
-            "color": "#173177"
+            "value": "订单内容",
+            "color": "#000000"
         },
         "orderItemData": {
             "value": goodsdes,
