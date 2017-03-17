@@ -240,8 +240,8 @@ function sendNewOrderTemplateMsg(openid, shopper, callback) {
     console.log("openid~~~~~:" + openid)
     var templateId = config.templateid.shopOrderId;
     var url1 = "http://baidu.com";
-    var goodsdes = "\""+shopper.goodslist[0].goods.goodsname+"等"+"\"";
-    var ordertime = "\""+moment(shopper.ordertime).format('YYYY-MM-DD HH:mm:ss')+"\"";
+    var goodsdes = shopper.goodslist[0].goods.goodsname;
+    var ordertime = moment(shopper.ordertime).format('YYYY-MM-DD HH:mm:ss');
 
 
     var postData = {
