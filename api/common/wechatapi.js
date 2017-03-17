@@ -242,11 +242,16 @@ function sendNewOrderTemplateMsg(openid, shopper, callback) {
     var url1 = "http://baidu.com";
 
     var goodsdes ='';
-    for(var i = 0;i<shopper.goodslist.length-1;i++){
-        goodsdes += shopper.goodslist[0].goods.goodsname+"x"+shopper.goodslist[0].goodscount+";";
+    for(var i = 0;i<shopper.goodslist.length;i++){
+        if(i<shopper.goodslist.length-1)
+        {
+            goodsdes += shopper.goodslist[i].goods.goodsname+"x"+shopper.goodslist[i].goodscount+";";
+        }
+        else{
+            goodsdes += shopper.goodslist[i].goods.goodsname+"x"+shopper.goodslist[i].goodscount+".";
+        }
     }
-    goodsdes += shopper.goodslist[0].goods.goodsname+"x"+shopper.goodslist[0].goodscount+".";
-    
+
     var ordertime = moment(shopper.ordertime).format('YYYY-MM-DD HH:mm:ss');
 
 
