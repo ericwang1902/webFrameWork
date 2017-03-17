@@ -2,6 +2,7 @@
 var request = require('request')
 var config = require('../frameConfig/frameConfig')
 var async = require('async')
+var moment  = require('moment');
 
 var WechatAPI = require('wechat-api');
 
@@ -234,22 +235,26 @@ function createTag(tagName, callback) {
 }
 
 //发送新订单模板消息,用的是第三方库
-function sendNewOrderTemplateMsg(openid, goodslist, callback) {
+function sendNewOrderTemplateMsg(openid, shopper, callback) {
+    moment.locale('zh-cn');
     console.log("openid~~~~~:" + openid)
     var templateId = config.templateid.shopOrderId;
     var url1 = "http://baidu.com";
-    var goodsdes =" \"" + goodslist[0].goods.goodsname+" \"";
+    var goodsdes = "\""+shopper.goodslist[0].goods.goodsname+"等"+"\"";
+    var ordertime = "\""+moment(shopper.ordertime).format('YYYY-MM-DD HH:mm:ss')+"\"";
+
+
     var postData = {
         "first": {
             "value": "您有新的订单！",
             "color": "#173177"
         },
         "tradeDateTime": {
-            "value": goodsdes,
+            "value": ordertime,
             "color": "#173177"
         },
         "orderType": {
-            "value": "下午茶",
+            "value": "系统分发",
             "color": "#173177"
         },
         "customerInfo": {
@@ -257,15 +262,15 @@ function sendNewOrderTemplateMsg(openid, goodslist, callback) {
             "color": "#173177"
         },
         "orderItemName": {
-            "value": "2014年9月22日",
+            "value": "小熊下午茶",
             "color": "#173177"
         },
         "orderItemData": {
-            "value": "2014年9月22日",
+            "value": goodsdes,
             "color": "#173177"
         },
         "remark": {
-            "value": "欢迎再次购买！",
+            "value": "请尽快备货！",
             "color": "#173177"
         }
     }
