@@ -234,7 +234,7 @@ function createTag(tagName, callback) {
 }
 
 //发送新订单模板消息,用的是第三方库
-function sendNewOrderTemplateMsg(openid,shoporder,callback) {
+function sendNewOrderTemplateMsg(openid, shoporder, callback) {
     console.log("openid~~~~~:" + openid)
     var templateId = config.templateid.shopOrderId;
     var url1 = "http://baidu.com";
@@ -281,26 +281,52 @@ function sendNewOrderTemplateMsg(openid,shoporder,callback) {
 
 }
 //设置粉丝分组(用于微信绑定后端用户的时候)
-var setfanstag = function (openid, rolename,callback) {
-    var getTagOptions = {
-        url: config.wechatTagCheckURL + config.apiToken,
-        method: 'GET'
-    }
-    request(getTagOptions, function (err, response, body) {
-        console.log("查询tag：" + body);
-        var tags = JSON.parse(body).tags;//获取tags数组
-        var group_id = '';
-
-        for (var i = 0; i < tags.length; i++) {
-            if (rolename.toUpperCase() == tags[i].name.toUpperCase()) {
-                group_id = tags[i].id;
-            }
+var setfanstag = function (openid, rolename, callback) {
+    if (config.apiToken) {
+        var getTagOptions = {
+            url: config.wechatTagCheckURL + config.apiToken,
+            method: 'GET'
         }
-        api.moveUserToGroup(openid, group_id, function(){
-            callback();
-        });
+        request(getTagOptions, function (err, response, body) {
+            console.log("查询tag：" + body);
+            var tags = JSON.parse(body).tags;//获取tags数组
+            var group_id = '';
 
-    })
+            for (var i = 0; i < tags.length; i++) {
+                if (rolename.toUpperCase() == tags[i].name.toUpperCase()) {
+                    group_id = tags[i].id;
+                }
+            }
+            api.moveUserToGroup(openid, group_id, function () {
+                callback();
+            });
+
+        })
+    }else{
+        this.getApiToken(function(){
+            var getTagOptions = {
+            url: config.wechatTagCheckURL + config.apiToken,
+            method: 'GET'
+        }
+        request(getTagOptions, function (err, response, body) {
+            console.log("查询tag：" + body);
+            var tags = JSON.parse(body).tags;//获取tags数组
+            var group_id = '';
+
+            for (var i = 0; i < tags.length; i++) {
+                if (rolename.toUpperCase() == tags[i].name.toUpperCase()) {
+                    group_id = tags[i].id;
+                }
+            }
+            api.moveUserToGroup(openid, group_id, function () {
+                callback();
+            });
+
+        })
+        })
+
+    }
+
 
 
 }
