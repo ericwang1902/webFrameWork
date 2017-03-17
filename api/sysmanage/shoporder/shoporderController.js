@@ -161,7 +161,7 @@ module.exports = {
     //分发订单时，批量创建商铺订单的接口
     pcreate: function (req, res) {
         var shoporderlist = req.body.shoporderlist;
-        console.log(shoporderlist);
+       // console.log(shoporderlist);
 
         async.each(shoporderlist, function (shoporder, callback) {
             var shoporder = new shoporderModel(
@@ -207,6 +207,8 @@ module.exports = {
                             console.log(err);
                             callback(err);
                         }
+                        console.log("----------------------------------")
+                        console.log(JSON.stringify(shoporderres.goodslist))
                         //发送订单通知
                         wechatapi
                             .sendNewOrderTemplateMsg(shoporderres.supplier.supplieruser.openid,
