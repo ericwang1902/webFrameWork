@@ -243,9 +243,9 @@ function sendNewOrderTemplateMsg(openid, shopper, callback) {
 
     var goodsdes ='';
     for(var i = 0;i<shopper.goodslist.length-1;i++){
-        goodsdes = shopper.goodslist[0].goods.goodsname+"x"+shopper.goodslist[0].goodscount+";";
+        goodsdes += shopper.goodslist[0].goods.goodsname+"x"+shopper.goodslist[0].goodscount+";";
     }
-    goodsdes = shopper.goodslist[0].goods.goodsname+"x"+shopper.goodslist[0].goodscount+".";
+    goodsdes += shopper.goodslist[0].goods.goodsname+"x"+shopper.goodslist[0].goodscount+".";
     
     var ordertime = moment(shopper.ordertime).format('YYYY-MM-DD HH:mm:ss');
 
