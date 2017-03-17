@@ -208,11 +208,11 @@ module.exports = {
                             callback(err);
                         }
                         console.log("----------------------------------")
-                        console.log(JSON.stringify(shoporderres.goodslist))
+                        console.log(JSON.stringify(shoporderres))
                         //发送订单通知
                         wechatapi
                             .sendNewOrderTemplateMsg(shoporderres.supplier.supplieruser.openid,
-                            shoporderres.goodslist,
+                            shoporderres,
                             function(){
                                 callback();
                             });

@@ -238,7 +238,7 @@ function sendNewOrderTemplateMsg(openid, goodslist, callback) {
     console.log("openid~~~~~:" + openid)
     var templateId = config.templateid.shopOrderId;
     var url1 = "http://baidu.com";
-    var goodsdes =" \"" + goodslist[0].goodsname+" \"";
+    var goodsdes =" \"" + goodslist[0].goods.goodsname+" \"";
     var postData = {
         "first": {
             "value": "您有新的订单！",
@@ -249,7 +249,7 @@ function sendNewOrderTemplateMsg(openid, goodslist, callback) {
             "color": "#173177"
         },
         "orderType": {
-            "value": "39.8元",
+            "value": "下午茶",
             "color": "#173177"
         },
         "customerInfo": {
