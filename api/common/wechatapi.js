@@ -234,7 +234,7 @@ function createTag(tagName, callback) {
     })
 }
 
-//发送新订单模板消息,用的是第三方库
+//发送新订单模板给店主消息,用的是第三方库
 function sendNewOrderTemplateMsg(openid, shopper, callback) {
     moment.locale('zh-cn');
     console.log("openid~~~~~:" + openid)
@@ -296,6 +296,41 @@ function sendNewOrderTemplateMsg(openid, shopper, callback) {
         }
     });
 
+}
+//发送模板消息给粉丝，用来通知订单状态的变更
+var sendOrderStateTemplateMsg= function(openid,orderinfo,callback){
+    var templateId = config.templateid.fansOrderId;
+    var url1 = "http://baidu.com";
+    
+
+    var postData = {
+        "first": {
+            "value": "您有新的订单！",
+            "color": "#173177"
+        },
+        "keyword1": {
+            "value": "客户订单号",
+            "color": "#173177"
+        },
+        "keyword2": {
+            "value": "更新时间",
+            "color": "#173177"
+        },
+        "remark": {
+            "value": "我们正在努力加油！",
+            "color": "#173177"
+        }
+    }
+
+    api.sendTemplate(openid, templateId, url1, postData, function (err, result) {
+        if (err) {
+            console.log(err);
+        }
+        else {
+            callback();
+            console.log('result:' + JSON.stringify(result));
+        }
+    });
 }
 //设置粉丝分组(用于微信绑定后端用户的时候)
 var setfanstag = function (openid, rolename, callback) {
