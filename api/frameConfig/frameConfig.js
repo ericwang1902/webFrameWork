@@ -121,8 +121,13 @@ module.exports = {
     mobileUserHome:mobileBaseURL+'home',
 
     //用户绑定
-    mobileUserBind:mobileBaseURL +'userbind'
-    
+    mobileUserBind:mobileBaseURL +'userbind',
+    //模板消息id
+    templateid:{
+        shopOrderId:"FWQV2RtWbgSE5IZxt7fi86wA3jwNKohNlL-c4mRPxBI"//店铺订单使用的模板消息
+
+
+    }
 
 
 

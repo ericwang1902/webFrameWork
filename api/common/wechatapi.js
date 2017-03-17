@@ -234,13 +234,13 @@ function createTag(tagName, callback) {
 }
 
 //发送新订单模板消息,用的是第三方库
-function sendNewOrderTemplateMsg(openid) {
+function sendNewOrderTemplateMsg(openid,shoporder,callback) {
     console.log("openid~~~~~:" + openid)
-    var templateId = "FWQV2RtWbgSE5IZxt7fi86wA3jwNKohNlL-c4mRPxBI";
+    var templateId = config.templateid.shopOrderId;
     var url1 = "http://baidu.com";
     var postData = {
         "first": {
-            "value": "恭喜你购买成功！",
+            "value": "您有新的订单！",
             "color": "#173177"
         },
         "tradeDateTime": {
@@ -272,9 +272,9 @@ function sendNewOrderTemplateMsg(openid) {
     api.sendTemplate(openid, templateId, url1, postData, function (err, result) {
         if (err) {
             console.log(err);
-
         }
         else {
+            callback();
             console.log('result:' + JSON.stringify(result));
         }
     });

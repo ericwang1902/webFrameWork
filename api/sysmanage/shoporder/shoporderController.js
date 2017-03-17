@@ -2,6 +2,7 @@ var shoporderModel = require('./shoporderModel.js');
 var moment = require('moment');
 var constants = require('../../frameConfig/constants')
 var async = require('async');
+var wechatapi = require('../../common/wechatapi');
 /**
  * shoporderController.js
  *
@@ -26,16 +27,16 @@ module.exports = {
 
         shoporderModel.find(conditions)
             .populate({
-                path:'district',
-                model:'district'
+                path: 'district',
+                model: 'district'
             })
             .populate({
-                path:'ficorder',
-                model:'ficorder'
+                path: 'ficorder',
+                model: 'ficorder'
             })
             .populate({
-                path:'supplier',
-                model:'supplier'
+                path: 'supplier',
+                model: 'supplier'
             })
             .sort({ 'ordertime': -1 })
             .exec(function (err, shoporders) {
@@ -79,7 +80,7 @@ module.exports = {
         var shoporder = new shoporderModel({
             ordernum: 'S' + moment().format('YYYYMMDDHHmmssSSS'),
             goodslist: req.body.goodslist,
-            district:req.body.district,
+            district: req.body.district,
             ordertime: moment(),//订单生成时间
             preparetime: req.body.preparetime,
             finishtime: req.body.finishtime,
@@ -127,7 +128,7 @@ module.exports = {
             shoporder.receivetime = req.body.receivetime ? req.body.receivetime : shoporder.receivetime;
             shoporder.ficorder = req.body.ficorder ? req.body.ficorder : shoporder.ficorder;
             shoporder.supplier = req.body.supplier ? req.body.supplier : shoporder.supplier;
-            shoporder.district =req.body.district ? req.body.district : shoporder.district;
+            shoporder.district = req.body.district ? req.body.district : shoporder.district;
 
             shoporder.save(function (err, shoporder) {
                 if (err) {
@@ -167,7 +168,7 @@ module.exports = {
                 {
                     ordernum: 'S' + moment().format('YYYYMMDDHHmmssSSS'),
                     goodslist: shoporder.goodslist,
-                    district:shoporder.district,
+                    district: shoporder.district,
                     ordertime: moment(),//订单生成时间
                     preparetime: '',
                     finishtime: '',
@@ -183,7 +184,42 @@ module.exports = {
                     console.log(err);
                     callback(err);
                 }
-                callback();
+                //查询result的通知
+                shoporderModel.findOne({ _id: result._id })
+                    .populate({
+                        path: 'district',
+                        model: 'district'
+                    })
+                    .populate({
+                        path: 'ficorder',
+                        model: 'ficorder'
+                    })
+                    .populate({
+                        path: 'supplier',
+                        model: 'supplier',
+                        populate: {
+                            path: 'supplieruser',
+                            model: 'user',
+                        }
+                    })
+                    .exec(function (err, shoporderres) {
+                        if (err) {
+                            console.log(err);
+                            callback(err);
+                        }
+                        //发送订单通知
+                        wechatapi
+                            .sendNewOrderTemplateMsg(shoporderres.supplier.supplieruser.openid,
+                            shoporderres.goodslist,
+                            function(){
+                                callback();
+                            });
+
+
+                    })
+
+
+                
             })
 
         }, function (err) {
