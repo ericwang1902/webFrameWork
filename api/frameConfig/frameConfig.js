@@ -124,6 +124,13 @@ module.exports = {
     mobileUserBind:mobileBaseURL +'userbind',
     //店主的移动端页面
     mobileShopper:mobileBaseURL + 'shopowner',
+    //配送员的移动端页面
+    mobileCourier:mobileBaseURL + 'courier',
+    //管理员的移动端页面
+    mobileAdmin:mobileBaseURL + 'admin',
+    //区域代理的移动端页面
+    mobileAgent:mobileBaseURL+'agent',
+
     //模板消息id
     templateid:{
         shopOrderId:"FWQV2RtWbgSE5IZxt7fi86wA3jwNKohNlL-c4mRPxBI",//店铺订单使用的模板消息
