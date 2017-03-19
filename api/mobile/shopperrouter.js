@@ -5,6 +5,7 @@ var config = require('../frameConfig/frameConfig');
 
 router.get('/',function(req,res,next){
     var url = wechatutil.getwechatauthurl('aft.robustudio.com','/mobile/shopper/shopperindex');
+    console.log("url~~~~~~~~~~"+url)
     res.redirect(url);
 });
 
