@@ -268,12 +268,50 @@ module.exports = {
                                     error: err
                                 });
                             }
-                            wechatapi.setfanstag(user.openid,user.role[0].roleName,function(){
+                            wechatapi.setfanstag(user.openid, user.role[0].roleName, function () {
                                 return res.json(user);
                             })
-                            
+
                         })
                 });
+            })
+    },
+    //根据openid获取用户信息返回
+    muser: function (req, res) {
+        var openid = req.query.openid;
+        //不可以一个微信绑定多的角色
+        userModel.findOne({ openid: openid })
+            .populate({
+                path: "role",//usermodel里的属性名
+                selcet: "_id roleName menuList",
+                model: "role",//path对应的model名
+                populate: {
+                    path: "menuList",
+                    select: "_id menuName funcList",
+                    options: { sort: { menuNum: 1 } },
+                    model: "menu",
+                    populate: {
+                        path: "funcList",
+                        select: "_id funcNum funcName funcLink",
+                        options: { sort: { funcNum: 1 } },
+                        model: "func"
+                    }
+
+                }
+            })
+            .populate({
+                path: "district",
+                model: "district"
+            })
+            .exec(function (err, user) {
+                if (err) {
+                    return res.status(500).json({
+                        message: 'Error when getting user.',
+                        error: err
+                    });
+                }
+                //console.log(JSON.stringify(user))
+                return res.json(user);
             })
     }
 };

@@ -25,6 +25,7 @@ var mregionRouter  = require('./region/mregionRouter')
 var maddressRouter = require('./address/maddressRouter');
 var msuiteRouter = require('./suite/msuiteRouter');
 var morderRouter = require('./order/morderRouter');
+var muserRouter = require('./user/muserRouter')
 
 
 var qiniuToken = require('../common/qiniu')
@@ -45,6 +46,11 @@ router.use('/role', roleRouter);
 //user router
 //sysmanage/user
 router.use('/user', userRouter);
+
+//muserRouter
+router.use('/muser',muserRouter);
+
+
 //supplier router
 //sysmanage/supplier
 router.use('/supplier',supplierRouter);
@@ -100,6 +106,7 @@ router.use('/pshoporder',pshoporderRouter);
 
 //shoporderRouter
 router.use('/shoporder',shoporderRouter);
+
 
 //图片上传uploadtoken
 router.get('/qiniu',qiniuToken.getToken);
