@@ -49,8 +49,8 @@ router.get('/bindjump',wechatutil.getopenid,function(req,res,next){
 //用户绑定页面网址
 router.use('/userbind',mobileRouter);
 
+//以下四个主要用来配微信的菜单url，需要做微信获取openid的跳转
 
-//以下四个主要用来配微信的菜单url
 //管理员微信端路由,mobile/admin
 router.use('/admin',adminRouter);
 
@@ -61,7 +61,8 @@ router.use('/agent',agentRouter);
 router.use('/courier',courierRouter);
 
 //店主微信端路由,mobile/shopper
-router.use('/shopper',shopperrRouter);
+//绑定微信端页面url是：/mobile/shopper/
+router.use('/shopper',wechatutil.getopenid,shopperrRouter);
 
 
 
