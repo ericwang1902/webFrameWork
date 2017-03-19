@@ -1,5 +1,6 @@
 var express = require('express');
 var router = express.Router();
+
 var wechatutil = require('../common/wechatutil');
 var config = require('../frameConfig/frameConfig');
 
