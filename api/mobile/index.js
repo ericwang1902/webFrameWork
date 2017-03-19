@@ -62,7 +62,7 @@ router.use('/courier',courierRouter);
 
 //店主微信端路由,mobile/shopper
 //绑定微信端页面url是：/mobile/shopper/
-router.use('/shopper',wechatutil.getopenid,shopperrRouter);
+router.use('/shopper',shopperrRouter);
 
 
 
