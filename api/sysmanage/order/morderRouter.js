@@ -3,10 +3,18 @@ var router = express.Router();
 var orderController = require('./orderController');
 
 /*
-    GET mobilesite的地区选择器数据
+    GET 粉丝根据fanid获取订单列表的接口
  */
-router.get('/',orderController.morderlist);
+router.get('/fan',orderController.morderlistfan);
 
+/*
+    区域代理
+*/
+router.get('/agent',orderController.morderlistagent);
+
+/*
+    
+*/
 
 
 module.exports = router;

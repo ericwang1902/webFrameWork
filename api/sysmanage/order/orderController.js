@@ -21,24 +21,24 @@ module.exports = {
         console.log(role);
         if (role == 'ADMIN') {
             if (!req.query.delivered) {//没有分发的客户订单
-                conditions = { region:req.query.region, ficorder: { $exists: false } }
+                conditions = { region: req.query.region, ficorder: { $exists: false } }
             } else {//已经分发的客户订单
-                conditions = { region:req.query.region, ficorder: { $exists: true } }
+                conditions = { region: req.query.region, ficorder: { $exists: true } }
             }
         } else {
             if (!req.query.delivered) {//没有分发的客户订单
-                if(!req.query.region){
-                    conditions = {  district: districtId, ficorder: { $exists: false } }
-                }else{//已经分发的客户订单
-                    conditions = { region:req.query.region, district: districtId, ficorder: { $exists: false } }
-                }   
-                
+                if (!req.query.region) {
+                    conditions = { district: districtId, ficorder: { $exists: false } }
+                } else {//已经分发的客户订单
+                    conditions = { region: req.query.region, district: districtId, ficorder: { $exists: false } }
+                }
+
             } else {
-                if(!req.query.region){
-                    conditions = {  district: districtId, ficorder: { $exists: true } }
-                }else{
-                    conditions = { region:req.query.region, district: districtId, ficorder: { $exists: true } }
-                }   
+                if (!req.query.region) {
+                    conditions = { district: districtId, ficorder: { $exists: true } }
+                } else {
+                    conditions = { region: req.query.region, district: districtId, ficorder: { $exists: true } }
+                }
             }
 
         }
@@ -202,9 +202,8 @@ module.exports = {
         });
     },
     //粉丝根据fanid获取订单列表的接口
-    morderlist: function (req, res) {
+    morderlistfan: function (req, res) {
         var fansid = req.query.fansid;
-
 
         orderModel.find({ fanid: fansid })
             .populate({
@@ -230,6 +229,43 @@ module.exports = {
                 return res.json(orderlist);
             })
     },
+    //根据局域代理的districtid获取订单列表
+    morderlistagent: function (req, res) {
+        var districtid = req.query.districtid;
+        var conditions = {};
+        if (!req.query.delivered) {
+            //如果没有分发
+            conditions = { district: districtid, ficorder: { $exists: false } }
+        } else {
+            conditions = { district: districtid, ficorder: { $exists: true } }
+        }
+
+        orderModel.find(conditions)
+            .populate({
+                path: 'district',
+                model: 'district'
+            })
+            .populate({
+                path: 'region',
+                model: 'region'
+            })
+            .populate({
+                path: 'fanid',
+                model: 'fans'
+            })
+            .sort({ 'paytime': -1 })
+            .exec(function (err, orderlist) {
+                if (err) {
+                    return res.status(500).json({
+                        message: 'Error when deleting the order.',
+                        error: err
+                    });
+                }
+                return res.json(orderlist);
+            })
+    },
+    //
+
     //分发订单时，批量更新客户订单的ficorder
     pupdate: function (req, res) {
         var orderlist = req.body.orderlist;
