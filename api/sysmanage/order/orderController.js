@@ -21,9 +21,9 @@ module.exports = {
         console.log(role);
         if (role == 'ADMIN') {
             if (!req.query.delivered) {//没有分发的客户订单
-                conditions = {  ficorder: { $exists: false } }
+                conditions = { region:req.query.region, ficorder: { $exists: false } }
             } else {//已经分发的客户订单
-                conditions = {  ficorder: { $exists: true } }
+                conditions = { region:req.query.region, ficorder: { $exists: true } }
             }
         } else {
             if (!req.query.delivered) {//没有分发的客户订单
