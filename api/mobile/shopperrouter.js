@@ -3,7 +3,7 @@ var router = express.Router();
 var wechatutil = require('../common/wechatutil');
 var config = require('../frameConfig/frameConfig');
 
-router.get('/index',function(req,res,next){
+router.get('/',function(req,res,next){
     var url = wechatutil.getwechatauthurl('aft.robustudio.com','/mobile/shopper/shopperindex');
     res.redirect(url);
 });
