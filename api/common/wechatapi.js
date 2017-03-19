@@ -2,7 +2,7 @@
 var request = require('request')
 var config = require('../frameConfig/frameConfig')
 var async = require('async')
-var moment  = require('moment');
+var moment = require('moment');
 
 var WechatAPI = require('wechat-api');
 
@@ -241,14 +241,13 @@ function sendNewOrderTemplateMsg(openid, shopper, callback) {
     var templateId = config.templateid.shopOrderId;
     var url1 = "http://baidu.com";
 
-    var goodsdes ='';
-    for(var i = 0;i<shopper.goodslist.length;i++){
-        if(i<shopper.goodslist.length-1)
-        {
-            goodsdes += shopper.goodslist[i].goods.goodsname+"x"+shopper.goodslist[i].goodscount+";";
+    var goodsdes = '';
+    for (var i = 0; i < shopper.goodslist.length; i++) {
+        if (i < shopper.goodslist.length - 1) {
+            goodsdes += shopper.goodslist[i].goods.goodsname + "x" + shopper.goodslist[i].goodscount + ";";
         }
-        else{
-            goodsdes += shopper.goodslist[i].goods.goodsname+"x"+shopper.goodslist[i].goodscount+".";
+        else {
+            goodsdes += shopper.goodslist[i].goods.goodsname + "x" + shopper.goodslist[i].goodscount + ".";
         }
     }
 
@@ -298,10 +297,10 @@ function sendNewOrderTemplateMsg(openid, shopper, callback) {
 
 }
 //发送模板消息给粉丝，用来通知订单状态的变更
-var sendOrderStateTemplateMsg= function(openid,orderinfo,callback){
+var sendOrderStateTemplateMsg = function (openid, orderinfo, callback) {
     var templateId = config.templateid.fansOrderId;
     var url1 = "http://baidu.com";
-    
+
 
     var postData = {
         "first": {
@@ -341,40 +340,65 @@ var setfanstag = function (openid, rolename, callback) {
         }
         request(getTagOptions, function (err, response, body) {
             console.log("查询tag：" + body);
-            var tags = JSON.parse(body).tags;//获取tags数组
-            var group_id = '';
+            if (body.errcode) {
+                this.getApiToken(function () {
+                    var getTagOptions = {
+                        url: config.wechatTagCheckURL + config.apiToken,
+                        method: 'GET'
+                    }
+                    request(getTagOptions, function (err, response, body) {
+                        console.log("查询tag：" + body);
+                        var tags = JSON.parse(body).tags;//获取tags数组
+                        var group_id = '';
 
-            for (var i = 0; i < tags.length; i++) {
-                if (rolename.toUpperCase() == tags[i].name.toUpperCase()) {
-                    group_id = tags[i].id;
+                        for (var i = 0; i < tags.length; i++) {
+                            if (rolename.toUpperCase() == tags[i].name.toUpperCase()) {
+                                group_id = tags[i].id;
+                            }
+                        }
+                        api.moveUserToGroup(openid, group_id, function () {
+                            callback();
+                        });
+
+                    })
+                })
+            } else {
+                var tags = JSON.parse(body).tags;//获取tags数组
+                var group_id = '';
+
+                for (var i = 0; i < tags.length; i++) {
+                    if (rolename.toUpperCase() == tags[i].name.toUpperCase()) {
+                        group_id = tags[i].id;
+                    }
                 }
+                api.moveUserToGroup(openid, group_id, function () {
+                    callback();
+                });
             }
-            api.moveUserToGroup(openid, group_id, function () {
-                callback();
-            });
+
 
         })
-    }else{
-        this.getApiToken(function(){
+    } else {
+        this.getApiToken(function () {
             var getTagOptions = {
-            url: config.wechatTagCheckURL + config.apiToken,
-            method: 'GET'
-        }
-        request(getTagOptions, function (err, response, body) {
-            console.log("查询tag：" + body);
-            var tags = JSON.parse(body).tags;//获取tags数组
-            var group_id = '';
-
-            for (var i = 0; i < tags.length; i++) {
-                if (rolename.toUpperCase() == tags[i].name.toUpperCase()) {
-                    group_id = tags[i].id;
-                }
+                url: config.wechatTagCheckURL + config.apiToken,
+                method: 'GET'
             }
-            api.moveUserToGroup(openid, group_id, function () {
-                callback();
-            });
+            request(getTagOptions, function (err, response, body) {
+                console.log("查询tag：" + body);
+                var tags = JSON.parse(body).tags;//获取tags数组
+                var group_id = '';
 
-        })
+                for (var i = 0; i < tags.length; i++) {
+                    if (rolename.toUpperCase() == tags[i].name.toUpperCase()) {
+                        group_id = tags[i].id;
+                    }
+                }
+                api.moveUserToGroup(openid, group_id, function () {
+                    callback();
+                });
+
+            })
         })
 
     }
