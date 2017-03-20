@@ -5,6 +5,7 @@ module.exports = {
         shopper:'SHOPPER',//店主
         courier:'COURIER'//配送员
     },
+    //根据ficorder model中的ficstate来作为下面数组的index来取值
     ficstatus: [
         { shop: '无', cust: '已下单' },
         { shop: '未取件', cust: '已接单' },
