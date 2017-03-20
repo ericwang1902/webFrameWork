@@ -239,6 +239,7 @@ module.exports = {
         } else {
             conditions = { district: districtid, ficorder: { $exists: true } }
         }
+        
         if(req.query.all){
              conditions = { district: districtid }
         }
