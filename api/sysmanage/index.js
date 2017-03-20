@@ -27,6 +27,8 @@ var msuiteRouter = require('./suite/msuiteRouter');
 var morderRouter = require('./order/morderRouter');
 var muserRouter = require('./user/muserRouter')
 
+var mshopeorderRouter = require('./shoporder/mshoporderRouter');
+
 
 var qiniuToken = require('../common/qiniu')
 
@@ -106,6 +108,9 @@ router.use('/pshoporder',pshoporderRouter);
 
 //shoporderRouter
 router.use('/shoporder',shoporderRouter);
+
+//根据供应商id获取shoporder
+router.use('/mshoporder',mshopeorderRouter);
 
 
 //图片上传uploadtoken

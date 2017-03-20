@@ -161,7 +161,7 @@ module.exports = {
     //分发订单时，批量创建商铺订单的接口
     pcreate: function (req, res) {
         var shoporderlist = req.body.shoporderlist;
-       // console.log(shoporderlist);
+        // console.log(shoporderlist);
 
         async.each(shoporderlist, function (shoporder, callback) {
             var shoporder = new shoporderModel(
@@ -213,7 +213,7 @@ module.exports = {
                         wechatapi
                             .sendNewOrderTemplateMsg(shoporderres.supplier.supplieruser.openid,
                             shoporderres,
-                            function(){
+                            function () {
                                 callback();
                             });
 
@@ -221,7 +221,7 @@ module.exports = {
                     })
 
 
-                
+
             })
 
         }, function (err) {
@@ -236,6 +236,40 @@ module.exports = {
                 return res.status(201).json({ result: 'success' });
             }
         })
+
+    },
+    //根据店主id，即supplier来获取店铺订单的数据
+    mshoporderforsupplier: function (req, res) {
+        var supplierid = req.body.supplierid;
+
+        var conditions = {
+            supplier: supplierid
+        }
+
+        shoporderModel.find(conditions)
+            .populate({
+                path: 'district',
+                model: 'district'
+            })
+            .populate({
+                path: 'ficorder',
+                model: 'ficorder'
+            })
+            .populate({
+                path: 'supplier',
+                model: 'supplier'
+            })
+            .sort({ 'ordertime': -1 })
+            .exec(function (err, shoporders) {
+                if (err) {
+                    return res.status(500).json({
+                        message: 'Error when getting shoporder.',
+                        error: err
+                    });
+                }
+                return res.json(shoporders);
+            })
+
 
     }
 };

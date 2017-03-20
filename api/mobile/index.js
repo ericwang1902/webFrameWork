@@ -55,6 +55,7 @@ router.use('/userbind',mobileRouter);
 router.use('/admin',adminRouter);
 
 //区域代理微信端路由,mobile/agent
+//绑定微信端页面url是：/mobile/agent，完成
 router.use('/agent',agentRouter);
 
 //配送员微信端路由,mobile/courier
