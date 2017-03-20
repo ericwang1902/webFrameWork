@@ -241,6 +241,7 @@ module.exports = {
     //根据店主id，即supplier来获取店铺订单的数据
     mshoporderforsupplier: function (req, res) {
         var supplierid = req.query.supplierid;
+        console.log(supplierid)
 
         var conditions = {
             supplier: supplierid
