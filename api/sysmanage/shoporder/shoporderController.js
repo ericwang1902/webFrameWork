@@ -1,4 +1,5 @@
 var shoporderModel = require('./shoporderModel.js');
+var supplierModel = require('../supplier/supplierModel');
 var moment = require('moment');
 var constants = require('../../frameConfig/constants')
 var async = require('async');
@@ -240,36 +241,47 @@ module.exports = {
     },
     //根据店主id，即supplier来获取店铺订单的数据
     mshoporderforsupplier: function (req, res) {
-        var supplierid = req.query.supplierid;
-        console.log(supplierid)
 
-        var conditions = {
-            supplier: supplierid
-        }
-
-        shoporderModel.find(conditions)
-            .populate({
-                path: 'district',
-                model: 'district'
-            })
-            .populate({
-                path: 'ficorder',
-                model: 'ficorder'
-            })
-            .populate({
-                path: 'supplier',
-                model: 'supplier'
-            })
-            .sort({ 'ordertime': -1 })
-            .exec(function (err, shoporders) {
+        var supplieruserid = req.query.supplieruserid;
+        //根据userid 去查询其对应的supplier档的id
+        supplierModel.findOne({ supplieruser: supplieruserid })
+            .exec(function (err, supplier) {
                 if (err) {
-                    return res.status(500).json({
-                        message: 'Error when getting shoporder.',
-                        error: err
-                    });
+                    console.log(err);
                 }
-                return res.json(shoporders);
+                if (!supplier) {
+                    console.log("没有该供应商");
+                }
+                var conditions = {
+                    supplier: supplier._id
+                }
+                shoporderModel.find(conditions)
+                    .populate({
+                        path: 'district',
+                        model: 'district'
+                    })
+                    .populate({
+                        path: 'ficorder',
+                        model: 'ficorder'
+                    })
+                    .populate({
+                        path: 'supplier',
+                        model: 'supplier'
+                    })
+                    .sort({ 'ordertime': -1 })
+                    .exec(function (err, shoporders) {
+                        if (err) {
+                            return res.status(500).json({
+                                message: 'Error when getting shoporder.',
+                                error: err
+                            });
+                        }
+                        return res.json(shoporders);
+                    })
+
             })
+
+
 
 
     }
