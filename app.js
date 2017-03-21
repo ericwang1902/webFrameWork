@@ -18,6 +18,8 @@ dbutils.createconnection();
 // routers
 var mobileRouter = require('./api/mobile');
 var sysmanage = require('./api/sysmanage')
+var wechatpay = require('./api/common/wechatpay');
+
 var app = express();
 var usercheckmiddle = require('./api/common/usercheckmidlle')
 
@@ -154,7 +156,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 //http://localhost:8085/MP_verify_fA2T6ARFofWXJQ9b.txt 即可访问
 app.use('/mobile', mobileRouter);
 app.use('/sysmanage',usercheckmiddle.getUserInfo, sysmanage);
-
+app.use('/wechatpay',wechatpay);//微信支付
 
 
 
