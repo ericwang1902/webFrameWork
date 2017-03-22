@@ -102,6 +102,7 @@ var createPrepay = function (order,openid) {
     formData += "<trade_type>JSAPI</trade_type>";
     formData += "<sign>" + paysignjsapi(appid, attach, body, mch_id, nonce_str, notify_url, openid, bookingNo, '', total_fee, 'JSAPI') + "</sign>";
     formData += "</xml>";
+    console.log(formData);
 
     request({ url: url, method: 'POST', body: formData }, function (err, response, body) {
         if (!err && response.statusCode == 200) {
