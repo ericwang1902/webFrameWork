@@ -103,8 +103,7 @@ module.exports = {
      * orderController.create()
      */
     create: function (req, res) {
-        console.log("ordernum:" + moment().format('YYYYMMDDHHmmssSSS'));
-
+        
         var order = new orderModel({
             ordernum: 'U' + moment().format('YYYYMMDDHHmmssSSS'),
             suitelist: req.body.suitelist,
