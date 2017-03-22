@@ -1,3 +1,5 @@
+var request = require('request');
+
 var frameconfig = require('../frameConfig/frameConfig');
 
 //随机字符串生成
