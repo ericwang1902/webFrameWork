@@ -32,7 +32,9 @@ function paysignjsapi(appid, attach, body, mch_id, nonce_str, notify_url, openid
     var key = 'YkvgfBU1zLRXYyCzJdYn0tdOApIxUL4v';
     string = string + '&key=' + key;
     var crypto = require('crypto');
-    return crypto.createHash('md5').update(string, 'utf8').digest('hex');
+    var cryString = crypto.createHash('md5').update(string, 'utf8').digest('hex');
+    //对加密后签名转化为大写
+    return cryString.toUpperCase();
 };
 
 //加密签名，给微信端产生支付的加密函数
@@ -45,11 +47,13 @@ function paysignjs(appid,nonceStr,package,signType,timeStamp) {
         timeStamp:timeStamp
     };
     var string = raw1(ret);
-    var key = '123qwe12edasdqweqwdasdqweasdqweq';
+    var key = 'YkvgfBU1zLRXYyCzJdYn0tdOApIxUL4v';
     string = string + '&key='+key;
     console.log(string);
     var crypto = require('crypto');
-    return crypto.createHash('md5').update(string,'utf8').digest('hex');
+    var cryString = crypto.createHash('md5').update(string, 'utf8').digest('hex');
+    //对加密后签名转化为大写
+    return cryString.toUpperCase();
 };
 
 //大小写转换，字符串拼接等操作，待确认
