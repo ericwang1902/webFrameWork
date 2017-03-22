@@ -3,6 +3,10 @@ var moment = require('moment');
 var constants = require('../../frameConfig/constants')
 var async = require('async');
 
+
+var wechatpay = require('../../common/wechatpay');//微信支付工具类
+var request = request('request');
+
 /**
  * orderController.js
  *
@@ -129,6 +133,11 @@ module.exports = {
                     message: 'Error when creating order',
                     error: err
                 });
+            }
+            //如果创建成功了order，成功返回，在这里对微信支付接口进行申请prepayid
+            if(order){
+                //调用统一下单接口
+                wechatpay.createPrepay(order);
             }
             return res.status(201).json(order);
         });

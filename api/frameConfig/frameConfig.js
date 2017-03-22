@@ -11,6 +11,8 @@ module.exports = {
         appid: "wx94e3a09e4149b262",
         appsecret: "6e428e808f1620210ef32a2d2313a038"
     },
+    //微信支付商户号
+    wechatmchid:"1437384602",
     //微信创建基础菜单的url
     wechatSelfMenu: "https://api.weixin.qq.com/cgi-bin/menu/create?access_token=",
     //微信删除所有菜单url
