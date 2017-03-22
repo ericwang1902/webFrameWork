@@ -52,6 +52,7 @@ function paysignjs(appid,nonceStr,package,signType,timeStamp) {
     var string = raw1(ret);
     var key = 'YkvgfBU1zLRXYyCzJdYn0tdOApIxUL4v';
     string = string + '&key='+key;
+    console.log("paysignjs:")
     console.log(string);
     var crypto = require('crypto');
     var cryString = crypto.createHash('md5').update(string, 'utf8').digest('hex');
