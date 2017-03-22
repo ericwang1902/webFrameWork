@@ -29,10 +29,11 @@ function paysignjsapi(appid, attach, body, mch_id, nonce_str, notify_url, openid
         trade_type: trade_type
     };
     var string = raw1(ret);
-    console.log("加密签名，申请prepayid的加密函数");
-    console.log(string);
+   
     var key = 'YkvgfBU1zLRXYyCzJdYn0tdOApIxUL4v';
     string = string + '&key=' + key;
+     console.log("加密签名，申请prepayid的加密函数");
+    console.log(string);
     var crypto = require('crypto');
     var cryString = crypto.createHash('md5').update(string, 'utf8').digest('hex');
     //对加密后签名转化为大写
