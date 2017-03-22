@@ -5,7 +5,7 @@ var async = require('async');
 
 
 var wechatpay = require('../../common/wechatpay');//微信支付工具类
-var request = request('request');
+var request = require('request');
 
 var fansModel = require('../fans/fansModel');
 
