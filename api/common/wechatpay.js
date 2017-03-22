@@ -1,5 +1,16 @@
 var frameconfig = require('../frameConfig/frameConfig');
 
+//随机字符串生成
+function getNonceStr() {
+    return Math.random().toString(36).substr(2, 15);
+};
+
+//取得timestamp
+function getTimeStamp() {
+    return parseInt(new Date().getTime() / 1000) + '';
+};
+
+
 //加密签名，申请prepayid的加密函数
 function paysignjsapi(appid, attach, body, mch_id, nonce_str, notify_url, openid, out_trade_no, spbill_create_ip, total_fee, trade_type) {
     var ret = {
@@ -16,7 +27,7 @@ function paysignjsapi(appid, attach, body, mch_id, nonce_str, notify_url, openid
         trade_type: trade_type
     };
     var string = raw(ret);
-    var key = '123qwe12edasdqweqwdasdqweasdqweq';
+    var key = 'YkvgfBU1zLRXYyCzJdYn0tdOApIxUL4v';
     string = string + '&key=' + key;
     var crypto = require('crypto');
     return crypto.createHash('md5').update(string, 'utf8').digest('hex');
@@ -61,18 +72,18 @@ function getXMLNodeValue(node_name,xml){
     return _tmp[0];
 }
 
-var createPrepay = function (order) {
+var createPrepay = function (order,openid) {
 
     var bookingNo = order.ordernum;
     var appid = frameconfig.wechatConfig.appid;
    // var attach = _attach;
     var mch_id = frameconfig.wechatmchid;
-    var nonce_str = _nonce_str;
-    var total_fee = _total_fee;
-    var notify_url = _notify_url;
-    var openid = _openid;
-    var body = _body;
-    var timeStamp = _timeStamp;
+    var nonce_str = getNonceStr();
+    var total_fee = order.totalamount;
+    var notify_url = frameconfig.wechaturl;
+    var openid = openid;
+    var body = "小熊下午茶";
+    var timeStamp = getTimeStamp();
     var url = "https://api.mch.weixin.qq.com/pay/unifiedorder";
 
     var formData = "<xml>";

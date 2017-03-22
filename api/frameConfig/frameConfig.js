@@ -13,6 +13,8 @@ module.exports = {
     },
     //微信支付商户号
     wechatmchid:"1437384602",
+    //微信支付回调网址
+    wechaturl:"http://aft.robustudio.com/sysmanage/wechatpayback",
     //微信创建基础菜单的url
     wechatSelfMenu: "https://api.weixin.qq.com/cgi-bin/menu/create?access_token=",
     //微信删除所有菜单url

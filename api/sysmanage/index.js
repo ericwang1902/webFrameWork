@@ -29,8 +29,7 @@ var muserRouter = require('./user/muserRouter')
 
 var mshopeorderRouter = require('./shoporder/mshoporderRouter');
 
-// var wechatpaytest = require('../common/wechatpaytest');//微信支付测试授权目录
-// var wechatpay = require('../common/wechatpay');
+var wechatpayRouter = require('./wechatpay/wechatpayrouter');
 
 
 var qiniuToken = require('../common/qiniu')
@@ -114,6 +113,10 @@ router.use('/shoporder',shoporderRouter);
 
 //根据供应商id获取shoporder
 router.use('/mshoporder',mshopeorderRouter);
+
+
+//微信支付回调地址
+router.use('/wechatpayback',wechatpayRouter);
 
 // router.use('/wechatpaytest',wechatpaytest);//微信支付测试授权目录
 // router.use('/wechatpay',wechatpay);//微信支付正式授权目录

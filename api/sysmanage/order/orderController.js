@@ -7,6 +7,8 @@ var async = require('async');
 var wechatpay = require('../../common/wechatpay');//微信支付工具类
 var request = request('request');
 
+var fansModel = require('../fans/fansModel');
+
 /**
  * orderController.js
  *
@@ -137,7 +139,16 @@ module.exports = {
             //如果创建成功了order，成功返回，在这里对微信支付接口进行申请prepayid
             if(order){
                 //调用统一下单接口
-                wechatpay.createPrepay(order);
+                fansModel.findById({_id:order.fanid})
+                         .exec(function(err,fans){
+                             if(err){
+                                 console.log(err)
+                             }
+                             var openid = fans.fanopenid;
+                             wechatpay.createPrepay(order,openid);
+
+                         })
+                
             }
             return res.status(201).json(order);
         });
