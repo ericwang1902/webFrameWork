@@ -89,6 +89,7 @@ var createPrepay = function (order,openid) {
     var mch_id = frameconfig.wechatmchid;
     var nonce_str = getNonceStr();
     var total_fee = order.totalamount;
+    var spbill_create_ip = "127.0.0.1";
     var notify_url = frameconfig.wechaturl;
     var openid = openid;
     var body = "小熊下午茶";
@@ -104,10 +105,10 @@ var createPrepay = function (order,openid) {
     formData += "<notify_url>" + notify_url + "</notify_url>";
     formData += "<openid>" + openid + "</openid>";
     formData += "<out_trade_no>" + bookingNo + "</out_trade_no>";
-    formData += "<spbill_create_ip>127.0.0.1</spbill_create_ip>";
+    formData += "<spbill_create_ip>"+spbill_create_ip+"</spbill_create_ip>";
     formData += "<total_fee>" + total_fee + "</total_fee>";
     formData += "<trade_type>JSAPI</trade_type>";
-    formData += "<sign>" + paysignjsapi(appid, attach, body, mch_id, nonce_str, notify_url, openid, bookingNo, '', total_fee, 'JSAPI') + "</sign>";
+    formData += "<sign>" + paysignjsapi(appid, attach, body, mch_id, nonce_str, notify_url, openid, bookingNo, spbill_create_ip, total_fee, 'JSAPI') + "</sign>";
     formData += "</xml>";
     console.log(formData);
 
