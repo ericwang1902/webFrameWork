@@ -26,7 +26,7 @@ function paysignjsapi(appid, attach, body, mch_id, nonce_str, notify_url, openid
         total_fee: total_fee,
         trade_type: trade_type
     };
-    var string = raw(ret);
+    var string = raw1(ret);
     var key = 'YkvgfBU1zLRXYyCzJdYn0tdOApIxUL4v';
     string = string + '&key=' + key;
     var crypto = require('crypto');
