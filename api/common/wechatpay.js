@@ -76,7 +76,7 @@ var createPrepay = function (order,openid) {
 
     var bookingNo = order.ordernum;
     var appid = frameconfig.wechatConfig.appid;
-   // var attach = _attach;
+    var attach = "小熊下午茶";
     var mch_id = frameconfig.wechatmchid;
     var nonce_str = getNonceStr();
     var total_fee = order.totalamount;
@@ -88,7 +88,7 @@ var createPrepay = function (order,openid) {
 
     var formData = "<xml>";
     formData += "<appid>" + appid + "</appid>";  //appid
-   // formData += "<attach>" + attach + "</attach>"; //附加数据
+    formData += "<attach>" + attach + "</attach>"; //附加数据
     formData += "<body>" + body + "</body>";
     formData += "<mch_id>" + mch_id + "</mch_id>";  //商户号
     formData += "<nonce_str>" + nonce_str + "</nonce_str>"; //随机字符串，不长于32位。
