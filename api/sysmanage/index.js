@@ -29,8 +29,8 @@ var muserRouter = require('./user/muserRouter')
 
 var mshopeorderRouter = require('./shoporder/mshoporderRouter');
 
-var wechatpaytest = require('../api/common/wechatpaytest');//微信支付测试授权目录
-var wechatpay = require('../api/common/wechatpay');
+var wechatpaytest = require('../common/wechatpaytest');//微信支付测试授权目录
+var wechatpay = require('../common/wechatpay');
 
 
 var qiniuToken = require('../common/qiniu')
