@@ -81,7 +81,7 @@ function getXMLNodeValue(node_name,xml){
     return _tmp[0];
 }
 
-var createPrepay = function (order,openid) {
+var createPrepay = function (order,openid,callback) {
 
     var bookingNo = order.ordernum;
     var appid = frameconfig.wechatConfig.appid;
@@ -120,9 +120,11 @@ var createPrepay = function (order,openid) {
             var tmp1 = tmp[2].split(']');
             //签名
             var _paySignjs = paysignjs(appid, nonce_str, 'prepay_id=' + tmp1[0], 'MD5', timeStamp);
-            res.render('jsapipay', { prepay_id: tmp1[0], _paySignjs: _paySignjs });
-            //res.render('jsapipay',{rows:body});
-            //res.redirect(tmp3[0]);
+            //res.render('jsapipay', { prepay_id: tmp1[0], _paySignjs: _paySignjs });
+            var prepayid = temp1[0];
+            var paySign=_paySignjs;
+            
+            callback(prepayid,paySign);
         }
     });
 }

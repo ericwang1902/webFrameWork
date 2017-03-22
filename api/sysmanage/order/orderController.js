@@ -145,12 +145,18 @@ module.exports = {
                                  console.log(err)
                              }
                              var openid = fans.fanopenid;
-                             wechatpay.createPrepay(order,openid);
+                             wechatpay.createPrepay(order,openid,function(prepayid,paySign){
+                                return res.status(201).json({
+                                    order:order,//订单信息
+                                    prepayid:prepayid,//与支付订单id
+                                    paySign:paySign//支付签名
+                                });
+                             });
 
                          })
                 
             }
-            return res.status(201).json(order);
+            
         });
     },
 
