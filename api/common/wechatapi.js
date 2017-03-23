@@ -19,7 +19,7 @@ function getApiToken(callback) {
         console.log('tokenOptions:' + JSON.stringify(body))
         config.apiToken = JSON.parse(body).access_token;
         console.log('config.apiToken:' + JSON.parse(body).access_token)
-        this.getJSapiTicket();
+        getJSapiTicket();
         callback();
     })
 }
