@@ -32,6 +32,7 @@ function getJSapiTicket(){
     }
     request(jsapiticketOptions,function(err,response,body){
         console.log("jsapiticket:"+JSON.stringify(body))
+        config.jsapiticket =  JSON.parse(body).ticket;
     })
 }
 

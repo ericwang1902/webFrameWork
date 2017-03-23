@@ -11,6 +11,7 @@ var adminRouter = require('./adminrouter');
 var agentRouter = require('./agentrouter')
 var courierRouter = require('./courierrouter');
 var shopperrRouter = require('./shopperrouter');
+var wxjsapiticket = require('./wxjsapiticket');
 
 // 这里的路由都是/mobile/xxx，不需要加sysmanage
 /*  index用来获取openid，并用来跳转到home */
@@ -65,6 +66,8 @@ router.use('/courier',courierRouter);
 //绑定微信端页面url是：/mobile/shopper/
 router.use('/shopper',shopperrRouter);
 
+//微信端用来获取jsapiticket的接口
+router.use('/jsapiticket',wxjsapiticket);
 
 
 
