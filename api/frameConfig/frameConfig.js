@@ -32,6 +32,8 @@ module.exports = {
     wechatTagCheckURL: "https://api.weixin.qq.com/cgi-bin/tags/get?access_token=",
     //获取微信全局的accesstoken的网址，这需要修改！！！！！
     wechatTokenURL: "https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=wx94e3a09e4149b262&secret=6e428e808f1620210ef32a2d2313a038",
+    //根据微信的accesstoken，获取jsapiticket
+    wechatJSApitTicketURL:"https://api.weixin.qq.com/cgi-bin/ticket/getticket?access_token=",
     //全局token
     apiToken: '',
     //粉丝分组标签，需与条件菜单中的menuName一致

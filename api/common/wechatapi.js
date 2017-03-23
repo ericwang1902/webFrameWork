@@ -19,10 +19,21 @@ function getApiToken(callback) {
         console.log('tokenOptions:' + JSON.stringify(body))
         config.apiToken = JSON.parse(body).access_token;
         console.log('config.apiToken:' + JSON.parse(body).access_token)
+        this.getJSapiTicket();
         callback();
     })
 }
 
+//根据全局token来获取jsapiticket
+function getJSapiTicket(){
+    var jsapiticketOptions ={
+        url:config.wechatJSApitTicketURL+config.apiToken+"&type=jsapi",
+        method:'GET'
+    }
+    request(jsapiticketOptions,function(err,response,body){
+        console.log("jsapiticket:"+JSON.stringify(body))
+    })
+}
 
 
 //创建菜单：
