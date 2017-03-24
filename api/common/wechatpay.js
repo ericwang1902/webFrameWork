@@ -90,8 +90,12 @@ function raw1(args) {
     string += '&' + k + '=' + newArgs[k];
   }
   string = string.substr(1);
+  console.log('按ask2拼接的字符串：'+string)
   return string;
 };
+
+
+
 //解析xml
 function getXMLNodeValue(node_name,xml){
     var tmp = xml.split("<"+node_name+">");
