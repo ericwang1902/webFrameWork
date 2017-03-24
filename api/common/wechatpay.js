@@ -59,6 +59,21 @@ function paysignjs(appid,nonceStr,package,signType,timeStamp) {
     //对加密后签名转化为大写
     return cryString.toUpperCase();
 };
+//给客户端jssdk做加密的函数
+var wxjssign = function(jsapi_ticket,noncestr,timestamp,url){
+    var ret = {
+        jsapi_ticket: jsapi_ticket,
+        noncestr: noncestr,
+        timestamp:timestamp,
+        url:url
+    };
+    var string = raw1(ret);
+
+    var crypto = require('crypto');
+    var cryString = crypto.createHash('sha1').update(string, 'utf8').digest('hex');
+  
+    return cryString;
+}
 
 //大小写转换，字符串拼接等操作，待确认
 function raw1(args) {
@@ -131,5 +146,6 @@ var createPrepay = function (order,openid,callback) {
 }
 
 module.exports = {
-    createPrepay
+    createPrepay,
+    wxjssign
 }

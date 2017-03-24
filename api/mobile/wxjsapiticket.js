@@ -1,11 +1,23 @@
 var express = require('express');
 var router = express.Router();
 var config = require('../frameConfig/frameConfig');
+var wechatpay = require('../common/wechatpay');
 
 
-router.get('/',function(req,res){
+router.post('/',function(req,res){
+    var jsapiticket = config.jsapiticket;
+    var noncestr = Math.random().toString(36).substr(2, 15);
+    var timestamp = parseInt(new Date().getTime() / 1000) + '';
+    var url = config.mobileBaseURL+ req.body.url;
+    var appid = config.wechatConfig.appid;
+
+    var signature = wechatpay.wxjssign(jsapiticket,noncestr,timestamp,url);
+
     res.json({
-        jsapiticket:config.jsapiticket
+        appid:appid,
+        timestamp:timestamp,
+        noncestr:noncestr,
+        signature:signature
     });
 })
 
