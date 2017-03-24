@@ -8,7 +8,7 @@ router.post('/',function(req,res){
     var jsapiticket = config.jsapiticket;
     var noncestr = Math.random().toString(36).substr(2, 15);
     var timestamp = parseInt(new Date().getTime() / 1000) + '';
-    var url = config.mobileBaseURL+ req.body.url;
+    var url = config.wxjsurl;
     var appid = config.wechatConfig.appid;
 
     var signature = wechatpay.wxjssign(jsapiticket,noncestr,timestamp,url);
