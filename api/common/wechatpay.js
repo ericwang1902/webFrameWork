@@ -13,7 +13,7 @@ function getTimeStamp() {
 };
 
 
-//加密签名，申请prepayid的加密函数
+//统一下单的加密签名，申请prepayid的加密函数
 function paysignjsapi(appid, attach, body, mch_id, nonce_str, notify_url, openid, out_trade_no, spbill_create_ip, total_fee, trade_type) {
     var ret = {
         appid: appid,
@@ -40,7 +40,7 @@ function paysignjsapi(appid, attach, body, mch_id, nonce_str, notify_url, openid
     return cryString.toUpperCase();
 };
 
-//加密签名，给微信端产生支付的加密函数
+//jssdk调用微信支付的加密签名，采用微信支付统一签名的方式，给微信端产生支付的加密函数
 function paysignjs(appid,nonceStr,package,signType,timeStamp) {
     
     var ret = {
@@ -48,7 +48,7 @@ function paysignjs(appid,nonceStr,package,signType,timeStamp) {
         nonceStr: nonceStr,
         package:package,
         signType:signType,
-        timeStamp:timeStamp
+        timestamp:timeStamp//这里是小写
     };
     var string = raw1(ret);
     var key = 'YkvgfBU1zLRXYyCzJdYn0tdOApIxUL4v';
