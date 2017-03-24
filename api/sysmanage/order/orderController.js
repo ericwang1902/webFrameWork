@@ -145,13 +145,15 @@ module.exports = {
                         }
 
                         var openid = fans.fanopenid;
-                        wechatpay.createPrepay(order, openid, function (prepayid, paySign) {
+                        wechatpay.createPrepay(order, openid, function (payinfo) {
+                        
+
                             var rs = {
-                                 timestamp : wechatpay.getTimeStamp(),
-                                 noncestr : wechatpay.getNonceStr(),
-                                 package : prepayid,
-                                 sintype : 'MD5',
-                                 paysign : paySign,
+                                 timestamp : payinfo.timestamp,
+                                 noncestr : payinfo.noncestr,
+                                 package : payinfo.prepayid,
+                                 sintype : payinfo.sintype,
+                                 paysign : payinfo.paySign,
                                  order:order
                             }
 

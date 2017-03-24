@@ -42,6 +42,7 @@ function paysignjsapi(appid, attach, body, mch_id, nonce_str, notify_url, openid
 
 //加密签名，给微信端产生支付的加密函数
 function paysignjs(appid,nonceStr,package,signType,timeStamp) {
+    
     var ret = {
         appId: appid,
         nonceStr: nonceStr,
@@ -76,10 +77,7 @@ var wxjssign = function(jsapi_ticket,noncestr,timestamp,url){
   
     return cryString;
 }
-//给客户端发起微信支付做签名加密的函数
-var wxpaysign = function(){
 
-}
 
 //大小写转换，字符串拼接等操作，待确认
 function raw1(args) {
@@ -147,10 +145,16 @@ var createPrepay = function (order,openid,callback) {
             //签名
             var _paySignjs = paysignjs(appid, nonce_str, 'prepay_id=' + tmp1[0], 'MD5', timeStamp);
             //res.render('jsapipay', { prepay_id: tmp1[0], _paySignjs: _paySignjs });
-            var prepayid = tmp1[0];
-            var paySign=_paySignjs;
+            var payinfo={
+                prepayid : tmp1[0],
+                paySign:_paySignjs,
+                timestamp:timeStamp,
+                sintype:'MD5',
+                noncestr:noncestr  
+            }
+            
 
-            callback(prepayid,paySign);
+            callback(payinfo);
         }
     });
 }
