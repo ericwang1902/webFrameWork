@@ -4,7 +4,7 @@ var config = require('../frameConfig/frameConfig');
 var wechatpay = require('../common/wechatpay');
 
 
-router.post('/',function(req,res){
+router.get('/',function(req,res){
     var jsapiticket = config.jsapiticket;
     var noncestr = Math.random().toString(36).substr(2, 15);
     var timestamp = parseInt(new Date().getTime() / 1000) + '';
