@@ -146,7 +146,7 @@ var createPrepay = function (order,openid,callback) {
             var _paySignjs = paysignjs(appid, nonce_str, 'prepay_id=' + tmp1[0], 'MD5', timeStamp);
             //res.render('jsapipay', { prepay_id: tmp1[0], _paySignjs: _paySignjs });
             var payinfo={
-                prepayid : tmp1[0],
+                prepayid : 'prepay_id=' +tmp1[0],
                 paySign:_paySignjs,
                 timestamp:timeStamp,
                 sintype:'MD5',
