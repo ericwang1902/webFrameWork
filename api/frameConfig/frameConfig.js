@@ -3,6 +3,7 @@ var mobileBaseURL = 'http://localhost:8090/#/';
 //var mobileBaseURL = 'http://mst.robustudio.com/#/';
 
 module.exports = {
+    mobileBaseURL:mobileBaseURL,
     //数据库名称
     databaseName: "frameworkDatabase",
     //session的secret
