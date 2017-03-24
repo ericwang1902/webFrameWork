@@ -150,7 +150,7 @@ var createPrepay = function (order,openid,callback) {
                 paySign:_paySignjs,
                 timestamp:timeStamp,
                 sintype:'MD5',
-                noncestr:noncestr  
+                noncestr:nonce_str  
             }
             
 
