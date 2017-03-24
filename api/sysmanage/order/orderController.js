@@ -146,7 +146,9 @@ module.exports = {
 
                         var openid = fans.fanopenid;
                         wechatpay.createPrepay(order, openid, function (payinfo) {
-                        
+                            
+                            console.log("payinfo:");
+                            console.log(payinfo);
 
                             var rs = {
                                  timestamp : payinfo.timestamp,
