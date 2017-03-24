@@ -103,7 +103,7 @@ module.exports = {
      * orderController.create()
      */
     create: function (req, res) {
-        
+
         var order = new orderModel({
             ordernum: 'U' + moment().format('YYYYMMDDHHmmssSSS'),
             suitelist: req.body.suitelist,
@@ -136,26 +136,33 @@ module.exports = {
                 });
             }
             //如果创建成功了order，成功返回，在这里对微信支付接口进行申请prepayid
-            if(order){
+            if (order) {
                 //调用统一下单接口
-                fansModel.findById({_id:order.fanid})
-                         .exec(function(err,fans){
-                             if(err){
-                                 console.log(err)
-                             }
-                             var openid = fans.fanopenid;
-                             wechatpay.createPrepay(order,openid,function(prepayid,paySign){
-                                return res.status(201).json({
-                                    order:order,//订单信息
-                                    prepayid:prepayid,//与支付订单id
-                                    paySign:paySign//支付签名
-                                });
-                             });
+                fansModel.findById({ _id: order.fanid })
+                    .exec(function (err, fans) {
+                        if (err) {
+                            console.log(err)
+                        }
 
-                         })
-                
+                        var openid = fans.fanopenid;
+                        wechatpay.createPrepay(order, openid, function (prepayid, paySign) {
+                            var rs = {
+                                 timestamp : wechatpay.getTimeStamp(),
+                                 noncestr : wechatpay.getNonceStr(),
+                                 package : prepayid,
+                                 sintype : 'MD5',
+                                 paysign : paySign,
+                                 order:order
+                            }
+
+
+                            return res.status(201).json(rs);
+                        });
+
+                    })
+
             }
-            
+
         });
     },
 
@@ -264,9 +271,9 @@ module.exports = {
         } else {
             conditions = { district: districtid, ficorder: { $exists: true } }
         }
-        
-        if(req.query.all){
-             conditions = { district: districtid }
+
+        if (req.query.all) {
+            conditions = { district: districtid }
         }
 
         orderModel.find(conditions)
