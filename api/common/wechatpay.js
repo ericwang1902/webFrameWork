@@ -67,6 +67,8 @@ var wxjssign = function(jsapi_ticket,noncestr,timestamp,url){
         timestamp:timestamp,
         url:url
     };
+    console.log("验证客户端jsapi加密")
+    console.log(JSON.stringify(ret));
     var string = raw1(ret);
 
     var crypto = require('crypto');
