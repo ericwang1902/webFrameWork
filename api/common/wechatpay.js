@@ -48,7 +48,7 @@ function paysignjs(appid,nonceStr,package,signType,timeStamp) {
         nonceStr: nonceStr,
         package:package,
         signType:signType,
-        timestamp:timeStamp//这里是小写
+        timeStamp:timeStamp
     };
     var string = raw1(ret);
     var key = 'YkvgfBU1zLRXYyCzJdYn0tdOApIxUL4v';
