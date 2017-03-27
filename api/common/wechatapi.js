@@ -312,12 +312,13 @@ function sendNewOrderTemplateMsg(openid, shopper, callback) {
 var sendOrderStateTemplateMsg = function (openid, orderinfo, callback) {
     var templateId = config.templateid.fansOrderId;
     var ordernum = orderinfo.ordernum;
+    var ordertime = moment(orderinfo.ordertime).format('YYYY-MM-DD HH:mm:ss');
     var url1 = "http://baidu.com";
 
 
     var postData = {
         "first": {
-            "value": "您的订单状态由更新！",
+            "value": "您的订单状态已更新！",
             "color": "#173177"
         },
         "keyword1": {
@@ -325,7 +326,7 @@ var sendOrderStateTemplateMsg = function (openid, orderinfo, callback) {
             "color": "#173177"
         },
         "keyword2": {
-            "value": "更新时间",
+            "value": ordertime,
             "color": "#173177"
         },
         "remark": {
