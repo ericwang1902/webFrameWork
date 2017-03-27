@@ -311,16 +311,17 @@ function sendNewOrderTemplateMsg(openid, shopper, callback) {
 //发送模板消息给粉丝，用来通知订单状态的变更
 var sendOrderStateTemplateMsg = function (openid, orderinfo, callback) {
     var templateId = config.templateid.fansOrderId;
+    var ordernum = orderinfo.ordernum;
     var url1 = "http://baidu.com";
 
 
     var postData = {
         "first": {
-            "value": "您有新的订单！",
+            "value": "您的订单状态由更新！",
             "color": "#173177"
         },
         "keyword1": {
-            "value": "客户订单号",
+            "value": ordernum,
             "color": "#173177"
         },
         "keyword2": {
@@ -425,6 +426,7 @@ module.exports = {
     initMenu,
     InitTag,
     sendNewOrderTemplateMsg,
+    sendOrderStateTemplateMsg,
     setfanstag
 
 }

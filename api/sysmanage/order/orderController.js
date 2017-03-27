@@ -3,6 +3,7 @@ var moment = require('moment');
 var constants = require('../../frameConfig/constants')
 var async = require('async');
 
+var wechatapi = require('../../common/wechatapi');
 
 var wechatpay = require('../../common/wechatpay');//微信支付工具类
 var request = require('request');
@@ -323,8 +324,13 @@ module.exports = {
                             console.log(err);
                             callback(err);
                         }
-
-                        callback();
+                          //发送订单通知
+                        wechatapi
+                            .sendOrderStateTemplateMsg(result.fanid,
+                            result,
+                            function () {
+                                callback();
+                            });
                     })
                 })
 
