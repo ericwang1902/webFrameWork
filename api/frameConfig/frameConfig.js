@@ -50,7 +50,7 @@ module.exports = {
         button: [
             {
                 type: "view",
-                name: "粉丝",
+                name: "点我下单",
                 url: "http://aft.robustudio.com/mobile/index"
             }
         ]
