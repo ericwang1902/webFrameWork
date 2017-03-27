@@ -111,7 +111,7 @@ module.exports = {
                     {
                         type: "view",
                         name: "区域代理",
-                        url: "http://mst.robustudio.com/mobile/agent"
+                        url: "http://aft.robustudio.com/mobile/agent"
                     }
                 ],
                 matchrule: {
