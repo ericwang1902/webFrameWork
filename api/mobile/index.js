@@ -7,6 +7,7 @@ var fansModel = require('../sysmanage/fans/fansModel');
 var mobileRouter =require('./mobilerouter');
 var config = require('../frameConfig/frameConfig');
 
+var fansRouter = require('./fanrouter');
 var adminRouter = require('./adminrouter');
 var agentRouter = require('./agentrouter')
 var courierRouter = require('./courierrouter');
@@ -51,6 +52,9 @@ router.get('/bindjump',wechatutil.getopenid,function(req,res,next){
 router.use('/userbind',mobileRouter);
 
 //以下四个主要用来配微信的菜单url，需要做微信获取openid的跳转
+
+//用户模板消息的url
+router.use('/fans',fansRouter);
 
 //管理员微信端路由,mobile/admin
 router.use('/admin',adminRouter);

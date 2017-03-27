@@ -141,6 +141,8 @@ module.exports = {
     mobileAdmin: mobileBaseURL + 'admin',
     //区域代理的移动端页面
     mobileAgent: mobileBaseURL + 'agent',
+    //粉丝的页面
+    mobileTempFans:mobileBaseURL+'orderlist',
 
     //模板消息id
     templateid: {

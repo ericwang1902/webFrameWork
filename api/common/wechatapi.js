@@ -313,7 +313,7 @@ var sendOrderStateTemplateMsg = function (openid, orderinfo, callback) {
     var templateId = config.templateid.fansOrderId;
     var ordernum = orderinfo.ordernum;
     var ordertime = moment(orderinfo.ordertime).format('YYYY-MM-DD HH:mm:ss');
-    var url1 = "http://baidu.com";
+    var url1 = "http://aft.robustudio.com/mobile/fans";
 
 
     var postData = {
