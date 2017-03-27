@@ -147,17 +147,17 @@ module.exports = {
 
                         var openid = fans.fanopenid;
                         wechatpay.createPrepay(order, openid, function (payinfo) {
-                            
+
                             console.log("payinfo:");
                             console.log(payinfo);
 
                             var rs = {
-                                 timestamp : payinfo.timestamp,
-                                 noncestr : payinfo.noncestr,
-                                 package : payinfo.prepayid,
-                                 sintype : payinfo.sintype,
-                                 paysign : payinfo.paySign,
-                                 order:order
+                                timestamp: payinfo.timestamp,
+                                noncestr: payinfo.noncestr,
+                                package: payinfo.prepayid,
+                                sintype: payinfo.sintype,
+                                paysign: payinfo.paySign,
+                                order: order
                             }
 
 
@@ -324,13 +324,26 @@ module.exports = {
                             console.log(err);
                             callback(err);
                         }
-                          //发送订单通知
-                        wechatapi
-                            .sendOrderStateTemplateMsg(result.fanid,
-                            result,
-                            function () {
-                                callback();
-                            });
+
+                        fansModel.findById({ _id: result.fanid })
+                            .exec(function (err, fans) {
+                                if (err) {
+                                    console.log(err)
+                                }
+
+                                //发送订单通知
+                                wechatapi
+                                    .sendOrderStateTemplateMsg(fans.fanopenid,
+                                    result,
+                                    function () {
+                                        callback();
+                                    });
+
+                            })
+
+
+
+
                     })
                 })
 
