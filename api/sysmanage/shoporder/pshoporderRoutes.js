@@ -3,7 +3,7 @@ var router = express.Router();
 var shoporderController = require('./shoporderController');
 
 /*
-    GET mobilesite的地区选择器数据
+    GET 创建商店订单
  */
 router.post('/',shoporderController.pcreate);
 

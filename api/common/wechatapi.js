@@ -251,7 +251,7 @@ function sendNewOrderTemplateMsg(openid, shopper, callback) {
     moment.locale('zh-cn');
     console.log("openid~~~~~:" + openid)
     var templateId = config.templateid.shopOrderId;
-    var url1 = "http://baidu.com";
+    var url1 = "http://aft.robustudio.com/mobile/shopper";
 
     var goodsdes = '';
     for (var i = 0; i < shopper.goodslist.length; i++) {
