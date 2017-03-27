@@ -50,8 +50,13 @@ module.exports = {
         button: [
             {
                 type: "view",
-                name: "点我下单",
+                name: "下午茶",
                 url: "http://aft.robustudio.com/mobile/index"
+            },
+            {
+                type: "view",
+                name: "我的订单",
+                url: "http://aft.robustudio.com/mobile/fans"
             }
         ]
     },
