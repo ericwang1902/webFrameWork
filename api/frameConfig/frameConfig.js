@@ -51,7 +51,7 @@ module.exports = {
             {
                 type: "view",
                 name: "粉丝",
-                url: "http://mst.robustudio.com/mobile/index"
+                url: "http://aft.robustudio.com/mobile/index"
             }
         ]
     },
@@ -64,7 +64,7 @@ module.exports = {
                     {
                         type: "view",
                         name: "店主",
-                        url: "http://mst.robustudio.com/mobile/shopper"
+                        url: "http://aft.robustudio.com/mobile/shopper"
                     }
                 ],
                 matchrule: {
@@ -80,7 +80,7 @@ module.exports = {
                     {
                         type: "view",
                         name: "管理员",
-                        url: "http://mst.robustudio.com/mobile/admin"
+                        url: "http://aft.robustudio.com/mobile/admin"
                     }
                 ],
                 matchrule: {
@@ -96,7 +96,7 @@ module.exports = {
                     {
                         type: "view",
                         name: "配送员",
-                        url: "http://mst.robustudio.com/mobile/courier"
+                        url: "http://aft.robustudio.com/mobile/courier"
                     }
                 ],
                 matchrule: {
