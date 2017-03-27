@@ -3,7 +3,7 @@
 var mobileBaseURL = 'http://mst.robustudio.com/#/';
 
 module.exports = {
-    wxjsurl:mobileBaseURL.split('#')[0],
+    wxjsurl: mobileBaseURL.split('#')[0],
     //数据库名称
     databaseName: "frameworkDatabase",
     //session的secret
@@ -14,9 +14,9 @@ module.exports = {
         appsecret: "6e428e808f1620210ef32a2d2313a038"
     },
     //微信支付商户号
-    wechatmchid:"1437384602",
+    wechatmchid: "1437384602",
     //微信支付回调网址
-    wechaturl:"http://aft.robustudio.com/sysmanage/wechatpayback",
+    wechaturl: "http://aft.robustudio.com/sysmanage/wechatpayback",
     //微信创建基础菜单的url
     wechatSelfMenu: "https://api.weixin.qq.com/cgi-bin/menu/create?access_token=",
     //微信删除所有菜单url
@@ -34,24 +34,24 @@ module.exports = {
     wechatTagCheckURL: "https://api.weixin.qq.com/cgi-bin/tags/get?access_token=",
     //获取微信全局的accesstoken的网址，这需要修改！！！！！
     wechatTokenURL: "https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=wx94e3a09e4149b262&secret=6e428e808f1620210ef32a2d2313a038",
-    
+
     //全局token
     apiToken: '',
     //根据微信的accesstoken，获取jsapiticket
-    wechatJSApitTicketURL:"https://api.weixin.qq.com/cgi-bin/ticket/getticket?access_token=",
+    wechatJSApitTicketURL: "https://api.weixin.qq.com/cgi-bin/ticket/getticket?access_token=",
     //全局jsapiticket
-    jsapiticket:'',
+    jsapiticket: '',
     //粉丝分组标签，需与条件菜单中的menuName一致
-    Tags: [{ name: 'ADMIN' }, { name: 'AGENT' }, { name: 'SHOPPER' },{ name: 'COURIER' }],
+    Tags: [{ name: 'ADMIN' }, { name: 'AGENT' }, { name: 'SHOPPER' }, { name: 'COURIER' }],
     //微信接口获取的tag
     TagsFromWechat: {},
     //粉丝菜单配置
     baseMenu: {
         button: [
             {
-                type: "click",
+                type: "view",
                 name: "粉丝",
-                key: "V1001_TODAY_MUSIC"
+                url: "http://mst.robustudio.com/mobile/index"
             }
         ]
     },
@@ -62,9 +62,9 @@ module.exports = {
             menu: {
                 button: [
                     {
-                        type: "click",
+                        type: "view",
                         name: "店主",
-                        key: "V1001_TODAY_MUSIC"
+                        url: "http://mst.robustudio.com/mobile/shopper"
                     }
                 ],
                 matchrule: {
@@ -78,9 +78,9 @@ module.exports = {
             menu: {
                 button: [
                     {
-                        type: "click",
+                        type: "view",
                         name: "管理员",
-                        key: "V1001_TODAY_MUSIC"
+                        url: "http://mst.robustudio.com/mobile/admin"
                     }
                 ],
                 matchrule: {
@@ -94,9 +94,9 @@ module.exports = {
             menu: {
                 button: [
                     {
-                        type: "click",
+                        type: "view",
                         name: "配送员",
-                        key: "V1001_TODAY_MUSIC"
+                        url: "http://mst.robustudio.com/mobile/courier"
                     }
                 ],
                 matchrule: {
@@ -109,9 +109,9 @@ module.exports = {
             menu: {
                 button: [
                     {
-                        type: "click",
+                        type: "view",
                         name: "区域代理",
-                        key: "V1001_TODAY_MUSIC"
+                        url: "http://mst.robustudio.com/mobile/agent"
                     }
                 ],
                 matchrule: {
@@ -123,29 +123,29 @@ module.exports = {
     ],
     //发送模板消息网址
     wechatTemplateMsg: "https://api.weixin.qq.com/cgi-bin/message/template/send?access_token=",
-    
-    
-    
+
+
+
     //mobile部分的url
-    mobileUserInitURL:mobileBaseURL+'initfan',
-    
-    mobileUserHome:mobileBaseURL+'home',
+    mobileUserInitURL: mobileBaseURL + 'initfan',
+
+    mobileUserHome: mobileBaseURL + 'home',
 
     //用户绑定
-    mobileUserBind:mobileBaseURL +'userbind',
+    mobileUserBind: mobileBaseURL + 'userbind',
     //店主的移动端页面
-    mobileShopper:mobileBaseURL + 'shopowner',
+    mobileShopper: mobileBaseURL + 'shopowner',
     //配送员的移动端页面
-    mobileCourier:mobileBaseURL + 'courier',
+    mobileCourier: mobileBaseURL + 'courier',
     //管理员的移动端页面
-    mobileAdmin:mobileBaseURL + 'admin',
+    mobileAdmin: mobileBaseURL + 'admin',
     //区域代理的移动端页面
-    mobileAgent:mobileBaseURL+'agent',
+    mobileAgent: mobileBaseURL + 'agent',
 
     //模板消息id
-    templateid:{
-        shopOrderId:"FWQV2RtWbgSE5IZxt7fi86wA3jwNKohNlL-c4mRPxBI",//店铺订单使用的模板消息
-        fansOrderId:"qTAFxHm0RvJwxhVgNonCHuSurwBVOPoaoZXx9RkSqzI"//给粉丝的订单状态通知 
+    templateid: {
+        shopOrderId: "FWQV2RtWbgSE5IZxt7fi86wA3jwNKohNlL-c4mRPxBI",//店铺订单使用的模板消息
+        fansOrderId: "qTAFxHm0RvJwxhVgNonCHuSurwBVOPoaoZXx9RkSqzI"//给粉丝的订单状态通知 
 
     }
 
