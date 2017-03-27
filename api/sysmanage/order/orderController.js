@@ -255,6 +255,10 @@ module.exports = {
                 path: 'fanid',
                 model: 'fans'
             })
+            .populate({
+                path: 'ficorder',
+                model: 'ficorder'
+            })
             .sort({ 'paytime': -1 })
             .exec(function (err, orderlist) {
                 if (err) {
