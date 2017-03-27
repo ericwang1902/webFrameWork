@@ -19,6 +19,8 @@ router.get('/fansindex',wechatutil.getopenid,function(req,res,next){
                  if(err){
                      console.log(err);
                  }
+                  console.log(fans);
+                 
                  res.redirect(config.mobileTempFans+"?fansid="+fans._id);
              })
 
