@@ -135,6 +135,11 @@ var AgentRoleData = {
                     funcNum: "5",
                     funcName: "商户订单",
                     funcLink: "/dashboard/shoporder"
+                },
+                {
+                    funcNum: "6",
+                    funcName: "配送员中心",
+                    funcLink: "/dashboard/couriercenter"
                 }
             ]
         }

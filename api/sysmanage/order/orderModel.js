@@ -32,6 +32,7 @@ var orderSchema = new Schema({
 	 	ref: 'region'
 	},//
 	'address' : String,//
+	'mobile':String,
 	'note' : String,
 	'ficorder' : {
 	 	type: Schema.Types.ObjectId,
