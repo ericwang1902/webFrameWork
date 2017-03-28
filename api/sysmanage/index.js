@@ -19,6 +19,7 @@ var porderRouter = require('./order/porderRouter');
 var ficorderRouter = require('./ficorder/ficorderRoutes');
 var shoporderRouter = require('./shoporder/shoporderRoutes');
 var pshoporderRouter = require('./shoporder/pshoporderRoutes');
+var courierRouter = require('./courier/courierRoutes');
 
 var mdistrictRouter = require('./district/mdistrictRouter');
 var mregionRouter  = require('./region/mregionRouter')
@@ -114,6 +115,8 @@ router.use('/shoporder',shoporderRouter);
 //根据供应商id获取shoporder
 router.use('/mshoporder',mshopeorderRouter);
 
+//配送员
+router.use('/courier',courierRouter);
 
 //微信支付回调地址
 router.use('/wechatpayback',wechatpayRouter);
