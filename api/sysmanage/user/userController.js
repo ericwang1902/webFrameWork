@@ -117,7 +117,7 @@ module.exports = {
 
         var user = new userModel({
             username: userInstance.userName,
-            mobile: userInstance.userName,
+            mobile: userInstance.mobile,
             nickname: userInstance.nickName,
             password: bcrypt.hashSync(userInstance.passWord, salt),
             openid: "",
