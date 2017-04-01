@@ -71,11 +71,14 @@ module.exports = {
      * courierController.create()
      */
     create: function (req, res) {
+        console.log(req.body);
+        var role = req.user.role[0].roleName;
+        var districtId = req.user.district._id;
         var courier = new courierModel({
             couriername: req.body.couriername,
             courierdes: req.body.courierdes,
             mobile: req.body.mobile,
-            district: req.body.district,
+            district: req.body.district ? req.body.district :districtId,
             region: req.body.region,
             courieruser:req.body.courieruser
         });
