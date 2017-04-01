@@ -4,7 +4,6 @@ var Schema   = mongoose.Schema;
 var courierSchema = new Schema({
 	'couriername' : String,
 	'courierdes' : String,
-	'mobile' : String,
 	'district' : {
 	 	type: Schema.Types.ObjectId,
 	 	ref: 'district'

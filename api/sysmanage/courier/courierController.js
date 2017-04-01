@@ -77,7 +77,6 @@ module.exports = {
         var courier = new courierModel({
             couriername: req.body.couriername,
             courierdes: req.body.courierdes,
-            mobile: req.body.mobile,
             district: req.body.district ? req.body.district :districtId,
             region: req.body.region,
             courieruser:req.body.courieruser
@@ -114,7 +113,6 @@ module.exports = {
 
             courier.couriername = req.body.couriername ? req.body.couriername : courier.couriername;
             courier.courierdes = req.body.courierdes ? req.body.courierdes : courier.courierdes;
-            courier.mobile = req.body.mobile ? req.body.mobile : courier.mobile;
             courier.district = req.body.district ? req.body.district : courier.district;
             courier.region = req.body.region ? req.body.region : courier.region;
             courier.courieruser = req.body.courieruser ? req.body.courieruser:courier.courieruser;
