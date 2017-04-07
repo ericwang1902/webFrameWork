@@ -1,6 +1,7 @@
 var ficorderModel = require('./ficorderModel.js');
-var moment  = require('moment');
-
+var moment = require('moment');
+var wechatapi = require('../../common/wechatapi');
+var courierModel = require('../courier/courierModel');
 
 /**
  * ficorderController.js
@@ -29,7 +30,7 @@ module.exports = {
      */
     show: function (req, res) {
         var id = req.params.id;
-        ficorderModel.findOne({_id: id}, function (err, ficorder) {
+        ficorderModel.findOne({ _id: id }, function (err, ficorder) {
             if (err) {
                 return res.status(500).json({
                     message: 'Error when getting ficorder.',
@@ -50,9 +51,13 @@ module.exports = {
      */
     create: function (req, res) {
         var ficorder = new ficorderModel({
-			ficordernum : 'F' + moment().format('YYYYMMDDHHmmssSSS'),
-			ficorderstate : req.body.ficorderstate
+            ficordernum: 'F' + moment().format('YYYYMMDDHHmmssSSS'),
+            ficorderstate: req.body.ficorderstate
         });
+
+        //region从前台取
+        var orgion = req.body.region;
+
 
         ficorder.save(function (err, ficorder) {
             if (err) {
@@ -61,7 +66,33 @@ module.exports = {
                     error: err
                 });
             }
-            return res.status(201).json(ficorder);
+            //根据orgion 查找courier
+            courierModel.findOne({ region: region })
+                .populate({
+                    path: 'district',
+                    model: 'district'
+                })
+                .populate({
+                    path: 'region',
+                    model: 'region'
+                })
+                .populate({
+                    path: 'courieruser',
+                    model: 'user'
+                })
+                .exec(function (err, courier) {
+                    if (err) {
+                        console.log(err);
+                    }
+                    var openid = courier.courieruser.openid;
+
+                    //发送新订单提醒给配送员
+                    wechatapi.sendMsgToCourier(oepnid, ficorder, () => { return res.status(201).json(ficorder); });
+
+
+                })
+
+
         });
     },
 
@@ -70,7 +101,7 @@ module.exports = {
      */
     update: function (req, res) {
         var id = req.params.id;
-        ficorderModel.findOne({_id: id}, function (err, ficorder) {
+        ficorderModel.findOne({ _id: id }, function (err, ficorder) {
             if (err) {
                 return res.status(500).json({
                     message: 'Error when getting ficorder',
@@ -84,8 +115,8 @@ module.exports = {
             }
 
             ficorder.ficordernum = req.body.ficordernum ? req.body.ficordernum : ficorder.ficordernum;
-			ficorder.ficorderstate = req.body.ficorderstate ? req.body.ficorderstate : ficorder.ficorderstate;
-			
+            ficorder.ficorderstate = req.body.ficorderstate ? req.body.ficorderstate : ficorder.ficorderstate;
+
             ficorder.save(function (err, ficorder) {
                 if (err) {
                     return res.status(500).json({

@@ -25,14 +25,14 @@ function getApiToken(callback) {
 }
 
 //根据全局token来获取jsapiticket
-function getJSapiTicket(){
-    var jsapiticketOptions ={
-        url:config.wechatJSApitTicketURL+config.apiToken+"&type=jsapi",
-        method:'GET'
+function getJSapiTicket() {
+    var jsapiticketOptions = {
+        url: config.wechatJSApitTicketURL + config.apiToken + "&type=jsapi",
+        method: 'GET'
     }
-    request(jsapiticketOptions,function(err,response,body){
-        console.log("jsapiticket:"+JSON.stringify(body))
-        config.jsapiticket =  JSON.parse(body).ticket;
+    request(jsapiticketOptions, function (err, response, body) {
+        console.log("jsapiticket:" + JSON.stringify(body))
+        config.jsapiticket = JSON.parse(body).ticket;
     })
 }
 
@@ -247,6 +247,7 @@ function createTag(tagName, callback) {
 }
 
 //发送新订单模板给店主消息,用的是第三方库
+//shopper是shop order
 function sendNewOrderTemplateMsg(openid, shopper, callback) {
     moment.locale('zh-cn');
     console.log("openid~~~~~:" + openid)
@@ -308,6 +309,7 @@ function sendNewOrderTemplateMsg(openid, shopper, callback) {
     });
 
 }
+
 //发送模板消息给粉丝，用来通知订单状态的变更
 var sendOrderStateTemplateMsg = function (openid, orderinfo, callback) {
     var templateId = config.templateid.fansOrderId;
@@ -345,6 +347,60 @@ var sendOrderStateTemplateMsg = function (openid, orderinfo, callback) {
         }
     });
 }
+
+
+//发送通知给配送员
+function sendMsgToCourier(openid, ficorder, callback) {
+    moment.locale('zh-cn');
+    var templateId = config.templateid.courierId;
+    var url1 = "http://www.baidu.com";
+
+
+    var postData = {
+        "first": {
+            "value": "您有新的订单！",
+            "color": "#173177"
+        },
+        "tradeDateTime": {
+            "value": "20170331",
+            "color": "#173177"
+        },
+        "orderType": {
+            "value": "系统分发",
+            "color": "#173177"
+        },
+        "customerInfo": {
+            "value": "小熊下午茶",
+            "color": "#173177"
+        },
+        "orderItemName": {
+            "value": "订单内容",
+            "color": "#000000"
+        },
+        "orderItemData": {
+            "value": "订单描述",
+            "color": "#173177"
+        },
+        "remark": {
+            "value": "请尽快备货！",
+            "color": "#173177"
+        }
+    }
+
+    api.sendTemplate(openid, templateId, url1, postData, function (err, result) {
+        if (err) {
+            console.log(err);
+        }
+        else {
+            callback();
+            console.log('result:' + JSON.stringify(result));
+        }
+    });
+
+
+}
+
+
 //设置粉丝分组(用于微信绑定后端用户的时候)
 var setfanstag = function (openid, rolename, callback) {
     if (config.apiToken) {
@@ -428,6 +484,7 @@ module.exports = {
     InitTag,
     sendNewOrderTemplateMsg,
     sendOrderStateTemplateMsg,
+    sendMsgToCourier,
     setfanstag
 
 }

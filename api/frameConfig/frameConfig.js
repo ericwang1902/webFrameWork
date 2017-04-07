@@ -152,8 +152,8 @@ module.exports = {
     //模板消息id
     templateid: {
         shopOrderId: "FWQV2RtWbgSE5IZxt7fi86wA3jwNKohNlL-c4mRPxBI",//店铺订单使用的模板消息
-        fansOrderId: "qTAFxHm0RvJwxhVgNonCHuSurwBVOPoaoZXx9RkSqzI"//给粉丝的订单状态通知 
-
+        fansOrderId: "qTAFxHm0RvJwxhVgNonCHuSurwBVOPoaoZXx9RkSqzI",//给粉丝的订单状态通知 
+        courierId:"FWQV2RtWbgSE5IZxt7fi86wA3jwNKohNlL-c4mRPxBI"//配送员的模板消息
     }
 
 
