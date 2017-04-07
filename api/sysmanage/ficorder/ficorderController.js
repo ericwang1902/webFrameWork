@@ -50,6 +50,7 @@ module.exports = {
      * ficorderController.create()
      */
     create: function (req, res) {
+        console.log(req.body);
         var ficorder = new ficorderModel({
             ficordernum: 'F' + moment().format('YYYYMMDDHHmmssSSS'),
             ficorderstate: req.body.ficorderstate
