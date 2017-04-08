@@ -353,36 +353,38 @@ var sendOrderStateTemplateMsg = function (openid, orderinfo, callback) {
 function sendMsgToCourier(openid, ficorder, callback) {
     moment.locale('zh-cn');
     var templateId = config.templateid.courierId;
-    var url1 = "http://www.baidu.com";
+    var url1 = "http://aft.robustudio.com/mobile/courier";
+     var ordertime = moment().format('YYYY-MM-DD HH:mm:ss');
+     var ficordernum = ficorder.ficordernum;
 
 
     var postData = {
         "first": {
-            "value": "您有新的订单！",
+            "value": "您有新的订单需要配送！",
             "color": "#173177"
         },
         "tradeDateTime": {
-            "value": "20170331",
+            "value": ordertime,
             "color": "#173177"
         },
         "orderType": {
-            "value": "系统分发",
+            "value": "配送订单",
             "color": "#173177"
         },
         "customerInfo": {
-            "value": "小熊下午茶",
+            "value": "小熊平台",
             "color": "#173177"
         },
         "orderItemName": {
-            "value": "订单内容",
+            "value": "批次号",
             "color": "#000000"
         },
         "orderItemData": {
-            "value": "订单描述",
+            "value": ficordernum,
             "color": "#173177"
         },
         "remark": {
-            "value": "请尽快备货！",
+            "value": "请尽快配送！",
             "color": "#173177"
         }
     }
