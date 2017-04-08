@@ -151,6 +151,7 @@ module.exports = {
     ficorderByRegion: function (req, res) {
         var regionid = req.query.regionid;
         var ficorderstate = req.query.ficorderstate;
+        console.log(ficorderstate);
 
         ficorderModel.find({ region: regionid ,ficorderstate:ficorderstate})
             .exec(function (err, ficordersRes) {
