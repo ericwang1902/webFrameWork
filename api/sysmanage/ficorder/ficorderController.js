@@ -88,7 +88,7 @@ module.exports = {
                     var openid = courier.courieruser.openid;
 
                     //发送新订单提醒给配送员
-                    wechatapi.sendMsgToCourier(oepnid, ficorder, () => { return res.status(201).json(ficorder); });
+                    wechatapi.sendMsgToCourier(openid, ficorder, () => { return res.status(201).json(ficorder); });
 
 
                 })
