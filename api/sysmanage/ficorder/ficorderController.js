@@ -149,7 +149,7 @@ module.exports = {
     },
     //根据regionid获取ficorder
     ficorderByRegion: function (req, res) {
-        var regionid = req.body.regionid;
+        var regionid = req.query.regionid;
         ficorderModel.find({ region: regionid })
             .exec(function (err, ficordersRes) {
                 if (err) {
