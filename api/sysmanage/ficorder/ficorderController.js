@@ -57,7 +57,7 @@ module.exports = {
         });
 
         //region从前台取
-        var orgion = req.body.region;
+        var region = req.body.region;
 
 
         ficorder.save(function (err, ficorder) {
