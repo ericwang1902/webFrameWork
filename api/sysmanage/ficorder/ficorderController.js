@@ -118,7 +118,7 @@ module.exports = {
             ficorder.ficordernum = req.body.ficordernum ? req.body.ficordernum : ficorder.ficordernum;
             ficorder.ficorderstate = req.body.ficorderstate ? req.body.ficorderstate : ficorder.ficorderstate;
             ficorder.region = req.body.region ? req.body.region : ficorder.region;
-            
+
             ficorder.save(function (err, ficorder) {
                 if (err) {
                     return res.status(500).json({
@@ -146,5 +146,21 @@ module.exports = {
             }
             return res.status(204).json();
         });
+    },
+    //根据regionid获取ficorder
+    ficorderByRegion: function (req, res) {
+        var regionid = req.body.regionid;
+        ficorderModel.find({ region: regionid })
+            .exec(function (err, ficordersRes) {
+                if (err) {
+                    return res.status(500).json({
+                        message: 'Error when getting ficorder.',
+                        error: err
+                    });
+                }
+                return res.json(ficorders);
+
+            })
     }
+
 };

@@ -31,6 +31,7 @@ var muserRouter = require('./user/muserRouter')
 var mshopeorderRouter = require('./shoporder/mshoporderRouter');
 
 var wechatpayRouter = require('./wechatpay/wechatpayrouter');
+var mficorderRouter = require('./ficorder/mficorderRouter');
 
 
 var qiniuToken = require('../common/qiniu')
@@ -105,6 +106,8 @@ router.use('/porder',porderRouter);
 router.use('/morder',morderRouter);
 //ficorderRouter
 router.use('/ficorder',ficorderRouter);
+//mficorderRouter
+router.use('/mficorder',mficorderRouter);
 
 //pshoporderRouter
 router.use('/pshoporder',pshoporderRouter);
