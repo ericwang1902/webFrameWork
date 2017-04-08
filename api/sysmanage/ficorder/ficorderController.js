@@ -158,7 +158,7 @@ module.exports = {
                         error: err
                     });
                 }
-                return res.json(ficorders);
+                return res.json(ficordersRes);
 
             })
     }
