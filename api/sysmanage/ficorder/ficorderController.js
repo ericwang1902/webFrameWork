@@ -150,7 +150,9 @@ module.exports = {
     //根据regionid获取ficorder
     ficorderByRegion: function (req, res) {
         var regionid = req.query.regionid;
-        ficorderModel.find({ region: regionid })
+        var ficorderstate = req.query.ficorderstate;
+
+        ficorderModel.find({ region: regionid ,ficorderstate:ficorderstate})
             .exec(function (err, ficordersRes) {
                 if (err) {
                     return res.status(500).json({
