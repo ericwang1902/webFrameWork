@@ -73,7 +73,7 @@ module.exports = {
     create: function (req, res) {
         console.log(req.body);
         var role = req.user.role[0].roleName;
-        var districtId = req.user.district._id;
+        var districtId = req.user.district._id;//取得当前登陆用户的区县信息
         var courier = new courierModel({
             couriername: req.body.couriername,
             courierdes: req.body.courierdes,
