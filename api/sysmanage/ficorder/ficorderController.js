@@ -51,14 +51,14 @@ module.exports = {
      */
     create: function (req, res) {
         console.log(req.body);
-        var ficorder = new ficorderModel({
-            ficordernum: 'F' + moment().format('YYYYMMDDHHmmssSSS'),
-            ficorderstate: req.body.ficorderstate
-        });
-
         //region从前台取
         var region = req.body.region;
 
+        var ficorder = new ficorderModel({
+            ficordernum: 'F' + moment().format('YYYYMMDDHHmmssSSS'),
+            ficorderstate: req.body.ficorderstate,
+            region: region
+        });
 
         ficorder.save(function (err, ficorder) {
             if (err) {
@@ -117,7 +117,8 @@ module.exports = {
 
             ficorder.ficordernum = req.body.ficordernum ? req.body.ficordernum : ficorder.ficordernum;
             ficorder.ficorderstate = req.body.ficorderstate ? req.body.ficorderstate : ficorder.ficorderstate;
-
+            ficorder.region = req.body.region ? req.body.region : ficorder.region;
+            
             ficorder.save(function (err, ficorder) {
                 if (err) {
                     return res.status(500).json({
