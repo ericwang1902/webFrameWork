@@ -369,10 +369,10 @@ module.exports = {
     },
     //根据region获取用户订单
     getorderbyficorder() {
-        var ficorder = req.query.ficorder;
-        console.log(ficorder)
+        var ficorderid = req.query.ficorder;
+        console.log(ficorderid)
 
-        orderModel.find({ ficorder: ficorder })
+        orderModel.find({ ficorder: ficorderid })
             .populate({
                 path: 'district',
                 model: 'district'
