@@ -124,7 +124,7 @@ module.exports = {
             district: req.body.district,
             region: req.body.region,
             address: req.body.address,
-            mobile:req.body.mobile,
+            mobile: req.body.mobile,
             note: req.body.note,
             ficorder: req.body.ficorder,
             taotalcount: req.body.taotalcount
@@ -205,12 +205,12 @@ module.exports = {
             order.paytime = req.body.paytime ? req.body.paytime : order.paytime;
             order.fanid = req.body.fanid ? req.body.fanid : order.fanid;
             order.district = req.body.district ? req.body.district : order.district,
-            order.region = req.body.region ? req.body.region : order.reion,
-            order.address = req.body.address ? req.body.address : order.address;
+                order.region = req.body.region ? req.body.region : order.reion,
+                order.address = req.body.address ? req.body.address : order.address;
             order.note = req.body.note ? req.body.note : order.note;
             order.ficorder = req.body.ficorder ? req.body.ficorder : order.ficorder;
             order.taotalcount = req.body.taotalcount ? req.body.taotalcount : order.taotalcount;
-            order.mobile = req.body.mobile ? req.body.mobile:order.mobile;
+            order.mobile = req.body.mobile ? req.body.mobile : order.mobile;
 
             order.save(function (err, order) {
                 if (err) {
@@ -366,6 +366,38 @@ module.exports = {
             }
         })
 
+    },
+    //根据region获取用户订单
+    getorderbyficorder() {
+        var ficorder = request.query.ficorder;
+
+        orderModel.find({ ficorder: ficorder })
+            .populate({
+                path: 'district',
+                model: 'district'
+            })
+            .populate({
+                path: 'region',
+                model: 'region'
+            })
+            .populate({
+                path: 'fanid',
+                model: 'fans'
+            })
+            .populate({
+                path: 'ficorder',
+                model: 'ficorder'
+            })
+            .sort({ 'paytime': -1 })
+            .exec(function (err, ordersRes) {
+                if (err) {
+                    return res.status(500).json({
+                        message: 'Error when getting order.',
+                        error: err
+                    });
+                }
+                return res.json(ordersRes);
+            })
     }
 
 };

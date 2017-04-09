@@ -12,9 +12,9 @@ router.get('/fan',orderController.morderlistfan);
 */
 router.get('/agent',orderController.morderlistagent);
 
-/*
-    
-*/
+
+//根据regionid获取粉丝订单的接口
+router.get('/orderbyficorder',orderController.getorderbyficorder);
 
 
 module.exports = router;
