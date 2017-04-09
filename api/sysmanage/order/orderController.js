@@ -368,7 +368,7 @@ module.exports = {
 
     },
     //根据region获取用户订单
-    getorderbyficorder() {
+    getorderbyficorder(req, res) {
         var ficorderid = req.query.ficorder;
         console.log(ficorderid)
 
