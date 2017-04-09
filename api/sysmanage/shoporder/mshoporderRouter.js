@@ -7,7 +7,8 @@ var shoporderController = require('./shoporderController');
  */
 router.get('/supplier',shoporderController.mshoporderforsupplier);
 
-
+//根据ficorder来获取店家订单
+router.get('/orderbyficorder',shoporderController.getshoporderbyfic);
 
 
 module.exports = router;

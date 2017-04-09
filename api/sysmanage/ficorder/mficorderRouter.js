@@ -7,6 +7,8 @@ var ficorderController = require('./ficorderController');
  */
 router.get('/ficorderbyregion',ficorderController.ficorderByRegion);
 
+//根据ficorder的id来更新ficstate
+fouter.post('/ficorderstate',ficorderController.updateficstate);
 
 
 module.exports = router;

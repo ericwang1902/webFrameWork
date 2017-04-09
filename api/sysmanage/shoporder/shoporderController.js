@@ -284,5 +284,35 @@ module.exports = {
 
 
 
+    },
+    //根据ficorder来获取shoporder
+    getshoporderbyfic(req, res) {
+        var ficorderid = req.query.ficorder;
+        console.log(ficorderid);
+
+        shoporderModel.find({ ficorder: ficorderid })
+            .populate({
+                path: 'district',
+                model: 'district'
+            })
+            .populate({
+                path: 'ficorder',
+                model: 'ficorder'
+            })
+            .populate({
+                path: 'supplier',
+                model: 'supplier'
+            })
+            .sort({ 'ordertime': -1 })
+            .exec(function (err, shoporders) {
+                if (err) {
+                    return res.status(500).json({
+                        message: 'Error when getting shoporder.',
+                        error: err
+                    });
+                }
+                return res.json(shoporders);
+            })
+
     }
 };

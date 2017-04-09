@@ -153,7 +153,7 @@ module.exports = {
         var ficorderstate = req.query.ficorderstate;
         console.log(ficorderstate);
 
-        ficorderModel.find({ region: regionid ,ficorderstate:ficorderstate})
+        ficorderModel.find({ region: regionid, ficorderstate: ficorderstate })
             .exec(function (err, ficordersRes) {
                 if (err) {
                     return res.status(500).json({
@@ -162,6 +162,34 @@ module.exports = {
                     });
                 }
                 return res.json(ficordersRes);
+
+            })
+    },
+    //根据ficorderid来更新ficorder的状态
+    updateficstate(req, res) {
+        var ficid = req.body.ficorder;
+        var updatestate = req.body.targetstate;
+
+        ficorderModel.findOne({ _id: ficid })
+            .exec(function (err, ficorder) {
+                if (err) {
+                    return res.status(500).json({
+                        message: 'Error when getting ficorder.',
+                        error: err
+                    });
+                }
+                ficorder.ficorderstate = updatestate ? updatestate : ficorder.ficorderstate;
+                
+                ficorder.save(function (err, ficorder) {
+                    if (err) {
+                        return res.status(500).json({
+                            message: 'Error when updating ficorder.',
+                            error: err
+                        });
+                    }
+
+                    return res.json(ficorder);
+                });
 
             })
     }
