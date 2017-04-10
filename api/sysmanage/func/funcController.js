@@ -49,7 +49,8 @@ module.exports = {
     create: function (req, res) {
         var func = new funcModel({
 			funcName : req.body.funcName,
-			funcLink : req.body.funcLink
+			funcLink : req.body.funcLink,
+            funcNum:req.body.funcNum
         });
 
         func.save(function (err, func) {
@@ -83,7 +84,7 @@ module.exports = {
 
             func.funcName = req.body.funcName ? req.body.funcName : func.funcName;
 			func.functionLink = req.body.funcLink ? req.body.funcLink : func.funcLink;
-			
+			func.funcNum = req.body.funcNum ? req.body.funcNum :func.funcNum;   
             func.save(function (err, func) {
                 if (err) {
                     return res.status(500).json({
