@@ -97,6 +97,16 @@ var UserData = {
                         funcLink: "/dashboard/couriercenter"
                     }
                 ]
+            },{
+                menuNum: "2",
+                menuName: "报表中心",
+                funcList: [
+                    {
+                        funcNum: "1",
+                        funcName: "日报表",
+                        funcLink: "/dashboard/dailyreport"
+                    }
+                ]
             }
         ]//菜单列表
     }
@@ -142,7 +152,17 @@ var AgentRoleData = {
                     funcLink: "/dashboard/couriercenter"
                 }
             ]
-        }
+        },{
+                menuNum: "2",
+                menuName: "报表中心",
+                funcList: [
+                    {
+                        funcNum: "1",
+                        funcName: "日报表",
+                        funcLink: "/dashboard/dailyreport"
+                    }
+                ]
+            }
     ]//菜单列表
 
 }
