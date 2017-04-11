@@ -4,8 +4,10 @@ var shoporderModel = require('../sysmanage/shoporder/shoporderModel');
 var async = require('async')
 
 var getSupplier = function (req, res) {
-    supplierModel.find()
-        .exec(function (err, suppliers) {
+    shoporderModel.aggregate(
+        { $group: { _id: "$supplier", totalPop: { $sum: "$orderamount" } } }
+        )
+        .exec(function (err, shoporders) {
             if (err) {
                 return res.status(500).json({
                     message: 'Error when getting supplier.',
@@ -13,9 +15,12 @@ var getSupplier = function (req, res) {
                 });
             }
 
-            return res.json(suppliers);
+
+            return res.json(shoporders);
         })
 }
+
+
 
 module.exports = {
     getSupplier: getSupplier
