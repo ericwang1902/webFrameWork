@@ -88,7 +88,8 @@ module.exports = {
             picktime: req.body.picktime,
             receivetime: req.body.receivetime,
             ficorder: req.body.ficorder,
-            supplier: req.body.supplier
+            supplier: req.body.supplier,
+            orderamount:req.body.orderamount
         });
 
         shoporder.save(function (err, shoporder) {
@@ -130,6 +131,7 @@ module.exports = {
             shoporder.ficorder = req.body.ficorder ? req.body.ficorder : shoporder.ficorder;
             shoporder.supplier = req.body.supplier ? req.body.supplier : shoporder.supplier;
             shoporder.district = req.body.district ? req.body.district : shoporder.district;
+            shoporder.orderamount = req.body.orderamount ? req.body.orderamount :shoporder.orderamount;
 
             shoporder.save(function (err, shoporder) {
                 if (err) {
@@ -165,10 +167,16 @@ module.exports = {
         // console.log(shoporderlist);
 
         async.each(shoporderlist, function (shoporder, callback) {
+            var amount = 0;
+            for(var i=0;i<shoporder.goodslist.length;i++){
+               amount+= shoporder.goodslist[i].goods.goodsprice*shoporder.goodslist[i].goodscount;
+            }
+
             var shoporder = new shoporderModel(
                 {
                     ordernum: 'S' + moment().format('YYYYMMDDHHmmssSSS'),
                     goodslist: shoporder.goodslist,
+                    orderamount:amount,
                     district: shoporder.district,
                     ordertime: moment(),//订单生成时间
                     preparetime: '',

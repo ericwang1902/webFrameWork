@@ -1,6 +1,9 @@
 var supplierModel = require('../sysmanage/supplier/supplierModel');
+var shoporderModel = require('../sysmanage/shoporder/shoporderModel');
 
-var getSupplier = function (req,res) {
+var async = require('async')
+
+var getSupplier = function (req, res) {
     supplierModel.find()
         .exec(function (err, suppliers) {
             if (err) {
@@ -9,10 +12,11 @@ var getSupplier = function (req,res) {
                     error: err
                 });
             }
+
             return res.json(suppliers);
         })
 }
 
-module.exports ={
-    getSupplier:getSupplier
+module.exports = {
+    getSupplier: getSupplier
 }
