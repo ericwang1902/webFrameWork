@@ -169,7 +169,7 @@ module.exports = {
         async.each(shoporderlist, function (shoporder, callback) {
             var amount = 0;
             for(var i=0;i<shoporder.goodslist.length;i++){
-               amount+= shoporder.goodslist[i].goods.goodsprice*shoporder.goodslist[i].goodscount;
+               amount+= shoporder.goodslist[i].goods.goodsbuyprice*shoporder.goodslist[i].goodscount;
             }
 
             var shoporder = new shoporderModel(
