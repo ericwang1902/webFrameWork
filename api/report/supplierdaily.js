@@ -16,7 +16,7 @@ var getSupplier = function (req, res) {
                 as: 'supplier'
             }
         },
-        {"$unwind":"supplier"}
+        {"$unwind":"$supplier"}
         
     ])
         .exec(function (err, shoporders) {
