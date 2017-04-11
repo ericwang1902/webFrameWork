@@ -6,21 +6,17 @@ var async = require('async')
 var getSupplier = function (req, res) {
     shoporderModel.aggregate(
         { $group: { supplierid: "$supplier", totalamount: { $sum: "$orderamount" } } }
-        )
-        .populate({
-                path: "supplier",
-                model: "supplier"
-            })
-        .exec(function (err, shoporders) {
+    )
+        .exec(function (err, ordersums) {
             if (err) {
                 return res.status(500).json({
                     message: 'Error when getting supplier.',
                     error: err
                 });
             }
-
-
-            return res.json(shoporders);
+            supplierModel.populate(ordersums, { path: 'supplierid' }, function (err, popordersums) {
+                 return res.json(popordersums);
+            });
         })
 }
 
