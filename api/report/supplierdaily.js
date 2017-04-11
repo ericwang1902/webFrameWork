@@ -14,5 +14,5 @@ var getSupplier = function (req,res) {
 }
 
 module.exports ={
-    getSupplier
+    getSupplier:getSupplier
 }
