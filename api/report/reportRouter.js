@@ -4,3 +4,6 @@ var supplierdaily = require('./supplierdaily');
 
 //report/supplierdaily
 router.get('/supplierdaily', supplierdaily.getSupplier);
+
+
+module.exports = router;
