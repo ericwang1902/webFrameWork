@@ -5,16 +5,17 @@ var async = require('async')
 
 var getSupplier = function (req, res) {
     shoporderModel.aggregate([
-        { $group: { supplierid: "$supplier", totalamount: { $sum: "$orderamount" } } },
-        {
-            $lookup:
-            {
-                from: 'supplier',
-                localField: 'supplierid',
-                foreignField: '_id',
-                as: 'supplier'
-            }
-        }]
+        { $group: { supplierid: "$supplier", totalamount: { $sum: "$orderamount" } } }
+        // {
+        //     $lookup:
+        //     {
+        //         from: 'supplier',
+        //         localField: 'supplierid',
+        //         foreignField: '_id',
+        //         as: 'supplier'
+        //     }
+        // }
+        ]
         )
         .exec(function (err, shoporders) {
             if (err) {
