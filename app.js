@@ -17,7 +17,8 @@ dbutils.createconnection();
 
 // routers
 var mobileRouter = require('./api/mobile');
-var sysmanage = require('./api/sysmanage')
+var sysmanage = require('./api/sysmanage');
+var reportRouter = require('./api/report/reportRouter');
 
 
 var app = express();
@@ -156,6 +157,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 //http://localhost:8085/MP_verify_fA2T6ARFofWXJQ9b.txt 即可访问
 app.use('/mobile', mobileRouter);
 app.use('/sysmanage',usercheckmiddle.getUserInfo, sysmanage);
+app.use('/report',reportRouter);
 
 
 
