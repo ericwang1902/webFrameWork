@@ -1,6 +1,6 @@
-import supplierModel from '../sysmanage/supplier/supplierModel';
+var supplierModel = require('../sysmanage/supplier/supplierModel');
 
-const getSupplier = function (req,res) {
+var getSupplier = function (req,res) {
     supplierModel.find()
         .exec(function (err, suppliers) {
             if (err) {
