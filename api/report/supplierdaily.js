@@ -5,7 +5,7 @@ var async = require('async')
 
 var getSupplier = function (req, res) {
     shoporderModel.aggregate([
-        { $group: { supplierid: "$supplier", totalPop: { $sum: "$orderamount" } } }
+        { $group: { _id: "$supplier", totalPop: { $sum: "$orderamount" } } }
         ])
         .exec(function (err, shoporders) {
             if (err) {
