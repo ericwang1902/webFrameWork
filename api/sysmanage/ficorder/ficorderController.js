@@ -193,6 +193,10 @@ module.exports = {
                     }
                     //根据ficorder找order，根据order找fanid，根据fanid找openid
                     orderModel.find({ ficorder: ficorder._id })
+                        .populate({
+                                        path:'ficorder',
+                                        model:'ficorder'
+                                    })
                         .exec(function (err, orders) {
                             if (err) {
                                 return res.status(500).json({
@@ -202,10 +206,6 @@ module.exports = {
                             }
                             async.each(orders, function (order, callback) {
                                 fansModel.findById({ _id: order.fanid })
-                                    .populate({
-                                        path:'ficorder',
-                                        model:'ficorder'
-                                    })
                                     .exec(function (err, fans) {
                                         if (err) {
                                             console.log(err)
