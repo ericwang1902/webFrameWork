@@ -161,15 +161,15 @@ module.exports = {
                                     message: 'Error when updating ficorder.',
                                     error: err
                                 });
-                            }else{
-                                    return res.json(ficorder);
+                            } else {
+                                return res.json(ficorder);
                             }
                         })
 
 
                     })
 
-            
+
             });
         });
     },
@@ -229,8 +229,45 @@ module.exports = {
                             error: err
                         });
                     }
+                    //根据ficorder找order，根据order找fanid，根据fanid找openid
+                    orderModel.find({ ficorder: ficorder._id })
+                        .exec(function (err, orders) {
+                            if (err) {
+                                return res.status(500).json({
+                                    message: 'Error when updating ficorder.',
+                                    error: err
+                                });
+                            }
+                            async.each(orders, function (order, callback) {
+                                fansModel.findById({ _id: order.fanid })
+                                    .exec(function (err, fans) {
+                                        if (err) {
+                                            console.log(err)
+                                            callback(err);
+                                        }
 
-                    return res.json(ficorder);
+                                        //发送订单通知
+                                        wechatapi
+                                            .sendOrderStateTemplateMsg(fans.fanopenid,
+                                            result,
+                                            function () {
+                                                callback();
+                                            });
+
+                                    })
+                            }, function (err) {
+                                if (err) {
+                                    return res.status(500).json({
+                                        message: 'Error when updating ficorder.',
+                                        error: err
+                                    });
+                                } else {
+                                    return res.json(ficorder);
+                                }
+                            })
+
+
+                        })
                 });
 
             })
