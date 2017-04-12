@@ -314,7 +314,7 @@ function sendNewOrderTemplateMsg(openid, shopper, callback) {
 var sendOrderStateTemplateMsg = function (openid, orderinfo, callback) {
     var templateId = config.templateid.fansOrderId;
     var ordernum = orderinfo.ordernum;
-    var ordertime = moment(orderinfo.ordertime).format('YYYY-MM-DD HH:mm:ss');
+    var updatetime = moment().format('YYYY-MM-DD HH:mm:ss');
     var url1 = "http://aft.robustudio.com/mobile/fans";
 
 
@@ -328,7 +328,7 @@ var sendOrderStateTemplateMsg = function (openid, orderinfo, callback) {
             "color": "#173177"
         },
         "keyword2": {
-            "value": ordertime,
+            "value": updatetime,
             "color": "#173177"
         },
         "remark": {
