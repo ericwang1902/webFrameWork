@@ -19,7 +19,8 @@ var getSupplier = function (req, res) {
                 foreignField: '_id',
                 as: 'supplierdoc'
             }
-        }
+        },
+        { $unwind: $supplierdoc }
 
     ])
         .exec(function (err, shoporders) {
