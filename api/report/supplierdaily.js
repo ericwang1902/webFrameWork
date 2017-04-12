@@ -14,7 +14,8 @@ var getSupplier = function (req, res) {
                 foreignField: '_id',
                 as: 'supplier'
             }
-        }
+        },
+        {$match: {supplier: {$ne: []}}}
         
     ])
         .exec(function (err, shoporders) {
