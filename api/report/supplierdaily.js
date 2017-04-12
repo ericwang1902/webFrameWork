@@ -9,7 +9,7 @@ var getSupplier = function (req, res) {
             {
                 $lookup:
                 {
-                    from: 'supplier',
+                    from: 'suppliers',
                     localField: '_id.supplierid',
                     foreignField: '_id',
                     as: 'supplierdoc'
