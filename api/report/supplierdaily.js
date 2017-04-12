@@ -10,7 +10,7 @@ var getSupplier = function (req, res) {
             $lookup:
             {
                 from: 'supplierModel',
-                localField: '_id',
+                localField: 'supplier',
                 foreignField: '_id',
                 as: 'supplier'
             }
