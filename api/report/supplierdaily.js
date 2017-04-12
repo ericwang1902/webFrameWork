@@ -1,15 +1,19 @@
 var supplierModel = require('../sysmanage/supplier/supplierModel');
 var shoporderModel = require('../sysmanage/shoporder/shoporderModel');
+var moment = require('moment');
 
 var async = require('async')
 
 var getSupplier = function (req, res) {
+        var today= moment().set({'hour': 0, 'minute': 0,'second':30});
+
         shoporderModel.aggregate([
-              { $group: { _id: { supplierid: "$supplier" }, orderamount: { $sum: "$orderamount" } } },
+            {$match:{$gte:today}},
+            { $group: { _id: { supplierid: "$supplier" }, orderamount: { $sum: "$orderamount" } } },
             {
                 $lookup:
                 {
-                    from: 'suppliers',
+                    from: 'suppliers',//这个要不是model，而是suppliers，是collection的名字！！！
                     localField: '_id.supplierid',
                     foreignField: '_id',
                     as: 'supplierdoc'
