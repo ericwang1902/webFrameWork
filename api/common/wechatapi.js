@@ -318,6 +318,8 @@ var sendOrderStateTemplateMsg = function (openid, orderinfo, callback) {
     var url1 = "http://aft.robustudio.com/mobile/fans";
     
     var title ='';
+    console.log("=======================");
+    console.log(orderinfo);
     var ficstate = orderinfo.ficorder.ficorderstate;
     switch(ficstate){
         case '1':
