@@ -316,11 +316,28 @@ var sendOrderStateTemplateMsg = function (openid, orderinfo, callback) {
     var ordernum = orderinfo.ordernum;
     var updatetime = moment().format('YYYY-MM-DD HH:mm:ss');
     var url1 = "http://aft.robustudio.com/mobile/fans";
+    
+    var title ='';
+    var ficstate = orderinfo.ficorder.ficorderstate;
+    switch(ficstate){
+        case '1':
+            title = '商家已经接单！';
+            break;
+        case '1':
+            title = '配送员已取件！';
+            break;
+        case '1':
+            title = '配送员已送达！';
+            break;
+        default:
+            break;
+    }
+
 
 
     var postData = {
         "first": {
-            "value": "您的订单状态已更新！",
+            "value": title,
             "color": "#173177"
         },
         "keyword1": {

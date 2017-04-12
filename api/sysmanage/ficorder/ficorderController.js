@@ -202,6 +202,10 @@ module.exports = {
                             }
                             async.each(orders, function (order, callback) {
                                 fansModel.findById({ _id: order.fanid })
+                                    .populate({
+                                        path:'ficorder',
+                                        model:'ficorder'
+                                    })
                                     .exec(function (err, fans) {
                                         if (err) {
                                             console.log(err)
