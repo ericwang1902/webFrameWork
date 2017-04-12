@@ -10,13 +10,11 @@ var getSupplier = function (req, res) {
             $lookup:
             {
                 from: 'supplierModel',
-                localField: 'supplier',
+                localField: '_id',
                 foreignField: '_id',
                 as: 'supplier'
             }
-        },
-        {"$unwind":"$supplier"},
-        {"$project": {"supplier":"$supplier.suppliername", "total":"$orderamount", _id:0}}
+        }
         
     ])
         .exec(function (err, shoporders) {
