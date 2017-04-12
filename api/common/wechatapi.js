@@ -323,10 +323,10 @@ var sendOrderStateTemplateMsg = function (openid, orderinfo, callback) {
         case '1':
             title = '商家已经接单！';
             break;
-        case '1':
+        case '2':
             title = '配送员已取件！';
             break;
-        case '1':
+        case '3':
             title = '配送员已送达！';
             break;
         default:
