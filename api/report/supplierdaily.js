@@ -4,20 +4,19 @@ var shoporderModel = require('../sysmanage/shoporder/shoporderModel');
 var async = require('async')
 
 var getSupplier = function (req, res) {
-    // shoporderModel.aggregate([
-    //     // { $group: { _id: { supplier: "$supplier" }, orderamount: { $sum: "$orderamount" } } },
-    //     {
-    //         $lookup:
-    //         {
-    //             from: 'supplierModel',
-    //             localField: 'supplier',
-    //             foreignField: '_id',
-    //             as: 'supplier'
-    //         }
-    //     }
+        shoporderModel.aggregate([
+             { $group: { _id: { supplier: "$supplier" }, orderamount: { $sum: "$orderamount" } } },
+            {
+                $lookup:
+                {
+                    from: 'supplierModel',
+                    localField: '_id.supplier',
+                    foreignField: '_id',
+                    as: 'supplier'
+                }
+            }
 
-    // ])
-    shoporderModel.find()
+        ])
         .exec(function (err, shoporders) {
             if (err) {
                 return res.status(500).json({
