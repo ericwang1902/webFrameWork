@@ -9,7 +9,7 @@ var getSupplier = function (req, res) {
     console.log(today)
 
     shoporderModel.aggregate([
-        { $match: { ordertime: { $gte: today } } },
+        { $match: { ordertime: { $gte: 0 } } },
         { $group: { _id: { supplierid: "$supplier" }, orderamount: { $sum: "$orderamount" } } },
         {
             $lookup:
