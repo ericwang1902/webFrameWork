@@ -12,7 +12,7 @@ var getSupplier = function (req, res) {
                     from: 'supplierModel',
                     localField: 'supplier',
                     foreignField: '_id',
-                    as: 'supplier'
+                    as: 'supplierdoc'
                 }
             }
 
