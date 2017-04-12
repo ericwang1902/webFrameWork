@@ -6,6 +6,7 @@ var async = require('async')
 
 var getSupplier = function (req, res) {
         var today= moment().set({'hour': 0, 'minute': 0,'second':30});
+        console.log(today)
 
         shoporderModel.aggregate([
             {$match:{$gte:today}},
