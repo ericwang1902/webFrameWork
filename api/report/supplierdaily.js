@@ -20,7 +20,7 @@ var getSupplier = function (req, res) {
                 as: 'supplierdoc'
             }
         },
-        { $unwind: $supplierdoc }
+        { $unwind: "$supplierdoc" }
 
     ])
         .exec(function (err, shoporders) {
