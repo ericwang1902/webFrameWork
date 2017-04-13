@@ -26,6 +26,9 @@ module.exports = {
             conditions = { district: districtId }
         }
 
+        var pageItems = Number(req.query.pageItems);
+        var currentPage = Number(req.query.currentPage);
+
         shoporderModel.find(conditions)
             .populate({
                 path: 'district',
@@ -39,6 +42,8 @@ module.exports = {
                 path: 'supplier',
                 model: 'supplier'
             })
+            .skip((currentPage - 1) * pageItems)
+            .limit(pageItems)
             .sort({ 'ordertime': -1 })
             .exec(function (err, shoporders) {
                 if (err) {
@@ -89,7 +94,7 @@ module.exports = {
             receivetime: req.body.receivetime,
             ficorder: req.body.ficorder,
             supplier: req.body.supplier,
-            orderamount:req.body.orderamount
+            orderamount: req.body.orderamount
         });
 
         shoporder.save(function (err, shoporder) {
@@ -131,7 +136,7 @@ module.exports = {
             shoporder.ficorder = req.body.ficorder ? req.body.ficorder : shoporder.ficorder;
             shoporder.supplier = req.body.supplier ? req.body.supplier : shoporder.supplier;
             shoporder.district = req.body.district ? req.body.district : shoporder.district;
-            shoporder.orderamount = req.body.orderamount ? req.body.orderamount :shoporder.orderamount;
+            shoporder.orderamount = req.body.orderamount ? req.body.orderamount : shoporder.orderamount;
 
             shoporder.save(function (err, shoporder) {
                 if (err) {
@@ -168,15 +173,15 @@ module.exports = {
 
         async.each(shoporderlist, function (shoporder, callback) {
             var amount = 0;
-            for(var i=0;i<shoporder.goodslist.length;i++){
-               amount+= shoporder.goodslist[i].goods.goodsbuyprice*shoporder.goodslist[i].goodscount;
+            for (var i = 0; i < shoporder.goodslist.length; i++) {
+                amount += shoporder.goodslist[i].goods.goodsbuyprice * shoporder.goodslist[i].goodscount;
             }
 
             var shoporder = new shoporderModel(
                 {
                     ordernum: 'S' + moment().format('YYYYMMDDHHmmssSSS'),
                     goodslist: shoporder.goodslist,
-                    orderamount:amount,
+                    orderamount: amount,
                     district: shoporder.district,
                     ordertime: moment(),//订单生成时间
                     preparetime: '',
