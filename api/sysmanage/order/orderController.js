@@ -50,33 +50,64 @@ module.exports = {
 
         }
 
-        orderModel.find(conditions)
-            .populate({
-                path: 'district',
-                model: 'district'
-            })
-            .populate({
-                path: 'region',
-                model: 'region'
-            })
-            .populate({
-                path: 'fanid',
-                model: 'fans'
-            })
-            .populate({
-                path: 'ficorder',
-                model: 'ficorder'
-            })
-            .sort({ 'paytime': -1 })
-            .exec(function (err, orders) {
-                if (err) {
-                    return res.status(500).json({
-                        message: 'Error when getting order.',
-                        error: err
-                    });
-                }
-                return res.json(orders);
-            })
+        var pageItems = Number(req.query.pageItems);
+        var currentPage = Number(req.query.currentPage);
+
+        async.series([
+            function (callback) {
+                orderModel.count({}, function (err, count) {
+                    if (err) console.log(err);
+                    callback(null, count);
+                })
+            },
+            function (callback) {
+                orderModel.find(conditions)
+                    .populate({
+                        path: 'district',
+                        model: 'district'
+                    })
+                    .populate({
+                        path: 'region',
+                        model: 'region'
+                    })
+                    .populate({
+                        path: 'fanid',
+                        model: 'fans'
+                    })
+                    .populate({
+                        path: 'ficorder',
+                        model: 'ficorder'
+                    })
+                    .skip((currentPage - 1) * pageItems)
+                    .limit(pageItems)
+                    .sort({ 'paytime': -1 })
+                    .exec(function (err, orders) {
+                        if (err) {
+                            return res.status(500).json({
+                                message: 'Error when getting order.',
+                                error: err
+                            });
+                        }
+                        callback(null, orders);
+                    })
+            }
+
+        ], function (err, results) {
+            var orderResult = {
+                count: results[0],
+                orders: results[1]
+            }
+            if (err) {
+                return res.status(500).json({
+                    message: 'Error when getting orders.',
+                    error: err
+                })
+            }
+            return res.json(orderResult);
+
+        })
+
+
     },
 
     /**
