@@ -28,9 +28,19 @@ module.exports = {
         console.log(role);
         if (role == 'ADMIN') {
             if (!req.query.delivered) {//没有分发的客户订单
-                conditions = { region: req.query.region, ficorder: { $exists: false } }
+                if(!req.query.region){
+                    conditions = { ficorder: { $exists: false } }
+                }else{
+                     conditions = { region: req.query.region, ficorder: { $exists: false } }   
+                }
+
             } else {//已经分发的客户订单
-                conditions = { region: req.query.region, ficorder: { $exists: true } }
+                if(!req.query.region){
+                    conditions = {  ficorder: { $exists: true } }
+                }else{
+                    conditions = { region: req.query.region, ficorder: { $exists: true } }
+                }
+                
             }
         } else {
             if (!req.query.delivered) {//没有分发的客户订单
