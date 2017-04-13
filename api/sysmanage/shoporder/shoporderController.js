@@ -29,31 +29,56 @@ module.exports = {
         var pageItems = Number(req.query.pageItems);
         var currentPage = Number(req.query.currentPage);
 
-        shoporderModel.find(conditions)
-            .populate({
-                path: 'district',
-                model: 'district'
-            })
-            .populate({
-                path: 'ficorder',
-                model: 'ficorder'
-            })
-            .populate({
-                path: 'supplier',
-                model: 'supplier'
-            })
-            .skip((currentPage - 1) * pageItems)
-            .limit(pageItems)
-            .sort({ 'ordertime': -1 })
-            .exec(function (err, shoporders) {
-                if (err) {
-                    return res.status(500).json({
-                        message: 'Error when getting shoporder.',
-                        error: err
-                    });
-                }
-                return res.json(shoporders);
-            })
+        async.series([
+            function (callback) {
+                //获取总条数
+                shoporderModel.count({}, function (err, count) {
+                    if (err) console.log(err);
+                    callback(null, count);
+                })
+            },
+            function (callback) {
+                shoporderModel.find(conditions)
+                    .populate({
+                        path: 'district',
+                        model: 'district'
+                    })
+                    .populate({
+                        path: 'ficorder',
+                        model: 'ficorder'
+                    })
+                    .populate({
+                        path: 'supplier',
+                        model: 'supplier'
+                    })
+                    .skip((currentPage - 1) * pageItems)
+                    .limit(pageItems)
+                    .sort({ 'ordertime': -1 })
+                    .exec(function (err, shoporders) {
+                        if (err) {
+                            return res.status(500).json({
+                                message: 'Error when getting shoporder.',
+                                error: err
+                            });
+                        }
+                        callback(null,shoporders);
+                    })
+            }
+        ], function (err, results) {
+            var shoporderResult={
+                count:results[0],
+                shoporders:results[1]
+            }
+            if (err) {
+                return res.status(500).json({
+                    message: 'Error when getting shoporder.',
+                    error: err
+                })
+            }
+            return res.json(shoporderResult);
+        })
+
+
 
 
     },
