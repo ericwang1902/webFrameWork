@@ -65,7 +65,7 @@ module.exports = {
 
         async.series([
             function (callback) {
-                orderModel.count({}, function (err, count) {
+                orderModel.count(conditions, function (err, count) {
                     if (err) console.log(err);
                     callback(null, count);
                 })
