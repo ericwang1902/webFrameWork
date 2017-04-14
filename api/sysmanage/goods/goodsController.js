@@ -1,4 +1,5 @@
 var goodsModel = require('./goodsModel.js');
+var async = require('async');
 
 /**
  * goodsController.js
@@ -11,32 +12,58 @@ module.exports = {
      * goodsController.list()
      */
     list: function (req, res) {
-         //构造查询条件，admin例外
+        //构造查询条件，admin例外
         var role = req.user.role[0].roleName;
-        var districtId= req.user.district._id;
+        var districtId = req.user.district._id;
         var conditions = {};
         console.log(role);
         if (role == 'ADMIN') {
-            conditions={}
-        }else{
-            conditions={district: districtId}
+            conditions = {}
+        } else {
+            conditions = { district: districtId }
         }
-        goodsModel
-            .find(conditions)
-            .populate('supplier')
-            .populate({
-                path:'district',
-                model:'district'
-            })
-            .exec(function (err, goodslist) {
-                if (err) {
-                    return res.status(500).json({
-                        message: 'Error when getting goodslist.',
-                        error: err
-                    });
-                }
-                return res.json(goodslist);
-            })
+        var pageItems = Number(req.query.pageItems);
+        var currentPage = Number(req.query.currentPage);
+
+        async.series([
+            function (callback) {
+                goodsModel.count(conditions, function (err, count) {
+                    if (err) callback("goods count出错")
+                    callback(null, count);
+                })
+            },
+            function (callback) {
+                goodsModel
+                    .find(conditions)
+                    .populate('supplier')
+                    .populate({
+                        path: 'district',
+                        model: 'district'
+                    })
+                    .skip((currentPage - 1) * pageItems)
+                    .limit(pageItems)
+                    .exec(function (err, goodslist) {
+                         if (err) callback("goodslist出错");
+                         callback(null,goodslist);
+                    })
+
+            }
+        ], function (err, results) {
+            var goodsResult={
+                count:results[0],
+                goods:results[1]
+            }
+            if (err) {
+                return res.status(500).json({
+                    message: 'Error when getting goodslist.',
+                    error: err
+                });
+            }
+            return res.json(goodsResult);
+
+        })
+
+
 
     },
 
@@ -78,7 +105,7 @@ module.exports = {
             supplier: req.body.supplier,
             salesnum: req.body.salesnum,
             goodsjudge: req.body.goodsjudge,
-            district:req.user.district._id
+            district: req.user.district._id
         });
 
         goods.save(function (err, goods) {
@@ -124,8 +151,8 @@ module.exports = {
             goods.supplier = req.body.supplier ? req.body.supplier : goods.supplier;
             goods.salesnum = req.body.salesnum ? req.body.salesnum : goods.salesnum;
             goods.goodsjudge = req.body.goodsjudge ? req.body.goodsjudge : goods.goodsjudge;
-            goods.district = req.user.district._id ? req.user.district._id :goods.district;
-            
+            goods.district = req.user.district._id ? req.user.district._id : goods.district;
+
             goods.save(function (err, goods) {
                 if (err) {
                     return res.status(500).json({
