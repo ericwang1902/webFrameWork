@@ -1,4 +1,6 @@
 var courierModel = require('./courierModel.js');
+var async = require('async');
+
 
 /**
  * courierController.js
@@ -15,34 +17,66 @@ module.exports = {
         var role = req.user.role[0].roleName;
         var districtId = req.user.district._id;
         var conditions = {};
+
         console.log(role);
         if (role == 'ADMIN') {
             conditions = {}
         } else {
             conditions = { district: districtId }
         }
-        courierModel.find(conditions)
-            .populate({
-                path: 'district',
-                model: 'district'
-            })
-            .populate({
-                path: 'region',
-                model: 'region'
-            })
-            .populate({
-                path:'courieruser',
-                model:'user'
-            })
-            .exec(function (err, couriers) {
-                if (err) {
-                    return res.status(500).json({
-                        message: 'Error when getting courier.',
-                        error: err
-                    });
-                }
-                return res.json(couriers);
-            })
+
+        var pageItems = Number(req.query.pageItems);
+        var currentPage = Number(req.query.currentPage);
+
+        async.series([
+            function (callback) {
+                courierModel.count(conditions, function (err, count) {
+                    if (err) callback("courier count出错");
+                    callback(null, count);
+                })
+            },
+            function (callback) {
+                courierModel.find(conditions)
+                    .populate({
+                        path: 'district',
+                        model: 'district'
+                    })
+                    .populate({
+                        path: 'region',
+                        model: 'region'
+                    })
+                    .populate({
+                        path: 'courieruser',
+                        model: 'user'
+                    })
+                    .skip((currentPage - 1) * pageItems)
+                    .limit(pageItems)
+                    .exec(function (err, couriers) {
+                        if (err) callback("couriers出错");
+                        callback(null, couriers);
+                    })
+            }
+        ], function (err, results) {
+            
+            var couriersResult={
+                count:results[0],
+                couriers:results[1]
+            }
+
+            if (err) {
+                return res.status(500).json({
+                    message: 'Error when getting courier.',
+                    error: err
+                });
+            }
+            
+            return res.json(couriersResult);
+
+        })
+
+
+
+
 
     },
 
@@ -77,9 +111,9 @@ module.exports = {
         var courier = new courierModel({
             couriername: req.body.couriername,
             courierdes: req.body.courierdes,
-            district: req.body.district ? req.body.district :districtId,
+            district: req.body.district ? req.body.district : districtId,
             region: req.body.region,
-            courieruser:req.body.courieruser
+            courieruser: req.body.courieruser
         });
 
         courier.save(function (err, courier) {
@@ -115,7 +149,7 @@ module.exports = {
             courier.courierdes = req.body.courierdes ? req.body.courierdes : courier.courierdes;
             courier.district = req.body.district ? req.body.district : courier.district;
             courier.region = req.body.region ? req.body.region : courier.region;
-            courier.courieruser = req.body.courieruser ? req.body.courieruser:courier.courieruser;
+            courier.courieruser = req.body.courieruser ? req.body.courieruser : courier.courieruser;
 
 
             courier.save(function (err, courier) {
