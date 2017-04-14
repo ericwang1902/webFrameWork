@@ -32,7 +32,7 @@ module.exports = {
         async.series([
             function (callback) {
                 //获取总条数
-                shoporderModel.count({}, function (err, count) {
+                shoporderModel.count(conditions, function (err, count) {
                     if (err) console.log(err);
                     callback(null, count);
                 })

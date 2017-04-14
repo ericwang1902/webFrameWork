@@ -1,4 +1,5 @@
 var supplierModel = require('./supplierModel.js');
+var async = require('async');
 
 /**
  * supplierController.js
@@ -22,46 +23,74 @@ module.exports = {
             conditions = { district: districtId }
         }
 
-        supplierModel.find(conditions)
-            .populate({
-                path: "supplieruser",
-                model: "user",
-                populate: {
-                    path: "role",
-                    select: "_id roleName menuList",
-                    model: "role",
-                    populate: {
-                        path: "menuList",
-                        select: "_id menuName funcList",
-                        model: "menu",
+        var pageItems = Number(req.query.pageItems);
+        var currentPage = Number(req.query.currentPage);
+
+        async.series([
+            function (callback) {
+                supplierModel.count(conditions, function (err, count) {
+                    if (err) console.log(err);
+                    callback(null, count);
+                })
+            },
+            function (callback) {
+                supplierModel.find(conditions)
+                    .populate({
+                        path: "supplieruser",
+                        model: "user",
                         populate: {
-                            path: "funcList",
-                            select: "_id funcName funcLink",
-                            model: "func"
+                            path: "role",
+                            select: "_id roleName menuList",
+                            model: "role",
+                            populate: {
+                                path: "menuList",
+                                select: "_id menuName funcList",
+                                model: "menu",
+                                populate: {
+                                    path: "funcList",
+                                    select: "_id funcName funcLink",
+                                    model: "func"
+                                }
+                            }
+                        },
+                        populate: {
+                            path: "district",
+                            model: "district"
                         }
                     }
-                },
-                populate: {
-                    path: "district",
-                    model: "district"
-                }
-            }
-            )
-            .populate({
-                path: 'workers',
-                select: '_id username nickname',
-                model: 'user'
-            })
-            .exec(function (err, suppliers) {
-                if (err) {
-                    return res.status(500).json({
-                        message: 'Error when getting supplier.',
-                        error: err
-                    });
-                }
-                return res.json(suppliers);
+                    )
+                    .populate({
+                        path: 'workers',
+                        select: '_id username nickname',
+                        model: 'user'
+                    })
+                    .skip((currentPage - 1) * pageItems)
+                    .limit(pageItems)
+                    .exec(function (err, suppliers) {
+                        if(err) {
+                            callback("supplier wrong");
+                        }
+                        callback(null, suppliers);
 
-            })
+                    })
+
+            }
+        ], function (err, result) {
+            if (err) {
+                return res.status(500).json({
+                    message: 'Error when getting supplier.',
+                    error: err
+                });
+            }
+            var supplierResult={
+                count:result[0],
+                suppliers:result[1]
+            }
+            return res.json(supplierResult);
+
+        })
+
+
     },
 
     /**
