@@ -125,7 +125,7 @@ router.use('/mshoporder',mshopeorderRouter);
 router.use('/courier',courierRouter);
 
 //
-router.use('/goodslistroute',goodsListRoute);
+router.use('/goodslistall',goodsListRoute);
 
 //微信支付回调地址
 router.use('/wechatpayback',wechatpayRouter);

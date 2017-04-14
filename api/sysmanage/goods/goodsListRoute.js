@@ -4,7 +4,7 @@ var goodsController = require('./goodsController.js');
 
 /*
  * GET
- * /sysmanage/goodslistroute/goodslist
+ * /sysmanage/goodslistall
  */
 router.get('/', goodsController.listall);
 
