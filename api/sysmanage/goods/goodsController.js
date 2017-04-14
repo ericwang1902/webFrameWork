@@ -8,6 +8,36 @@ var async = require('async');
  */
 module.exports = {
 
+    listall: function (req, res) {
+        var role = req.user.role[0].roleName;
+        var districtId = req.user.district._id;
+        var conditions = {};
+        console.log(role);
+        if (role == 'ADMIN') {
+            conditions = {}
+        } else {
+            conditions = { district: districtId }
+        }
+        goodsModel
+            .find(conditions)
+            .populate('supplier')
+            .populate({
+                path: 'district',
+                model: 'district'
+            })
+            .skip((currentPage - 1) * pageItems)
+            .limit(pageItems)
+            .exec(function (err, goodslist) {
+                if (err) {
+                    return res.status(500).json({
+                        message: 'Error when getting goodslist.',
+                        error: err
+                    });
+                }
+                return res.json(goodslist);
+            })
+    },
+
     /**
      * goodsController.list()
      */
@@ -43,15 +73,15 @@ module.exports = {
                     .skip((currentPage - 1) * pageItems)
                     .limit(pageItems)
                     .exec(function (err, goodslist) {
-                         if (err) callback("goodslist出错");
-                         callback(null,goodslist);
+                        if (err) callback("goodslist出错");
+                        callback(null, goodslist);
                     })
 
             }
         ], function (err, results) {
-            var goodsResult={
-                count:results[0],
-                goods:results[1]
+            var goodsResult = {
+                count: results[0],
+                goods: results[1]
             }
             if (err) {
                 return res.status(500).json({
