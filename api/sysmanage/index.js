@@ -34,7 +34,7 @@ var wechatpayRouter = require('./wechatpay/wechatpayrouter');
 var mficorderRouter = require('./ficorder/mficorderRouter');
 
 //无分页的数据列表API
-var goodsListRoute = require('./goods/goodsListRoute');
+var formlistdata = require('./formlistdataRoute');
 
 
 var qiniuToken = require('../common/qiniu')
@@ -125,7 +125,7 @@ router.use('/mshoporder',mshopeorderRouter);
 router.use('/courier',courierRouter);
 
 //
-router.use('/goodslistall',goodsListRoute);
+router.use('/formlistdata',formlistdata);
 
 //微信支付回调地址
 router.use('/wechatpayback',wechatpayRouter);
