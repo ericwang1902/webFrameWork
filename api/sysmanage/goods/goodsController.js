@@ -25,8 +25,6 @@ module.exports = {
                 path: 'district',
                 model: 'district'
             })
-            .skip((currentPage - 1) * pageItems)
-            .limit(pageItems)
             .exec(function (err, goodslist) {
                 if (err) {
                     return res.status(500).json({

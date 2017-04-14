@@ -7,6 +7,55 @@ var async = require('async');
  * @description :: Server-side logic for managing suppliers.
  */
 module.exports = {
+    listall: function (req, res) {
+        var role = req.user.role[0].roleName;
+        var districtId = req.user.district._id;
+        var conditions = {};
+        console.log(role);
+        if (role == 'ADMIN') {
+            conditions = {}
+        } else {
+            conditions = { district: districtId }
+        }
+
+        supplierModel.find(conditions)
+            .populate({
+                path: "supplieruser",
+                model: "user",
+                populate: {
+                    path: "role",
+                    select: "_id roleName menuList",
+                    model: "role",
+                    populate: {
+                        path: "menuList",
+                        select: "_id menuName funcList",
+                        model: "menu",
+                        populate: {
+                            path: "funcList",
+                            select: "_id funcName funcLink",
+                            model: "func"
+                        }
+                    }
+                },
+                populate: {
+                    path: "district",
+                    model: "district"
+                }
+            }
+            )
+            .populate({
+                path: 'workers',
+                select: '_id username nickname',
+                model: 'user'
+            })
+            .exec(function (err, suppliers) {
+                if (err) {
+                    callback("supplier wrong");
+                }
+                return res.json(suppliers);
+
+            })
+    },
 
     /**
      * supplierController.list()
@@ -67,7 +116,7 @@ module.exports = {
                     .skip((currentPage - 1) * pageItems)
                     .limit(pageItems)
                     .exec(function (err, suppliers) {
-                        if(err) {
+                        if (err) {
                             callback("supplier wrong");
                         }
                         callback(null, suppliers);
@@ -82,9 +131,9 @@ module.exports = {
                     error: err
                 });
             }
-            var supplierResult={
-                count:result[0],
-                suppliers:result[1]
+            var supplierResult = {
+                count: result[0],
+                suppliers: result[1]
             }
             return res.json(supplierResult);
 
