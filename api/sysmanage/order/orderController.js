@@ -359,13 +359,13 @@ module.exports = {
         var orderlist = req.body.orderlist;
 
         async.each(orderlist, function (order, callback) {
-            orderModel.findOne({ _id: order._id })
+            orderModel.findOne({ _id: order.orderitem._id })
                 .exec(function (err, orderresult) {
                     if (err) {
                         console.log(err);
                         callback(err);
                     }
-                    orderresult.ficorder = order.ficorder;
+                    orderresult.ficorder = order.orderitem.ficorder;
                     orderresult.save(function (err, result) {
                         if (err) {
                             console.log(err);
