@@ -1,4 +1,5 @@
 var suiteModel = require('./suiteModel.js');
+var async = require('async');
 
 /**
  * suiteController.js
@@ -22,29 +23,58 @@ module.exports = {
             conditions = { district: districtId }
         }
 
-        suiteModel
-            .find(conditions)
-            .populate({
-                path: "goodslist",
-                model: "goods",
-                populate: {
-                    path: "supplier",
-                    model: "supplier"
-                }
-            })
-            .populate({
-                path: 'district',
-                model: 'district'
-            })
-            .exec(function (err, suites) {
-                if (err) {
-                    return res.status(500).json({
-                        message: 'Error when getting suite.',
-                        error: err
-                    });
-                }
-                return res.json(suites);
-            })
+        var pageItems = Number(req.query.pageItems);
+        var currentPage = Number(req.query.currentPage);
+
+        async.series([
+            function (callback) {
+                suiteModel.count(conditions, function (err, count) {
+                    if (err) callback("suitelist error");
+
+                    callback(null, count);
+                })
+            },
+            function (callback) {
+                suiteModel
+                    .find(conditions)
+                    .populate({
+                        path: "goodslist",
+                        model: "goods",
+                        populate: {
+                            path: "supplier",
+                            model: "supplier"
+                        }
+                    })
+                    .populate({
+                        path: 'district',
+                        model: 'district'
+                    })
+                    .skip((currentPage - 1) * pageItems)
+                    .limit(pageItems)
+                    .exec(function (err, suites) {
+                        if (err) {
+                           callback("suitelist error");
+                        }
+                       callback(null,suites);
+                    })
+            }
+
+        ], function (err, results) {
+            var suitesResult = {
+                count:results[0],
+                suites:results[1]
+            }
+
+            if (err) {
+                return res.status(500).json({
+                    message: 'Error when getting suite.',
+                    error: err
+                });
+            }
+            return res.json(suitesResult);
+        })
+
+
 
     },
 
@@ -179,7 +209,7 @@ module.exports = {
         var conditions = { district: districtId }
         suiteModel
             .find(conditions)
-           .populate({
+            .populate({
                 path: "goodslist",
                 model: "goods",
                 populate: {
@@ -196,7 +226,7 @@ module.exports = {
                     return res.status(500).json({
                         message: 'Error when getting suite.',
                         error: err
-                        
+
                     });
                 }
                 return res.json(suites);
