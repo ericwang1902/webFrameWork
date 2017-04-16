@@ -125,6 +125,7 @@ module.exports = {
             suitedes: req.body.suitedes,
             suitephoto: req.body.suitephoto,
             suiteprice: req.body.suiteprice,
+            suiteshowprice:req.body.suiteshowprice,
             suitestate: req.body.suitestate,
             suitetype: req.body.suitetype,
             salesnum: req.body.salesnum,
@@ -174,6 +175,7 @@ module.exports = {
             suite.salesnum = req.body.salesnum ? req.body.salesnum : suite.salesnum;
             suite.goodslist = req.body.goodslist ? req.body.goodslist : suite.goodslist;
             suite.district = req.user.district._id ? req.user.district._id : suite.district;
+            suite.suiteshowprice = req.body.suiteshowprice ? req.body.suiteshowprice :suite.suiteshowprice;
 
             suite.save(function (err, suite) {
                 if (err) {
