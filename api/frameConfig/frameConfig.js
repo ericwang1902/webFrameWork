@@ -57,6 +57,11 @@ module.exports = {
                 type: "view",
                 name: "我的订单",
                 url: "http://aft.robustudio.com/mobile/fans"
+            },
+            {
+                type: "view",
+                name: "反馈",
+                url: "http://cn.mikecrm.com/gAsdnWy"
             }
         ]
     },
