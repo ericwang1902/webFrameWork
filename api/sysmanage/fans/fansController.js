@@ -43,7 +43,11 @@ module.exports = {
             })
             .populate({
                 path: 'address',
-                model: 'address'
+                model: 'address',
+                populate:{
+                    path:"region",
+                    model:"region"
+                }
             })
             .exec(function (err, fans) {
                 if (err) {
