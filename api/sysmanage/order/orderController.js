@@ -286,7 +286,7 @@ module.exports = {
         var fansid = req.query.fansid;
         var pageitems = parseInt(req.query.pageitems);
         var currentpage = parseInt(req.query.currentpage);
-        console.log(count)
+       
 
         orderModel.find({ fanid: fansid })
             .limit(count)
