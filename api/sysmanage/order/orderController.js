@@ -284,7 +284,7 @@ module.exports = {
     //粉丝根据fanid获取订单列表的接口
     morderlistfan: function (req, res) {
         var fansid = req.query.fansid;
-        var count = req.query.count;
+        var count = parseInt(req.query.count);
         console.log(count)
 
         orderModel.find({ fanid: fansid })
