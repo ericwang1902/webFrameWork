@@ -284,7 +284,8 @@ module.exports = {
     //粉丝根据fanid获取订单列表的接口
     morderlistfan: function (req, res) {
         var fansid = req.query.fansid;
-        var count = parseInt(req.query.count);
+        var pageitems = parseInt(req.query.pageitems);
+        var currentpage = parseInt(req.query.currentpage);
         console.log(count)
 
         orderModel.find({ fanid: fansid })
@@ -306,7 +307,8 @@ module.exports = {
                 model: 'ficorder'
             })
             .sort({ 'paytime': -1 })
-            .limit(count)
+            .skip((currentpage - 1) * pageitems)
+            .limit(pageitems)
             .exec(function (err, orderlist) {
                 if (err) {
                     return res.status(500).json({
