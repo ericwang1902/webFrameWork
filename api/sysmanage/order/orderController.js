@@ -287,8 +287,15 @@ module.exports = {
         var pageitems = parseInt(req.query.pageitems);
         var currentpage = parseInt(req.query.currentpage);
        
-
-        orderModel.find({ fanid: fansid })
+       async.series([
+           function(callback){
+               orderModel.count({},function(err,count){
+                   if (err) callback("order count出错");
+                    callback(null, count);
+               })
+           },
+           function(callback){
+               orderModel.find({ fanid: fansid })
             .populate({
                 path: 'district',
                 model: 'district'
@@ -309,14 +316,29 @@ module.exports = {
             .skip((currentpage - 1) * pageitems)
             .limit(pageitems)
             .exec(function (err, orderlist) {
-                if (err) {
+                     if (err) callback("orderlist");
+                        callback(null, orderlist);
+            })
+
+           }
+       ],function(err,results){
+            var orderResult={
+                count:results[0],
+                orders:results[1]
+            }
+
+           if (err) {
                     return res.status(500).json({
-                        message: 'Error when deleting the order.',
+                        message: 'Error when getting the order.',
                         error: err
                     });
                 }
-                return res.json(orderlist);
-            })
+                return res.json(orderResult);
+
+
+       })
+
+        
     },
     //根据局域代理的districtid获取订单列表
     morderlistagent: function (req, res) {
