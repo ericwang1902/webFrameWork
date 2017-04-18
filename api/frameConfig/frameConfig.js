@@ -1,7 +1,7 @@
 //framework全局开发配置文件
-var mobileBaseURL = 'http://localhost:8090/#/';
+//var mobileBaseURL = 'http://localhost:8090/#/';
 
-//var mobileBaseURL = 'http://mst.robustudio.com/#/';
+var mobileBaseURL = 'http://mst.robustudio.com/#/';
 
 module.exports = {
     wxjsurl: mobileBaseURL.split('#')[0],
