@@ -289,7 +289,6 @@ module.exports = {
        
 
         orderModel.find({ fanid: fansid })
-            .limit(count)
             .populate({
                 path: 'district',
                 model: 'district'
