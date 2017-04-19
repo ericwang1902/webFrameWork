@@ -316,15 +316,15 @@ var sendOrderStateTemplateMsg = function (openid, orderinfo, callback) {
     var ordernum = orderinfo.ordernum;
     var updatetime = moment().format('YYYY-MM-DD HH:mm:ss');
     var url1 = "http://aft.robustudio.com/mobile/fans";
-    
-    var title ='';
+
+    var title = '';
     console.log("=======================");
     console.log(orderinfo);
     var ficstate = orderinfo.ficorder.ficorderstate;
-    switch(ficstate){
-        case '1':
-            title = '商家已经接单！';
-            break;
+    switch (ficstate) {
+        // case '1':
+        //     title = '商家已经接单！';
+        //     break;
         case '2':
             title = '配送员已取件！';
             break;
@@ -332,6 +332,7 @@ var sendOrderStateTemplateMsg = function (openid, orderinfo, callback) {
             title = '配送员已送达！';
             break;
         default:
+            title = '商家已经接单！';
             break;
     }
 
@@ -373,8 +374,8 @@ function sendMsgToCourier(openid, ficorder, callback) {
     moment.locale('zh-cn');
     var templateId = config.templateid.courierId;
     var url1 = "http://aft.robustudio.com/mobile/courier";
-     var ordertime = moment().format('YYYY-MM-DD HH:mm:ss');
-     var ficordernum = ficorder.ficordernum;
+    var ordertime = moment().format('YYYY-MM-DD HH:mm:ss');
+    var ficordernum = ficorder.ficordernum;
 
 
     var postData = {
