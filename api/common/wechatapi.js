@@ -28,7 +28,7 @@ function getApiToken(callback) {
     api.getLatestToken(function(err,tokenRes){
         if(err)console.log(err);
         console.log('token:' + JSON.stringify(tokenRes));
-        config.apiToken = tokenRes;
+        config.apiToken = tokenRes.accessToken;
         getJSapiTicket();
         callback();
 
