@@ -10,18 +10,29 @@ var api = new WechatAPI(config.wechatConfig.appid, config.wechatConfig.appsecret
 
 //获取全局的token
 function getApiToken(callback) {
-    var tokenOptions = {
-        url: config.wechatTokenURL,
-        method: 'GET'
-    }
-    //body返回的是string
-    request(tokenOptions, function (err, response, body) {
-        console.log('tokenOptions:' + JSON.stringify(body))
+    //=================================
+    // var tokenOptions = {
+    //     url: config.wechatTokenURL,
+    //     method: 'GET'
+    // }
+    // //body返回的是string
+    // request(tokenOptions, function (err, response, body) {
+    //     console.log('tokenOptions:' + JSON.stringify(body))
+    //     config.apiToken = JSON.parse(body).access_token;
+    //     console.log('config.apiToken:' + JSON.parse(body).access_token)
+    //     getJSapiTicket();
+    //     callback();
+    // })
+    //===========================================
+
+    api.getLatestToken(function(err,tokenRes){
+        if(err)console.log(err);
+        console.log('token:' + tokenRes);
         config.apiToken = JSON.parse(body).access_token;
-        console.log('config.apiToken:' + JSON.parse(body).access_token)
         getJSapiTicket();
         callback();
-    })
+
+    });
 }
 
 //根据全局token来获取jsapiticket
@@ -418,6 +429,7 @@ function sendMsgToCourier(openid, ficorder, callback) {
             console.log('result:' + JSON.stringify(result));
         }
     });
+
 
 
 }
