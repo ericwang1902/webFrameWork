@@ -25,8 +25,8 @@ function getApiToken(callback) {
     // })
     //===========================================
 
-    api.getLatestToken(function(err,tokenRes){
-        if(err)console.log(err);
+    api.getLatestToken(function (err, tokenRes) {
+        if (err) console.log(err);
         console.log('token:' + JSON.stringify(tokenRes));
         config.apiToken = tokenRes.accessToken;
         getJSapiTicket();
@@ -209,31 +209,38 @@ function InitTag(initMenuCallback) {
         method: 'GET'
     }
     request(getTagOptions, function (err, response, body) {
-        console.log("查询tag：" + body);
-        var tags = JSON.parse(body).tags;//获取tags数组
-        if(tags){
-        async.eachOf(config.Tags, function (value, key, callback) {
-            if (!tags.find(d => d.name === value.name)) {
-                createTag(config.Tags.find(d => d.name === value.name).name, callback);
-            } else {
-                console.log(value.name + "已创建！")
-                callback();
+        if (err) {
+            console.log("tags err:")
+            console.log(err);
+        } else {
+            console.log("查询tag：" + body);
+            var tags = JSON.parse(body).tags;//获取tags数组
+            if (tags) {
+                async.eachOf(config.Tags, function (value, key, callback) {
+                    if (!tags.find(d => d.name === value.name)) {
+                        createTag(config.Tags.find(d => d.name === value.name).name, callback);
+                    } else {
+                        console.log(value.name + "已创建！")
+                        callback();
+                    }
+                }, function (err) {
+                    if (err) console.error(err.message);
+                    console.log("initTag~~~异步全部完成，下面到了menu创建")
+                    //经过上述async.eachof代码段，就完成了tag的新建，在系统里就有了tag数据了
+
+                    //下面是取出最新的tag数组，获取到tags的id，根据id来创建menu
+                    request(getTagOptions, function (err, response, body) {
+                        var finalTags = JSON.parse(body).tags;
+                        config.TagsFromWechat = finalTags;//将tags存入全局
+                        console.log('finalTags:' + finalTags);
+                        initMenuCallback(finalTags);//创建菜单的回调
+                    })
+
+                })
             }
-        }, function (err) {
-            if (err) console.error(err.message);
-            console.log("initTag~~~异步全部完成，下面到了menu创建")
-            //经过上述async.eachof代码段，就完成了tag的新建，在系统里就有了tag数据了
 
-            //下面是取出最新的tag数组，获取到tags的id，根据id来创建menu
-            request(getTagOptions, function (err, response, body) {
-                var finalTags = JSON.parse(body).tags;
-                config.TagsFromWechat = finalTags;//将tags存入全局
-                console.log('finalTags:' + finalTags);
-                initMenuCallback(finalTags);//创建菜单的回调
-            })
-
-        })
         }
+
 
 
     })
