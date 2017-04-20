@@ -211,7 +211,7 @@ function InitTag(initMenuCallback) {
     request(getTagOptions, function (err, response, body) {
         console.log("查询tag：" + body);
         var tags = JSON.parse(body).tags;//获取tags数组
-
+        if(tags){
         async.eachOf(config.Tags, function (value, key, callback) {
             if (!tags.find(d => d.name === value.name)) {
                 createTag(config.Tags.find(d => d.name === value.name).name, callback);
@@ -233,6 +233,8 @@ function InitTag(initMenuCallback) {
             })
 
         })
+        }
+
 
     })
 
