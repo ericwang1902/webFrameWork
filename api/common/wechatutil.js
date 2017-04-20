@@ -28,6 +28,9 @@ var getopenid = function (req, res, next) {
 
 
             } catch (error) {
+                
+                console.log("getopenid:")
+                console.log("code:"+req.query.code)
                 console.log(err)
                 return res.json({
                     info: '获取openid错误'
