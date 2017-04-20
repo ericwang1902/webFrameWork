@@ -141,7 +141,7 @@ seed.initData();
 
 //下面两个是微信相关的，在本地调试的时候，先注释掉
 seed.setSchedule();//设置定时获取apitoken的定时任务
-seed.initTagAndMenu();//初始化tag、菜单
+//seed.initTagAndMenu();//初始化tag、菜单
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));

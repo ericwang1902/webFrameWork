@@ -494,6 +494,7 @@ var setSchedule = function () {
         console.log('定时任务:' + new Date());
         wechatApi.getApiToken(function () {
             console.log("定时任务获取apitoken")
+            this.initTagAndMenu();
         });
     });
 }
