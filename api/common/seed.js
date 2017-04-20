@@ -482,10 +482,10 @@ var initAgentRole = function (RoleData, callback9) {
 
 //对比setSchedule中和creaeMenu的getApiToken的调用，可以看到不同的回调的使用。
 var setSchedule = function () {
-    console.log("开始定时任务")
-    wechatApi.getApiToken(function () {
-        console.log("定时任务获取apitoken")
-    });
+    // console.log("开始定时任务")
+    // wechatApi.getApiToken(function () {
+    //     console.log("定时任务获取apitoken")
+    // });
 
     var rule2 = new schedule.RecurrenceRule();
     // var times2    = [1,3,5,7,9,11,13,15,17,19,21,23];  
