@@ -489,7 +489,7 @@ var setSchedule = function () {
 
     var rule2 = new schedule.RecurrenceRule();
     // var times2    = [1,3,5,7,9,11,13,15,17,19,21,23];  
-    rule2.minute = 1;
+    rule2.minute = new Date().getMinutes()+1;
     schedule.scheduleJob(rule2, function () {
         console.log('定时任务:' + new Date());
         wechatApi.getApiToken(function () {
