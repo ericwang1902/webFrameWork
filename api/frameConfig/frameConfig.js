@@ -51,7 +51,7 @@ module.exports = {
         button: [
             {
                 type: "view",
-                name: "\ue051下午茶",
+                name: "🐻下午茶",
                 url: "http://aft.robustudio.com/mobile/index"
             },
             {
