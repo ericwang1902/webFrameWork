@@ -61,7 +61,7 @@ module.exports = {
             },
             {
                 type: "view",
-                name: "反馈",
+                name: "对小熊说",
                 url: "http://cn.mikecrm.com/gAsdnWy"
             }
         ]
