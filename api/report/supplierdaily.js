@@ -24,6 +24,9 @@ var getSupplier = function (req, res) {
 
     ])
         .exec(function (err, shoporders) {
+            for(var i=0;i<shoporders.length;i++){
+                shoporders[i].orderamount=shoporders[i].orderamount.toFixed(2)
+            }
             if (err) {
                 return res.status(500).json({
                     message: 'Error when getting supplier.',
