@@ -145,8 +145,9 @@ module.exports = {
      * orderController.create()
      */
     create: function (req, res) {
+        var paystep = req.query.ps;
 
-        var order = new orderModel({
+        var ordertemp = {
             ordernum: 'U' + moment().format('YYYYMMDDHHmmssSSS'),
             suitelist: req.body.suitelist,
             goodslist: req.body.goodslist,
@@ -169,48 +170,45 @@ module.exports = {
             note: req.body.note,
             ficorder: req.body.ficorder,
             taotalcount: req.body.taotalcount
-        });
+        }
+        if (paystep == 1) {
+            wechatpay.createPrepay(ordertemp, openid, function (payinfo) {
 
-        order.save(function (err, order) {
-            if (err) {
-                return res.status(500).json({
-                    message: 'Error when creating order',
-                    error: err
-                });
-            }
-            //如果创建成功了order，成功返回，在这里对微信支付接口进行申请prepayid
-            if (order) {
-                //调用统一下单接口
-                fansModel.findById({ _id: order.fanid })
-                    .exec(function (err, fans) {
-                        if (err) {
-                            console.log(err)
-                        }
+                console.log("payinfo:");
+                console.log(payinfo);
 
-                        var openid = fans.fanopenid;
-                        wechatpay.createPrepay(order, openid, function (payinfo) {
-
-                            console.log("payinfo:");
-                            console.log(payinfo);
-
-                            var rs = {
-                                timestamp: payinfo.timestamp,
-                                noncestr: payinfo.noncestr,
-                                package: payinfo.prepayid,
-                                sintype: payinfo.sintype,
-                                paysign: payinfo.paySign,
-                                order: order
-                            }
+                var rs = {
+                    timestamp: payinfo.timestamp,
+                    noncestr: payinfo.noncestr,
+                    package: payinfo.prepayid,
+                    sintype: payinfo.sintype,
+                    paysign: payinfo.paySign,
+                    order: ordertemp
+                }
 
 
-                            return res.status(201).json(rs);
-                        });
+                return res.status(201).json(rs);
+            });
 
-                    })
 
-            }
+        } else if (paystep == 2) {
+            var order = new orderModel(ordertemp);
+            order.save(function (err, order) {
+                if (err) {
+                    return res.status(500).json({
+                        message: 'Error when creating order',
+                        error: err
+                    });
+                }
+                //如果创建成功了order
+                if (order) {
 
-        });
+                    return res.status(201).json(order);
+                }
+
+            });
+
+        }
     },
 
     /**
@@ -286,59 +284,59 @@ module.exports = {
         var fansid = req.query.fansid;
         var pageitems = parseInt(req.query.pageitems);
         var currentpage = parseInt(req.query.currentpage);
-       
-       async.series([
-           function(callback){
-               orderModel.count({},function(err,count){
-                   if (err) callback("order count出错");
-                    callback(null, count);
-               })
-           },
-           function(callback){
-               orderModel.find({ fanid: fansid })
-            .populate({
-                path: 'district',
-                model: 'district'
-            })
-            .populate({
-                path: 'region',
-                model: 'region'
-            })
-            .populate({
-                path: 'fanid',
-                model: 'fans'
-            })
-            .populate({
-                path: 'ficorder',
-                model: 'ficorder'
-            })
-            .sort({ 'paytime': -1 })
-            .skip((currentpage - 1) * pageitems)
-            .limit(pageitems)
-            .exec(function (err, orderlist) {
-                     if (err) callback("orderlist");
-                        callback(null, orderlist);
-            })
 
-           }
-       ],function(err,results){
-            var orderResult={
-                count:results[0],
-                orders:results[1]
+        async.series([
+            function (callback) {
+                orderModel.count({}, function (err, count) {
+                    if (err) callback("order count出错");
+                    callback(null, count);
+                })
+            },
+            function (callback) {
+                orderModel.find({ fanid: fansid })
+                    .populate({
+                        path: 'district',
+                        model: 'district'
+                    })
+                    .populate({
+                        path: 'region',
+                        model: 'region'
+                    })
+                    .populate({
+                        path: 'fanid',
+                        model: 'fans'
+                    })
+                    .populate({
+                        path: 'ficorder',
+                        model: 'ficorder'
+                    })
+                    .sort({ 'paytime': -1 })
+                    .skip((currentpage - 1) * pageitems)
+                    .limit(pageitems)
+                    .exec(function (err, orderlist) {
+                        if (err) callback("orderlist");
+                        callback(null, orderlist);
+                    })
+
+            }
+        ], function (err, results) {
+            var orderResult = {
+                count: results[0],
+                orders: results[1]
             }
 
-           if (err) {
-                    return res.status(500).json({
-                        message: 'Error when getting the order.',
-                        error: err
-                    });
-                }
-                return res.json(orderResult);
+            if (err) {
+                return res.status(500).json({
+                    message: 'Error when getting the order.',
+                    error: err
+                });
+            }
+            return res.json(orderResult);
 
 
-       })
+        })
 
-        
+
     },
     //根据局域代理的districtid获取订单列表
     morderlistagent: function (req, res) {

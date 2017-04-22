@@ -226,6 +226,7 @@ module.exports = {
                 path: 'district',
                 model: 'district'
             })
+            .sort({ 'suiteorder': -1 })
             .exec(function (err, suites) {
                 if (err) {
                     return res.status(500).json({
