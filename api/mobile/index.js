@@ -4,7 +4,6 @@ var wechatutil = require('../common/wechatutil');//微信粉丝部分的方法�
 var wechatapi = require('../common/wechatapi')//微信公共接口的方法封装
 
 var fansModel = require('../sysmanage/fans/fansModel');
-var addressModel = require('../sysmanage/address/addressModel');
 
 var mobileRouter =require('./mobilerouter');
 var config = require('../frameConfig/frameConfig');
@@ -24,7 +23,7 @@ router.get('/index', function (req, res, next) {
 });
 
 // 通过跳转到home携带code，获取openid，只能用这种跳转的方式，不能用ajax访问获取openid
-router.get('/home', wechatutil.getopenid, wechatutil.createFans,getAddressCount, function (req, res, next) {
+router.get('/home', wechatutil.getopenid, wechatutil.createFans,wechatutil.getAddressCount, function (req, res, next) {
     if(req.fanSaveResult.district){
         res.redirect(config.mobileUserHome+"?userid="+req.fanSaveResult._id);
     }else{
@@ -37,18 +36,7 @@ router.get('/home', wechatutil.getopenid, wechatutil.createFans,getAddressCount,
 
 });
 
-var getAddressCount=function(req,res,next){
-    addressModel.count({fans:req.fanSaveResult._id})
-                 .exec(function(err,addresscount){
-                     if(err)console.log(err);
-                     
 
-                     req.addresscount = addresscount;
-                     console.log(req.addresscount )
-
-                     return next();
-                 })
-}
 
 
 

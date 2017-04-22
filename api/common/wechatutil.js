@@ -2,6 +2,7 @@
 
 var fansModel = require('../sysmanage/fans/fansModel');
 
+var addressModel = require('../sysmanage/address/addressModel');
 
 var OAuth = require('wechat-oauth');
 var config = require('../frameConfig/frameConfig');
@@ -81,9 +82,22 @@ var createFans = function (req, res, next) {
 
     })
 }
+var getAddressCount=function(req,res,next){
+    addressModel.count({fans:req.fanSaveResult._id})
+                 .exec(function(err,addresscount){
+                     if(err)console.log(err);
+                     
+
+                     req.addresscount = addresscount;
+                     console.log(req.addresscount )
+
+                     return next();
+                 })
+}
 
 module.exports = {
     getopenid,
     createFans,
-    getwechatauthurl
+    getwechatauthurl,
+    getAddressCount
 }
