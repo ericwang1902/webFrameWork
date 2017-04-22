@@ -4,6 +4,8 @@ var wechatutil = require('../common/wechatutil');//微信粉丝部分的方法�
 var wechatapi = require('../common/wechatapi')//微信公共接口的方法封装
 
 var fansModel = require('../sysmanage/fans/fansModel');
+var addressModel = require('../sysmanage/address/addressModel');
+
 var mobileRouter =require('./mobilerouter');
 var config = require('../frameConfig/frameConfig');
 
@@ -22,16 +24,32 @@ router.get('/index', function (req, res, next) {
 });
 
 // 通过跳转到home携带code，获取openid，只能用这种跳转的方式，不能用ajax访问获取openid
-router.get('/home', wechatutil.getopenid, wechatutil.createFans, function (req, res, next) {
-    
-    //获取了fan的数据之后，判断该fan是否有district数据，如果没有，就跳转到initfans；如果有，就直接跳转到前端home路由
-    if(!req.fanSaveResult.district){
-        res.redirect(config.mobileUserInitURL+"?userid="+req.fanSaveResult._id);
-    }else{
+router.get('/home', wechatutil.getopenid, wechatutil.createFans,getAddressCount, function (req, res, next) {
+    if(req.fanSaveResult.district){
         res.redirect(config.mobileUserHome+"?userid="+req.fanSaveResult._id);
+    }else{
+        if(req.addresscount==0){
+            res.redirect(config.mobileUserInitURL+"?userid="+req.fanSaveResult._id);
+        }else{
+            res.redirect(config.mobildUserAddlist+"?userid="+req.fanSaveResult._id);
+        }
     }
 
 });
+
+var getAddressCount=function(req,res,next){
+    addressModel.count({fans:req.fanSaveResult._id})
+                 .exec(function(err,addresscount){
+                     if(err)console.log(err);
+                     
+
+                     req.addresscount = addresscount;
+                     console.log(req.addresscount )
+
+                     return next();
+                 })
+}
+
 
 
 //mobile/bind 用来获取用户openid⭐️️️️️️️️️️

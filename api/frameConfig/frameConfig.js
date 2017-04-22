@@ -140,6 +140,8 @@ module.exports = {
     //mobile部分的url
     mobileUserInitURL: mobileBaseURL + 'initfan',
 
+    mobildUserAddlist:mobileBaseURL +'addlist',
+
     mobileUserHome: mobileBaseURL + 'home',
 
     //用户绑定
