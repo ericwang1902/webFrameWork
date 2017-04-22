@@ -172,6 +172,7 @@ module.exports = {
             taotalcount: req.body.taotalcount
         }
         if (paystep == 1) {
+            console.log('paystep:'+paystep)
             wechatpay.createPrepay(ordertemp, openid, function (payinfo) {
 
                 console.log("payinfo:");
@@ -192,6 +193,7 @@ module.exports = {
 
 
         } else if (paystep == 2) {
+            console.log('paystep:'+paystep)
             var order = new orderModel(ordertemp);
             order.save(function (err, order) {
                 if (err) {
