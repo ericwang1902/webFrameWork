@@ -172,28 +172,38 @@ module.exports = {
             taotalcount: req.body.taotalcount
         }
         if (paystep == 1) {
-            console.log('paystep:'+paystep)
-            wechatpay.createPrepay(ordertemp, openid, function (payinfo) {
+            console.log('paystep:' + paystep)
 
-                console.log("payinfo:");
-                console.log(payinfo);
+            fansModel.findById({ _id: req.body.fanid })
+                .exec(function (err, fans) {
+                    if (err) {
+                        console.log(err)
+                    }
+                    wechatpay.createPrepay(ordertemp, fans.fanopenid, function (payinfo) {
 
-                var rs = {
-                    timestamp: payinfo.timestamp,
-                    noncestr: payinfo.noncestr,
-                    package: payinfo.prepayid,
-                    sintype: payinfo.sintype,
-                    paysign: payinfo.paySign,
-                    order: ordertemp
-                }
+                        console.log("payinfo:");
+                        console.log(payinfo);
+
+                        var rs = {
+                            timestamp: payinfo.timestamp,
+                            noncestr: payinfo.noncestr,
+                            package: payinfo.prepayid,
+                            sintype: payinfo.sintype,
+                            paysign: payinfo.paySign,
+                            order: ordertemp
+                        }
 
 
-                return res.status(201).json(rs);
-            });
+                        return res.status(201).json(rs);
+                    });
+
+                })
+
+
 
 
         } else if (paystep == 2) {
-            console.log('paystep:'+paystep)
+            console.log('paystep:' + paystep)
             var order = new orderModel(ordertemp);
             order.save(function (err, order) {
                 if (err) {
