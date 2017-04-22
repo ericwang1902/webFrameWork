@@ -3,6 +3,7 @@ var Schema   = mongoose.Schema;
 
 var suiteSchema = new Schema({
 	'suitenum' : String,
+	'suiteorder':Number,//套餐排序
 	'suitename' : String,
 	'suitedes' : String,
 	'suitephoto' : String,

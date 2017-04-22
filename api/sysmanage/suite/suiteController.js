@@ -121,6 +121,7 @@ module.exports = {
     create: function (req, res) {
         var suite = new suiteModel({
             suitenum: req.body.suitenum,
+            suiteorder:req.body.suiteorder,
             suitename: req.body.suitename,
             suitedes: req.body.suitedes,
             suitephoto: req.body.suitephoto,
@@ -164,6 +165,7 @@ module.exports = {
             }
 
             suite.suitenum = req.body.suitenum ? req.body.suitenum : suite.suitenum;
+            suite.suiteorder = req.body.suiteorder ?req.body.suiteorder:suite.suiteorder;
             suite.suitename = req.body.suitename ? req.body.suitename : suite.suitename;
             suite.suitedes = req.body.suitedes ? req.body.suitedes : suite.suitedes;
             suite.suitephoto = req.body.suitephoto ? req.body.suitephoto : suite.suitephoto;
