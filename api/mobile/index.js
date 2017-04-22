@@ -27,7 +27,7 @@ router.get('/home', wechatutil.getopenid, wechatutil.createFans,wechatutil.getAd
     if(req.fanSaveResult.district){
         res.redirect(config.mobileUserHome+"?userid="+req.fanSaveResult._id);
     }else{
-        if(req.addresscount==0){
+        if(req.addresscount==4){
             res.redirect(config.mobileUserInitURL+"?userid="+req.fanSaveResult._id);
         }else{
             res.redirect(config.mobildUserAddlist+"?userid="+req.fanSaveResult._id);
