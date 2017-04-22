@@ -51,6 +51,7 @@ module.exports = {
                     })
                     .skip((currentPage - 1) * pageItems)
                     .limit(pageItems)
+                    .sort({ 'suiteorder': -1 })
                     .exec(function (err, suites) {
                         if (err) {
                            callback("suitelist error");
