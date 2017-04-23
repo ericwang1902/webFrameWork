@@ -162,7 +162,7 @@ module.exports = {
         shopOrderId: "FWQV2RtWbgSE5IZxt7fi86wA3jwNKohNlL-c4mRPxBI",//店铺订单使用的模板消息
         fansOrderId: "qTAFxHm0RvJwxhVgNonCHuSurwBVOPoaoZXx9RkSqzI",//给粉丝的订单状态通知 
         courierId:"FWQV2RtWbgSE5IZxt7fi86wA3jwNKohNlL-c4mRPxBI",//配送员的模板消息
-        adminOrderId:"EomQuk85iSHk6qoB9GcBBklixqEMJl1UO-x5k2pVLeA"//发送给管理员的通知
+        agentOrderId:"EomQuk85iSHk6qoB9GcBBklixqEMJl1UO-x5k2pVLeA"//发送给管理员的通知
     }
 
 

@@ -437,7 +437,7 @@ function sendMsgToCourier(openid, ficorder, callback) {
 }
 //发送给管理员的通知
 function sendInfoToAgent(openid,orderinfo,callback){
-    var templateId = config.templateid.fansOrderId;
+    var templateId = config.templateid.agentOrderId;
     var ordernum = orderinfo.ordernum;
     var updatetime = moment().format('YYYY-MM-DD HH:mm:ss');
     var url1 = "http://aft.robustudio.com/mobile/agent";
