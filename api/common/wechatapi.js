@@ -435,6 +435,53 @@ function sendMsgToCourier(openid, ficorder, callback) {
 
 
 }
+//发送给管理员的通知
+function sendInfoToAgent(openid,orderinfo,callback){
+    var templateId = config.templateid.fansOrderId;
+    var ordernum = orderinfo.ordernum;
+    var updatetime = moment().format('YYYY-MM-DD HH:mm:ss');
+    var url1 = "http://aft.robustudio.com/mobile/agent";
+
+    var suites="";
+    for(var i = 0;i<orderinfo.suitelist.length;i++){
+            suites+=orderinfo.suitelist[i].suite.suitename;
+    }
+
+
+
+    var postData = {
+        "first": {
+            "value": "有客户下单了！",
+            "color": "#173177"
+        },
+        "keyword1": {
+            "value": updatetime,
+            "color": "#173177"
+        },
+        "keyword2": {
+            "value": suites,
+            "color": "#173177"
+        },
+        "keyword3": {
+            "value": ordernum,
+            "color": "#173177"
+        },
+        "remark": {
+            "value": "请赶紧分发订单！",
+            "color": "#173177"
+        }
+    }
+
+    api.sendTemplate(openid, templateId, url1, postData, function (err, result) {
+        if (err) {
+            console.log(err);
+        }
+        else {
+            callback();
+            console.log('result:' + JSON.stringify(result));
+        }
+    });
+}
 
 
 //设置粉丝分组(用于微信绑定后端用户的时候)
@@ -521,6 +568,7 @@ module.exports = {
     sendNewOrderTemplateMsg,
     sendOrderStateTemplateMsg,
     sendMsgToCourier,
-    setfanstag
+    setfanstag,
+    sendInfoToAgent
 
 }

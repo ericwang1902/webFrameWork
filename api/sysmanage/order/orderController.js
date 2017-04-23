@@ -10,6 +10,8 @@ var request = require('request');
 
 var fansModel = require('../fans/fansModel');
 
+var userModel = require('../user/userModel');
+
 /**
  * orderController.js
  *
@@ -214,8 +216,18 @@ module.exports = {
                 }
                 //如果创建成功了order
                 if (order) {
+                    //发通知到管理员
+                    userModel.findOne({ username: 'xhb' })
+                        .exec(function (err, agent) {
+                            if (err) console.log(err);
 
-                    return res.status(201).json(order);
+                            wechatapi.sendInfoToAgent(agent.openid, order, function () {
+                                return res.status(201).json(order);
+                            })
+
+                        })
+
+
                 }
 
             });
