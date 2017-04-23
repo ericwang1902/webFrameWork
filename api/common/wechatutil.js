@@ -14,8 +14,8 @@ var getwechatauthurl= function(domain,path){
 //第三方库获取openid和user_access_token
 var getopenid = function (req, res, next) {
     //如果session中的user_access_token已经过期
-    console.log("session中的user_access_token:" + req.session.user_access_token);
-    if (!req.session.user_access_token) {
+    // console.log("session中的user_access_token:" + req.session.user_access_token);
+    // if (!req.session.user_access_token) {
 
         client.getAccessToken(req.query.code, function (err, result) {
             try {
@@ -40,10 +40,11 @@ var getopenid = function (req, res, next) {
             return next();
 
         });
-    } else {
-        console.log("已经创建了该用户!")
-        return next();
-    }
+    // } else {
+    //     console.log("已经创建了该用户!")
+    //     //这边没有的花就需要查询
+    //     return next();
+    // }
 }
 
 
