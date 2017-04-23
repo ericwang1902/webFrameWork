@@ -17,6 +17,14 @@ router.get('/agentindex',wechatutil.getopenid,function(req,res,next){
     res.redirect(config.mobileAgent+"?openid="+openid);
 });
 
+//移动端一键分发订单
+router.post('/mdeliver',function(req,res,next){
+    var regionid = req.body.regionid;
+    console.log("regionid:"+regionid);
+
+
+})
+
 
 
 module.exports = router;

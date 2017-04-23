@@ -368,9 +368,19 @@ module.exports = {
         var conditions = {};
         if (!req.query.delivered) {
             //如果没有分发
-            conditions = { district: districtid, ficorder: { $exists: false } }
+            if(req.query.regionid){//如果有regionid
+                 conditions = { district: districtid,region:req.query.regionid, ficorder: { $exists: false } }
+            }else{
+                 conditions = { district: districtid, ficorder: { $exists: false } }
+            }
+           
         } else {
-            conditions = { district: districtid, ficorder: { $exists: true } }
+            if(req.query.regionid){
+                 conditions = { district: districtid, region:req.query.regionid,ficorder: { $exists: true } }
+            }else{
+                 conditions = { district: districtid, ficorder: { $exists: true } }
+            }
+           
         }
 
         if (req.query.all) {
@@ -401,7 +411,6 @@ module.exports = {
                 return res.json(orderlist);
             })
     },
-    //
 
     //分发订单时，批量更新客户订单的ficorder
     pupdate: function (req, res) {
