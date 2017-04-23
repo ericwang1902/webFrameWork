@@ -69,7 +69,7 @@ router.post('/mdeliver', function (req, res, next) {
                     callback(new Error("创建ficorder出错"))
                 }
                 //根据orgion 查找courier
-                courierModel.findOne({ region: region })
+                courierModel.findOne({ region: regionid })
                     .populate({
                         path: 'district',
                         model: 'district'
