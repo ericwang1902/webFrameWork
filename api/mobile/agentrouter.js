@@ -42,7 +42,7 @@ router.post('/mdeliver', function (req, res, next) {
     async.waterfall([
         //查询订单
         function (callback) {
-            orderModel.find({ region: regionid })
+            orderModel.find({ region: regionid,ficorder: { $exists: false } })
                 .exec(function (err, orders) {
                     if (err) {
                         console.log(err);
