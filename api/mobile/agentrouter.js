@@ -99,6 +99,8 @@ router.post('/mdeliver', function (req, res, next) {
         },
         //根据用户订单创建商户订单
         function (custorders, ficorder, callback) {
+            console.log("custorders:"+JSON.stringify(custorders));
+            console.log("ficorder:"+JSON.stringify(ficorder));
             //1.按商品拆分订单,按照供应商汇总
             var goodslist = [];
             for (var i = 0; i < custorders.length; i++) {
