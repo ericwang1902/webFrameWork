@@ -49,7 +49,7 @@ router.post('/mdeliver', function (req, res, next) {
                         callback(new Error("查询订单出错"))
                     }
                     if (orders.length > 0) {
-                        callback(null, true);
+                        callback(null, orders);
                     } else {
                         callback(new Error("该地区无订单"))
                     }
