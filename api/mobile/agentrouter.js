@@ -124,6 +124,7 @@ router.post('/mdeliver', function (req, res, next) {
                     }
                 }
             }
+            console.log("goodslist:"+JSON.stringify(goodslist));
             //2.根据goodslist中的goods数据，按照supplierid来分组,按照goods汇总数据，构成shoporder
             var shopgoodslist = [];
             for (var i = 0; i < goodslist.length; i++) {
@@ -135,6 +136,7 @@ router.post('/mdeliver', function (req, res, next) {
                     shopgoodslist[index].goodscount += goodslist[i].goodscount;
                 }
             }
+             console.log("shopgoodslist:"+JSON.stringify(shopgoodslist));
 
             //3.按供应商汇总goods
             var shoporderlist = [];
@@ -159,6 +161,7 @@ router.post('/mdeliver', function (req, res, next) {
                     })
                 }
             }
+            console.log("shoporderlist:"+JSON.stringify(shoporderlist));
             //4.批量创建商铺订单
             createShopOrder(shoporderlist, function () {
                 callback(null, custorders, ficorder);
