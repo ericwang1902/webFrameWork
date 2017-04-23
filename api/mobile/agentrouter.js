@@ -68,6 +68,7 @@ router.post('/mdeliver', function (req, res, next) {
                     console.log(err);
                     callback(new Error("创建ficorder出错"))
                 }
+                console.log("ficorder:"+JSON.stringify(ficorder));
                 //根据orgion 查找courier
                 courierModel.findOne({ region: regionid })
                     .populate({
@@ -142,7 +143,7 @@ router.post('/mdeliver', function (req, res, next) {
                     shoporderlist.push({
                         supplier: shopgoodslist[i].supplier,
                         district: shopgoodslist[i].district,
-                        ficorder: fic._id,
+                        ficorder: ficorder._id,
                         goodslist: [
                             {
                                 goods: shopgoodslist[i].goods,
@@ -179,6 +180,7 @@ router.post('/mdeliver', function (req, res, next) {
 
 
 var createShopOrder = function (shoporderlist, callback2) {
+    console.log(JSON.stringify(shoporderlist));
     async.each(shoporderlist, function (shoporder, callback) {
         var amount = 0;
         for (var i = 0; i < shoporder.goodslist.length; i++) {
