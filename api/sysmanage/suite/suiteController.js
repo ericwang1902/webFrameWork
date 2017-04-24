@@ -211,7 +211,7 @@ module.exports = {
     //移动端货架接口，增加查询条件，为了避免污染框架接口，在这里另写一个接口
     msuite: function (req, res) {
         var districtId = req.fan.district._id;
-        var conditions = { district: districtId }
+        var conditions = { district: districtId ,suitestate:true}
         suiteModel
             .find(conditions)
             .populate({
