@@ -1,7 +1,7 @@
 module.exports = {
     role: {
         admin: 'ADMIN',//管理员的角色
-        agent: 'AGENT',//区域代理
+        agent: 'AGENT', //区域代理
         shopper:'SHOPPER',//店主
         courier:'COURIER'//配送员
     },
