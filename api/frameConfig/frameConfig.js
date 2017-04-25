@@ -60,12 +60,25 @@ module.exports = {
                 url: "http://aft.robustudio.com/mobile/fans"
             },
             {
-                type: "view",
-                name: "对小熊说",
-                url: "http://cn.mikecrm.com/gAsdnWy"
+                "name": "找小熊",
+                "sub_button": [
+                    {
+                        "type": "view",
+                        "name": "对小熊说",
+                        "url": "http://cn.mikecrm.com/gAsdnWy"
+                    },
+                    {
+                        "type": "view",
+                        "name": "联系小熊",
+                        "url": "http://mp.weixin.qq.com/s/hhc1vWXuca3dbt9Fm124Ag"
+                    }
+                ]
             }
         ]
     },
+
+
+
     //条件菜单，menuName需与粉丝分组标签的name一致
     conditionalMenus: [
         {
@@ -140,7 +153,7 @@ module.exports = {
     //mobile部分的url
     mobileUserInitURL: mobileBaseURL + 'initfan',
 
-    mobildUserAddlist:mobileBaseURL +'addlist',
+    mobildUserAddlist: mobileBaseURL + 'addlist',
 
     mobileUserHome: mobileBaseURL + 'home',
 
@@ -155,14 +168,14 @@ module.exports = {
     //区域代理的移动端页面
     mobileAgent: mobileBaseURL + 'agent',
     //粉丝的页面
-    mobileTempFans:mobileBaseURL+'orderlist',
+    mobileTempFans: mobileBaseURL + 'orderlist',
 
     //模板消息id
     templateid: {
         shopOrderId: "FWQV2RtWbgSE5IZxt7fi86wA3jwNKohNlL-c4mRPxBI",//店铺订单使用的模板消息
         fansOrderId: "qTAFxHm0RvJwxhVgNonCHuSurwBVOPoaoZXx9RkSqzI",//给粉丝的订单状态通知 
-        courierId:"FWQV2RtWbgSE5IZxt7fi86wA3jwNKohNlL-c4mRPxBI",//配送员的模板消息
-        agentOrderId:"EomQuk85iSHk6qoB9GcBBklixqEMJl1UO-x5k2pVLeA"//发送给管理员的通知
+        courierId: "FWQV2RtWbgSE5IZxt7fi86wA3jwNKohNlL-c4mRPxBI",//配送员的模板消息
+        agentOrderId: "EomQuk85iSHk6qoB9GcBBklixqEMJl1UO-x5k2pVLeA"//发送给管理员的通知
     }
 
 
