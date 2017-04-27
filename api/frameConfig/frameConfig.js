@@ -169,6 +169,8 @@ module.exports = {
     mobileAgent: mobileBaseURL + 'agent',
     //粉丝的页面
     mobileTempFans: mobileBaseURL + 'orderlist',
+    //粉丝区域设置界面
+    mobiledistictURL:mobileBaseURL+'districtform',
 
     //模板消息id
     templateid: {
