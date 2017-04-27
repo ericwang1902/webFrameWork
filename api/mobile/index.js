@@ -25,16 +25,18 @@ router.get('/index', function (req, res, next) {
 // 通过跳转到home携带code，获取openid，只能用这种跳转的方式，不能用ajax访问获取openid
 router.get('/home', wechatutil.getopenid, wechatutil.createFans,wechatutil.getAddressCount, function (req, res, next) {
     
+    res.redirect(config.mobileUserHome+"?userid="+req.fanSaveResult._id);
     
-    if(req.fanSaveResult.district){
-        res.redirect(config.mobileUserHome+"?userid="+req.fanSaveResult._id);
-    }else{
-        if(req.addresscount==0){
-            res.redirect(config.mobileUserInitURL+"?userid="+req.fanSaveResult._id);
-        }else{
-            res.redirect(config.mobildUserAddlist+"?userid="+req.fanSaveResult._id);
-        }
-    }
+    //取消前置
+    // if(req.fanSaveResult.district){
+    //     res.redirect(config.mobileUserHome+"?userid="+req.fanSaveResult._id);
+    // }else{
+    //     if(req.addresscount==0){
+    //         res.redirect(config.mobileUserInitURL+"?userid="+req.fanSaveResult._id);
+    //     }else{
+    //         res.redirect(config.mobildUserAddlist+"?userid="+req.fanSaveResult._id);
+    //     }
+    // }
 
 });
 
