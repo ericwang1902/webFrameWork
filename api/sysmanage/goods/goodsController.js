@@ -25,6 +25,7 @@ module.exports = {
                 path: 'district',
                 model: 'district'
             })
+            .sort({'supplier':-1})
             .exec(function (err, goodslist) {
                 if (err) {
                     return res.status(500).json({
