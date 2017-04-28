@@ -69,6 +69,7 @@ module.exports = {
                         path: 'district',
                         model: 'district'
                     })
+                    .sort({'supplier':-1})
                     .skip((currentPage - 1) * pageItems)
                     .limit(pageItems)
                     .exec(function (err, goodslist) {
