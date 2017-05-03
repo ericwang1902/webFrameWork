@@ -365,51 +365,79 @@ module.exports = {
     //根据局域代理的districtid获取订单列表
     morderlistagent: function (req, res) {
         var districtid = req.query.districtid;
+        var pageitems = parseInt(req.query.pageitems);
+        var currentpage = parseInt(req.query.currentpage);
+
         var conditions = {};
         if (!req.query.delivered) {
             //如果没有分发
-            if(req.query.regionid){//如果有regionid
-                 conditions = { district: districtid,region:req.query.regionid, ficorder: { $exists: false } }
-            }else{
-                 conditions = { district: districtid, ficorder: { $exists: false } }
+            if (req.query.regionid) {//如果有regionid
+                conditions = { district: districtid, region: req.query.regionid, ficorder: { $exists: false } }
+            } else {
+                conditions = { district: districtid, ficorder: { $exists: false } }
             }
-           
-        } else {
-            if(req.query.regionid){
-                 conditions = { district: districtid, region:req.query.regionid,ficorder: { $exists: true } }
-            }else{
-                 conditions = { district: districtid, ficorder: { $exists: true } }
-            }
-           
-        }
 
+        } else {
+            if (req.query.regionid) {
+                conditions = { district: districtid, region: req.query.regionid, ficorder: { $exists: true } }
+            } else {
+                conditions = { district: districtid, ficorder: { $exists: true } }
+            }
+
+        }
         if (req.query.all) {
             conditions = { district: districtid }
         }
 
-        orderModel.find(conditions)
-            .populate({
-                path: 'district',
-                model: 'district'
-            })
-            .populate({
-                path: 'region',
-                model: 'region'
-            })
-            .populate({
-                path: 'fanid',
-                model: 'fans'
-            })
-            .sort({ 'paytime': -1 })
-            .exec(function (err, orderlist) {
-                if (err) {
-                    return res.status(500).json({
-                        message: 'Error when deleting the order.',
-                        error: err
-                    });
-                }
-                return res.json(orderlist);
-            })
+
+
+        async.series([
+            function (callback) {
+                orderModel.count(conditions, function (err, count) {
+                    if (err) callback("order count出错");
+                    callback(null, count);
+                })
+            },
+            function (callback) {
+                orderModel.find(conditions)
+                    .populate({
+                        path: 'district',
+                        model: 'district'
+                    })
+                    .populate({
+                        path: 'region',
+                        model: 'region'
+                    })
+                    .populate({
+                        path: 'fanid',
+                        model: 'fans'
+                    })
+                    .sort({ 'paytime': -1 })
+                    .skip((currentpage - 1) * pageitems)
+                    .limit(pageitems)
+                    .exec(function (err, orderlist) {
+                        if (err) callback("orderlist");
+                        callback(null, orderlist);
+                    })
+            }
+
+        ], function (err, results) {
+            var orderResult = {
+                count: results[0],
+                orders: results[1]
+            }
+
+            if (err) {
+                return res.status(500).json({
+                    message: 'Error when getting the order.',
+                    error: err
+                });
+            }
+            return res.json(orderResult);
+        })
+
+
+
     },
 
     //分发订单时，批量更新客户订单的ficorder
