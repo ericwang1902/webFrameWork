@@ -171,7 +171,7 @@ module.exports = {
                 })
             },
             function (callback) {
-                ficorderModel.find(conditions)
+                ficorderModel.find(conditions).sort({ 'ficordernum': -1 })
                     .exec(function (err, ficordersRes) {
                         callback(null, ficordersRes);
                     })
