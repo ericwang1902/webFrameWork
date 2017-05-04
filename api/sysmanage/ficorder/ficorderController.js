@@ -173,7 +173,7 @@ module.exports = {
             function (callback) {
                 ficorderModel.find(conditions)
                     .exec(function (err, ficordersRes) {
-                        callback(null, orderlist);
+                        callback(null, ficordersRes);
                     })
             }
         ], function (err, results) {
