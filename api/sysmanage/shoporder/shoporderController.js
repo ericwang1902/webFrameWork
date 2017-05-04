@@ -320,7 +320,7 @@ module.exports = {
                             .populate({
                                 path: 'ficorder',
                                 model: 'ficorder',
-                                match: { ficorderstate: ficstatus },
+                                match: { 'ficorderstate': ficstatus },
                             })
                             .populate({
                                 path: 'supplier',
