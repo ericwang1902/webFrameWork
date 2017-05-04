@@ -129,7 +129,7 @@ module.exports = {
                         error: err
                     });
                 }
-                 return res.json(ficorder);
+                return res.json(ficorder);
 
 
             });
@@ -155,24 +155,49 @@ module.exports = {
     ficorderByRegion: function (req, res) {
         var regionid = req.query.regionid;
         var ficorderstate = req.query.ficorderstate;
-        console.log(ficorderstate);
 
-        ficorderModel.find({ region: regionid, ficorderstate: ficorderstate })
-            .exec(function (err, ficordersRes) {
-                if (err) {
-                    return res.status(500).json({
-                        message: 'Error when getting ficorder.',
-                        error: err
-                    });
-                }
-                return res.json(ficordersRes);
+        var pageitems = parseInt(req.query.pageitems);
+        var currentpage = parseInt(req.query.currentpage);
 
-            })
+        var conditions = {
+            region: regionid,
+            ficorderstate: ficorderstate
+        }
+        async.series([
+            function (callback) {
+                ficorderModel.count(conditions, function (err, count) {
+                    if (err) callback("order count出错");
+                    callback(null, count);
+                })
+            },
+            function (callback) {
+                ficorderModel.find(conditions)
+                    .exec(function (err, ficordersRes) {
+                        callback(null, orderlist);
+                    })
+            }
+        ], function (err, results) {
+            var orderResult = {
+                count: results[0],
+                ficorders: results[1]
+            }
+
+            if (err) {
+                return res.status(500).json({
+                    message: 'Error when getting the order.',
+                    error: err
+                });
+            }
+            return res.json(orderResult);
+        })
+
+
     },
     //根据ficorderid来更新ficorder的状态
     updateficstate(req, res) {
         var ficid = req.body.ficorder;
         var updatestate = req.body.targetstate;
+
 
         ficorderModel.findOne({ _id: ficid })
             .exec(function (err, ficorder) {
@@ -194,9 +219,9 @@ module.exports = {
                     //根据ficorder找order，根据order找fanid，根据fanid找openid
                     orderModel.find({ ficorder: ficorder._id })
                         .populate({
-                                        path:'ficorder',
-                                        model:'ficorder'
-                                    })
+                            path: 'ficorder',
+                            model: 'ficorder'
+                        })
                         .exec(function (err, orders) {
                             if (err) {
                                 return res.status(500).json({
