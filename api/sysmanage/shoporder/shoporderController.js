@@ -308,7 +308,7 @@ module.exports = {
                     .populate({
                         path: 'ficorder',
                         model: 'ficorder',
-                        match: { 'ficorderstate': {"$lte":ficstatus,"$gte":ficstatus} }
+                        match: { ficorderstate: {"$lte":ficstatus,"$gte":ficstatus} }
                     })
                     .sort({ 'ordertime': -1 })
                     .exec(function (err, shoporders) {
@@ -322,7 +322,7 @@ module.exports = {
                             .populate({
                                 path: 'ficorder',
                                 model: 'ficorder',
-                                match: { 'ficorderstate': {"$lte":ficstatus,"$gte":ficstatus}  }
+                                match: { ficorderstate: {"$lte":ficstatus,"$gte":ficstatus}  }
                             })
                             .populate({
                                 path: 'supplier',
