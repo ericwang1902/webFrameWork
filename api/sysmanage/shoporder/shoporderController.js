@@ -302,13 +302,13 @@ module.exports = {
                     supplier: supplier._id
                 }
 
-
+                //{"$lte":ficstatus,"$gte":ficstatus}
 
                 shoporderModel.find(conditions)
                     .populate({
                         path: 'ficorder',
                         model: 'ficorder',
-                        match: { ficorderstate: {"$lte":ficstatus,"$gte":ficstatus} }
+                        match: { ficorderstate: ficstatus }
                     })
                     .sort({ 'ordertime': -1 })
                     .exec(function (err, shoporders) {
@@ -322,7 +322,7 @@ module.exports = {
                             .populate({
                                 path: 'ficorder',
                                 model: 'ficorder',
-                                match: { ficorderstate: {"$lte":ficstatus,"$gte":ficstatus}  }
+                                match: { ficorderstate:ficstatus}  
                             })
                             .populate({
                                 path: 'supplier',
