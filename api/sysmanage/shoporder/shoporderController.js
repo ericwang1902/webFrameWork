@@ -61,13 +61,13 @@ module.exports = {
                                 error: err
                             });
                         }
-                        callback(null,shoporders);
+                        callback(null, shoporders);
                     })
             }
         ], function (err, results) {
-            var shoporderResult={
-                count:results[0],
-                shoporders:results[1]
+            var shoporderResult = {
+                count: results[0],
+                shoporders: results[1]
             }
             if (err) {
                 return res.status(500).json({
@@ -281,6 +281,12 @@ module.exports = {
     mshoporderforsupplier: function (req, res) {
 
         var supplieruserid = req.query.supplieruserid;
+        var ficstatus = req.query.ficstatus;
+
+        var pageitems = parseInt(req.query.pageitems);
+        var currentpage = parseInt(req.query.currentpage);
+
+
         //根据userid 去查询其对应的supplier档的id
         supplierModel.findOne({ supplieruser: supplieruserid })
             .exec(function (err, supplier) {
@@ -290,31 +296,54 @@ module.exports = {
                 if (!supplier) {
                     console.log("没有该供应商");
                 }
+
                 var conditions = {
                     supplier: supplier._id
                 }
+
+
                 shoporderModel.find(conditions)
                     .populate({
-                        path: 'district',
-                        model: 'district'
-                    })
-                    .populate({
                         path: 'ficorder',
-                        model: 'ficorder'
-                    })
-                    .populate({
-                        path: 'supplier',
-                        model: 'supplier'
+                        model: 'ficorder',
+                        match: { ficorderstate: ficstatus },
                     })
                     .sort({ 'ordertime': -1 })
                     .exec(function (err, shoporders) {
-                        if (err) {
-                            return res.status(500).json({
-                                message: 'Error when getting shoporder.',
-                                error: err
-                            });
-                        }
-                        return res.json(shoporders);
+                        var count = shoporders.length;
+
+                        shoporderModel.find(conditions)
+                            .populate({
+                                path: 'district',
+                                model: 'district'
+                            })
+                            .populate({
+                                path: 'ficorder',
+                                model: 'ficorder',
+                                match: { ficorderstate: ficstatus },
+                            })
+                            .populate({
+                                path: 'supplier',
+                                model: 'supplier'
+                            })
+                            .sort({ 'ordertime': -1 })
+                            .skip((currentpage - 1) * pageitems)
+                            .limit(pageitems)
+                            .exec(function (err, shoporders1) {
+                                var orderResult = {
+                                    count: count,
+                                    orders: shoporders1
+                                }
+
+                                if (err) {
+                                    return res.status(500).json({
+                                        message: 'Error when getting the order.',
+                                        error: err
+                                    });
+                                }
+                                return res.json(orderResult);
+                            })
+
                     })
 
             })
