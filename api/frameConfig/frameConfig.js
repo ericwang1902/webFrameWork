@@ -65,13 +65,19 @@ module.exports = {
                     {
                         "type": "view",
                         "name": "对小熊说",
-                        "url": "http://cn.mikecrm.com/gAsdnWy"
+                        "url": "https://static.meiqia.com/dist/standalone.html?eid=56981&agentid=37ee846ef642e7cc9fe397d948e833eb"
                     },
                     {
                         "type": "view",
                         "name": "联系小熊",
                         "url": "http://mp.weixin.qq.com/s/hhc1vWXuca3dbt9Fm124Ag"
                     }
+                    //,
+                    // {
+                    //     "type": "view",
+                    //     "name": "联系小熊",
+                    //     "url": "http://mp.weixin.qq.com/s/hhc1vWXuca3dbt9Fm124Ag"
+                    // }
                 ]
             }
         ]
