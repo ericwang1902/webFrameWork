@@ -65,7 +65,7 @@ module.exports = {
                     {
                         "type": "view",
                         "name": "对小熊说",
-                        "url": "https://static.meiqia.com/dist/standalone.html?eid=56981&agentid=37ee846ef642e7cc9fe397d948e833eb"
+                        "url": "https://2248930513.kf5.com/kchat/29185?from=%E5%9C%A8%E7%BA%BF%E6%94%AF%E6%8C%81"
                     },
                     {
                         "type": "view",
