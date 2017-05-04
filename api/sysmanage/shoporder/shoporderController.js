@@ -285,6 +285,7 @@ module.exports = {
 
         var pageitems = parseInt(req.query.pageitems);
         var currentpage = parseInt(req.query.currentpage);
+        console.log("ficstatus:"+ficstatus);
 
 
         //根据userid 去查询其对应的supplier档的id
@@ -306,7 +307,7 @@ module.exports = {
                     .populate({
                         path: 'ficorder',
                         model: 'ficorder',
-                        match: { 'ficorderstate': ficstatus+"" }
+                        match: { 'ficorderstate': ficstatus }
                     })
                     .sort({ 'ordertime': -1 })
                     .exec(function (err, shoporders) {
@@ -320,7 +321,7 @@ module.exports = {
                             .populate({
                                 path: 'ficorder',
                                 model: 'ficorder',
-                                match: { 'ficorderstate': ficstatus+"" }
+                                match: { 'ficorderstate': ficstatus }
                             })
                             .populate({
                                 path: 'supplier',
