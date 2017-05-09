@@ -64,6 +64,7 @@ module.exports = {
 
         var pageItems = Number(req.query.pageItems);
         var currentPage = Number(req.query.currentPage);
+        console.log(currentPage);
 
         async.series([
             function (callback) {
